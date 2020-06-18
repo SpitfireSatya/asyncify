@@ -1,0 +1,33 @@
+{
+  "name": "asyncify",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/index.js",
+  "scripts": {
+    "build": "webpack",
+    "start": "webpack-dev-server"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@babel/generator": "^7.10.2",
+    "@babel/parser": "^7.10.2",
+    "csv-parser": "^2.3.3"
+  },
+  "devDependencies": {
+    "@babel/types": "^7.10.2",
+    "@types/babel__generator": "^7.6.1",
+    "@types/node": "^14.0.13",
+    "ts-loader": "^7.0.5",
+    "tslint": "^6.1.2",
+    "tslint-consistent-codestyle": "^1.16.0",
+    "tslint-eslint-rules": "^5.4.0",
+    "tslint-html-report": "^2.0.3",
+    "tslint-immutable": "^6.0.1",
+    "tslint-microsoft-contrib": "^6.2.0",
+    "typescript": "^3.9.5",
+    "vrsource-tslint-rules": "^6.0.0",
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.11"
+  }
+}

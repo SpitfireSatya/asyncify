@@ -27,9 +27,11 @@ export class AsyncAwaitMethodCalls {
   }
 
   private static wrapAsyncInAwait = (nodeRef: IASTNode): void => {
-    if (nodeRef.parentFunction === null && !AsyncAwaitMethodCalls.asyncifiedFiles.includes(nodeRef.fileName)) {
-      AsyncAwaitMethodCalls.addIIFE(nodeRef);
-      AsyncAwaitMethodCalls.asyncifiedFiles.push(nodeRef.fileName);
+    if (nodeRef.parentFunction === null) {
+      if (!AsyncAwaitMethodCalls.asyncifiedFiles.includes(nodeRef.fileName)) {
+        AsyncAwaitMethodCalls.addIIFE(nodeRef);
+        AsyncAwaitMethodCalls.asyncifiedFiles.push(nodeRef.fileName);
+      }
     } else {
       nodeRef.parentFunction.async = true;
     }

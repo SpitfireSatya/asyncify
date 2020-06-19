@@ -15,7 +15,7 @@ export class Asyncify {
     const callgraph: Array<ICallgraphEdge> = await FileOps.readCSVFile(pathToCallgraphCSV, true);
     const callTree: Node = await CallGraphTransformations.transform(callgraph);
     await ASTTransformations.transform(callTree);
-    await Asyncify.writeTransformedFiles;
+    await Asyncify.writeTransformedFiles();
     console.log('Done');
   }
 
@@ -23,6 +23,7 @@ export class Asyncify {
 
     const promises: Array<Promise<any>> = [];
     Store.getFileList().forEach((fileName: string): void => {
+      console.log('Writing to file: ', fileName);
       promises.push(Asyncify.generateCodeAndWrite(fileName));
     });
     return Promise.all(promises)

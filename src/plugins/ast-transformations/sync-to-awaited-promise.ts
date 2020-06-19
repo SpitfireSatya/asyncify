@@ -23,17 +23,7 @@ export class SyncToAwaitedPromise {
     (<babelTypes.OptionalMemberExpression>childNode.callee).property.name =
       (<any>SyncToAsyncMap)[(<babelTypes.OptionalMemberExpression>childNode.callee).property.name];
 
-    if (nodeRef.parentNode.type === 'AwaitExpression') {
       nodeRef.parentNode[nodeRef.key] = childNode;
-    } else {
-      nodeRef.parentNode[nodeRef.key] = {
-        type: 'AwaitExpression',
-        argument: childNode,
-        extra: {
-          parenthesized: true
-        }
-      };
-    }
 
   }
 

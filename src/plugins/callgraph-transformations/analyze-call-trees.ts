@@ -4,6 +4,7 @@ import { CallgraphUtils } from '../../utils/callgraph-utils';
 import { ExternsCallDefinitions } from '../../constants/externs-call-definitions.constant';
 import { Node } from '../../models/node.model';
 import { IASTNode } from '../../interfaces/AST-node.interface';
+import { ASTNodeKinds } from '../../constants/ast-node-kinds.constant';
 
 export class AnalyzeCallTrees {
 
@@ -68,7 +69,7 @@ export class AnalyzeCallTrees {
     if (Store.getFileList().includes(CallgraphUtils.getFileName(node.target))) {
 
       const cachedNode: IASTNode = Store.getASTNode(node.target);
-      if (cachedNode.parentNode.kind === 'get') {
+      if (ASTNodeKinds.getterAndSetter().includes(cachedNode.parentNode[cachedNode.key].kind)) {
         return true;
       }
 

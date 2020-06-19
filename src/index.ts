@@ -7,23 +7,21 @@ import { Node } from './models/node.model';
 import { Store } from './plugins/store/store';
 import { BabelGenerator } from './plugins/parsers-and-generators/babel-generator';
 import * as babelTypes from '@babel/types';
-import * as path from 'path';
+// import * as path from 'path';
 
 export class Asyncify {
 
   public static initialize = async (pathToCallgraphCSV: string): Promise<void> => {
     const callgraph: Array<ICallgraphEdge> = await FileOps.readCSVFile(pathToCallgraphCSV, true);
     const callTree: Node = await CallGraphTransformations.transform(callgraph);
-    await ASTTransformations.transform(callTree);
+    ASTTransformations.transform(callTree);
     await Asyncify.writeTransformedFiles();
-    console.log('Done');
   }
 
   private static writeTransformedFiles = (): Promise<void> => {
 
     const promises: Array<Promise<any>> = [];
     Store.getFileList().forEach((fileName: string): void => {
-      console.log('Writing to file: ', fileName);
       promises.push(Asyncify.generateCodeAndWrite(fileName));
     });
     return Promise.all(promises)
@@ -38,4 +36,4 @@ export class Asyncify {
 
 }
 
-Asyncify.initialize(path.resolve('mock', 'test.csv'));
+// Asyncify.initialize(path.resolve('mock', 'test.csv'));

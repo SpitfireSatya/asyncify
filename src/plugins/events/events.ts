@@ -14,6 +14,7 @@ export class Events {
 
   public static initialize = (): void => {
     Events.registerEvents();
+    /* istanbul ignore next */
     Events.registerEvents = (): void => { /* Prevent reregistration of events */ };
   }
 

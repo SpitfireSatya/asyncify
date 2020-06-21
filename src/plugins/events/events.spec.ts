@@ -356,4 +356,4 @@ describe('plugins > events', (): void => {
     });
 
   });
-});
+}); // tslint:disable-line: max-file-line-count

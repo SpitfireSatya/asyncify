@@ -1,9 +1,9 @@
 
-import { SyncToExternsMap } from '../../constants/sync-to-externs-map.constant';
 import { CallgraphUtils } from '../../utils/callgraph-utils';
 import { Events } from '../events/events';
 import { Node } from '../../models/node.model';
 import { ICallgraphEdge } from '../../interfaces/callgraph-edge.interface';
+import { ExternsFuncDefinitions } from '../../constants/externs-func-definitions';
 
 export class ExtractCallTrees {
 
@@ -12,22 +12,34 @@ export class ExtractCallTrees {
   public static extract = (callGraph: Array<ICallgraphEdge>): Promise<Node> => {
     return new Promise((resolve: any, reject: any): void => {
       const root: Node = new Node(null, null);
-      ExtractCallTrees.extractSyncFunctionCallers(root, callGraph);
-      ExtractCallTrees.extractRelatedCalls(root, callGraph);
-      Events.register('ready', (): void => {
-        resolve(root);
-      });
+      ExtractCallTrees._extractSyncFunctionCallers(root, callGraph);
+      ExtractCallTrees._extractRelatedCalls(root, callGraph);
+      Events.register('ready', ExtractCallTrees._readyCallback);
       Events.dispatch('notify-when-ready', null);
     });
   }
 
-  private static extractRelatedCalls = (callTreeNode: Node, callGraph: Array<ICallgraphEdge>): void => {
+  private static _readyCallback = (resolve: any, root: Node): void => {
+    resolve(root);
+  }
+
+  private static _extractSyncFunctionCallers = (rootNode: Node, callGraph: Array<ICallgraphEdge>): void => {
+
+    for (let i: number = 0; i < callGraph.length; i++) {
+      if (ExternsFuncDefinitions.syncFunctions.indexOf(callGraph[i].targetNode) !== -1) {
+        ExtractCallTrees._addNode(rootNode, new Node(callGraph[i].sourceNode, callGraph[i].targetNode));
+      }
+    }
+
+  }
+
+  private static _extractRelatedCalls = (callTreeNode: Node, callGraph: Array<ICallgraphEdge>): void => {
 
     if (callTreeNode.children.length > 0) {
 
       callTreeNode.children.forEach((childNode: Node): void => {
 
-        const newTarget: string = ExtractCallTrees.getParent(childNode.source, callGraph);
+        const newTarget: string = ExtractCallTrees._getParent(childNode.source, callGraph);
 
         if (newTarget) {
           for (let i: number = 0; i < callGraph.length; i++) {
@@ -36,11 +48,11 @@ export class ExtractCallTrees {
                 const index: number = ExtractCallTrees._nativeCallers
                   .indexOf(callGraph[i].sourceNode.slice(callGraph[i].sourceNode.indexOf('('), callGraph[i].sourceNode.indexOf(',')));
                 if (index !== -1) {
-                  ExtractCallTrees.addNode(childNode, new Node(callGraph[i].sourceNode, callGraph[i].targetNode));
+                  ExtractCallTrees._addNode(childNode, new Node(callGraph[i].sourceNode, callGraph[i].targetNode));
                   ExtractCallTrees._nativeCallers.splice(index, 1);
                 }
               } else {
-                ExtractCallTrees.addNode(childNode, new Node(callGraph[i].sourceNode, callGraph[i].targetNode));
+                ExtractCallTrees._addNode(childNode, new Node(callGraph[i].sourceNode, callGraph[i].targetNode));
                 if (callGraph[i].sourceNode.indexOf('codeql-home') !== -1) {
                   const targetSubString: string = callGraph[i].targetNode
                     .slice(callGraph[i].targetNode.indexOf('('), callGraph[i].targetNode.indexOf(','));
@@ -50,7 +62,7 @@ export class ExtractCallTrees {
             }
           }
 
-          ExtractCallTrees.extractRelatedCalls(childNode, callGraph);
+          ExtractCallTrees._extractRelatedCalls(childNode, callGraph);
 
         }
 
@@ -59,23 +71,12 @@ export class ExtractCallTrees {
 
   }
 
-  private static extractSyncFunctionCallers = (rootNode: Node, callGraph: Array<ICallgraphEdge>): void => {
-
-    const listOfExterns: Array<string> = Object.values(SyncToExternsMap.getAll());
-    for (let i: number = 0; i < callGraph.length; i++) {
-      if (listOfExterns.indexOf(callGraph[i].targetNode) !== -1) {
-        ExtractCallTrees.addNode(rootNode, new Node(callGraph[i].sourceNode, callGraph[i].targetNode));
-      }
-    }
-
-  }
-
-  private static addNode = (parentNode: Node, childNode: Node): void => {
+  private static _addNode = (parentNode: Node, childNode: Node): void => {
     parentNode.addChild = childNode;
     Events.dispatch('fetch-file', CallgraphUtils.getFileName(childNode.source));
   }
 
-  private static getParent = (target: string, callGraph: Array<ICallgraphEdge>): string => {
+  private static _getParent = (target: string, callGraph: Array<ICallgraphEdge>): string => {
     let parent: ICallgraphEdge = <ICallgraphEdge>{};
     for (let i: number = 0; i < callGraph.length; i++) {
       if ((CallgraphUtils.getFileName(callGraph[i].targetNode) === CallgraphUtils.getFileName(target)) &&

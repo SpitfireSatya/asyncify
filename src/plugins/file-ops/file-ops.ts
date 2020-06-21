@@ -1,6 +1,6 @@
 
 import * as fs from 'fs';
-import * as path from 'path';
+// import * as path from 'path';
 import * as csv from 'csv-parser';
 import { ICallgraphEdge } from '../../interfaces/callgraph-edge.interface';
 
@@ -14,9 +14,14 @@ export class FileOps {
   }
 
   public static readCSVFile(filePath: string, lineNoCorrection: boolean = false): Promise<Array<ICallgraphEdge>> {
-    console.log('Reading file: ', filePath);
+
     return new Promise((resolve: any, reject: any): void => {
+
       const csvResults: Array<ICallgraphEdge> = [];
+
+      if (!fs.existsSync(filePath)) {
+        return reject(new Error('File not found'));
+      }
 
       fs.createReadStream(filePath)
         .pipe(csv())
@@ -29,9 +34,6 @@ export class FileOps {
         })
         .on('end', (): void => {
           resolve(csvResults);
-        })
-        .on('error', (error: Error): void => {
-          reject(error);
         });
     });
   }
@@ -40,7 +42,7 @@ export class FileOps {
     return fs.promises.writeFile(filePath, data, 'utf8');
   }
 
-  public static generateFileList(filePath: string): Promise<Array<string>> {
+  /* public static generateFileList(filePath: string): Promise<Array<string>> {
 
     return new Promise(async (resolve: any, reject: any): Promise<any> => {
 
@@ -73,7 +75,7 @@ export class FileOps {
       return resolve(fileList);
 
     });
-  }
+  } */
 
   // tslint:disable-next-line: max-line-length
   // `Fun(${filePath}:<${astNode[key].loc.start.line},${astNode[key].loc.start.column}>--<${astNode[key].loc.end.line},${astNode[key].loc.end.column}>)`

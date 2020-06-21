@@ -12,14 +12,14 @@ export class BabelParser {
   public static generateAST(sourceCode: string, config: babelParser.ParserOptions, filePath: string): babelTypes.File {
     try {
       const ast: babelTypes.File = babelParser.parse(sourceCode, config);
-      BabelParser.cacheASTNodes(ast, filePath);
+      BabelParser._cacheASTNodes(ast, filePath);
       return ast;
     } catch (e) {
       throw new Error(e.message);
     }
   }
 
-  private static cacheASTNodes(ast: babelTypes.File, filePath: string): void {
+  private static _cacheASTNodes(ast: babelTypes.File, filePath: string): void {
 
     function traverseAST(astNode: any, fileName: string, parentFunction: babelTypes.FunctionDeclaration): void {
 
@@ -29,17 +29,17 @@ export class BabelParser {
 
           if (astNode[key]) {
 
-            if (ASTNodeTypes.functionCalls().includes(astNode[key].type)) {
+            if (ASTNodeTypes.functionCalls.includes(astNode[key].type)) {
               const cacheKey: string = `Callee(${fileName}:<${astNode[key].loc.start.line},${astNode[key].loc.start.column}>--<${astNode[key].loc.end.line},${astNode[key].loc.end.column}>)`;
               Store.setASTNode(cacheKey, new ASTNode(astNode, key, fileName, parentFunction, ast));
-            } else if (ASTNodeTypes.functionDeclarations().includes(astNode[key].type)) {
+            } else if (ASTNodeTypes.functionDeclarations.includes(astNode[key].type)) {
               const cacheKey: string = `Fun(${fileName}:<${astNode[key].loc.start.line},${astNode[key].loc.start.column}>--<${astNode[key].loc.end.line},${astNode[key].loc.end.column}>)`;
               Store.setASTNode(cacheKey, new ASTNode(astNode, key, fileName, parentFunction, ast));
             }
 
             if (typeof astNode[key] === 'object' && !BabelParser._infoKeys.includes(key)) {
               traverseAST(astNode[key], fileName,
-                (ASTNodeTypes.functionDeclarations().indexOf(astNode.type) !== -1) ? astNode : parentFunction);
+                (ASTNodeTypes.functionDeclarations.indexOf(astNode.type) !== -1) ? astNode : parentFunction);
             }
 
           }

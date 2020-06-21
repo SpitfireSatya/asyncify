@@ -11,7 +11,7 @@ export class ASTNodeTypes {
   public static readonly CALL_EXPRESSION: string = 'CallExpression';
   public static readonly MEMBER_EXPRESSION: string = 'MemberExpression';
 
-  public static functionDeclarations = (): Array<string> => {
+  public static get functionDeclarations(): Array<string> {
     return [
      ASTNodeTypes.FUNCTION_DECLARATION,
      ASTNodeTypes.FUNCTION_EXPRESSION,
@@ -22,7 +22,7 @@ export class ASTNodeTypes {
     ];
   }
 
-  public static functionCalls = (): Array<string> => {
+  public static get functionCalls(): Array<string> {
     return [
       ASTNodeTypes.CALL_EXPRESSION,
       ASTNodeTypes.MEMBER_EXPRESSION

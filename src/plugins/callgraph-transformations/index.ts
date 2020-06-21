@@ -16,6 +16,7 @@ export class CallGraphTransformations {
     });
   }
 
+  /* istanbul ignore next: Non-functional code. For displaying the tree only */
   private static printCallTrees = (node: Node, calltree: string): void => {
 
     if (node.children.length === 0) {

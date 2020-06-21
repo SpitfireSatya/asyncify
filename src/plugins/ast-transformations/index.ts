@@ -1,11 +1,10 @@
 
 import { Node } from '../../models/node.model';
 import { RequiredTransform } from '../../enums/required-transform.enum';
-import { SyncToExternsMap } from '../../constants/sync-to-externs-map.constant';
 import { AsyncAwaitMethodCalls } from './async-await-method-calls';
 import { SyncToAwaitedPromise } from './sync-to-awaited-promise';
 import { Store } from '../store/store';
-import { CallgraphUtils } from '../../utils/callgraph-utils';
+import { ExternsFuncDefinitions } from '../../constants/externs-func-definitions';
 
 export class ASTTransformations {
 
@@ -48,7 +47,7 @@ export class ASTTransformations {
 
     let requiredTransform: RequiredTransform = RequiredTransform.ASYNC_AWAIT;
 
-    if (SyncToExternsMap.getAll().includes(node.target)) {
+    if (ExternsFuncDefinitions.syncFunctions.includes(node.target)) {
       requiredTransform = RequiredTransform.SYNC_TO_ASYNC;
     }
 

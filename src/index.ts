@@ -7,7 +7,7 @@ import { Node } from './models/node.model';
 import { Store } from './plugins/store/store';
 import { BabelGenerator } from './plugins/parsers-and-generators/babel-generator';
 import * as babelTypes from '@babel/types';
-// import * as path from 'path';
+import * as path from 'path';
 
 export class Asyncify {
 

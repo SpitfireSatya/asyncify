@@ -12,4 +12,10 @@ export class ExternsCallDefinitions {
   // call to new Promise()
   public static readonly NEW_PROMISE: string = 'Callee(/home/osboxes/codeql-home/codeql/javascript/tools/data/externs/nodejs/es6.js:<1105,42>--<1105,52>)';
 
+  public static get validExternsCalls(): Array<string> {
+    return [
+      ExternsCallDefinitions.NEW_PROMISE
+    ];
+  }
+
 }

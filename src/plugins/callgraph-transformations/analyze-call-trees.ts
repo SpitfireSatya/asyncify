@@ -8,13 +8,6 @@ import { ASTNodeKinds } from '../../constants/ast-node-kinds.constant';
 
 export class AnalyzeCallTrees {
 
-  private static _invalidCalls: Array<string> = [
-    ExternsCallDefinitions.FOREACH_ES3,
-    ExternsCallDefinitions.FOREACH_ES6,
-    ExternsCallDefinitions.MAP_ES3,
-    ExternsCallDefinitions.MAP_ES6,
-  ];
-
   public static analyze = (rootNode: Node): Node => {
 
     let isBranchInvalid: boolean = false;
@@ -25,12 +18,17 @@ export class AnalyzeCallTrees {
         return;
       }
 
-      if (AnalyzeCallTrees.isNodeInvalid(node)) {
+      if (AnalyzeCallTrees._isCallbackFromExterns(node) && !AnalyzeCallTrees._isValidExternsCall(node)) {
         isBranchInvalid = true;
         return;
       }
 
-      if (AnalyzeCallTrees.isNewPromise(node)) {
+      if (!AnalyzeCallTrees._isCallToExterns(node) && AnalyzeCallTrees._isCallToGetterOrSetter(node)) {
+        isBranchInvalid = true;
+        return;
+      }
+
+      if (AnalyzeCallTrees._isNewPromise(node)) {
         node.removeChildren();
       }
 
@@ -56,25 +54,31 @@ export class AnalyzeCallTrees {
 
   }
 
-  private static isNewPromise = (node: Node): boolean => {
+  private static _isNewPromise = (node: Node): boolean => {
     return (node.source === ExternsCallDefinitions.NEW_PROMISE);
   }
 
-  private static isNodeInvalid = (node: Node): boolean => {
+  private static _isCallToExterns = (node: Node): boolean => {
+    return !Store.getFileList().includes(CallgraphUtils.getFileName(node.target));
+  }
 
-    if (AnalyzeCallTrees._invalidCalls.includes(node.source)) {
+  private static _isCallbackFromExterns = (node: Node): boolean => {
+    return !Store.getFileList().includes(CallgraphUtils.getFileName(node.source));
+  }
+
+  private static _isValidExternsCall = (node: Node): boolean => {
+    if (ExternsCallDefinitions.validExternsCalls.includes(node.source)) {
       return true;
     }
+    return false;
+  }
 
-    if (Store.getFileList().includes(CallgraphUtils.getFileName(node.target))) {
+  private static _isCallToGetterOrSetter = (node: Node): boolean => {
 
-      const cachedNode: IASTNode = Store.getASTNode(node.target);
-      if (ASTNodeKinds.getterAndSetter().includes(cachedNode.parentNode[cachedNode.key].kind)) {
-        return true;
-      }
-
+    const cachedNode: IASTNode = Store.getASTNode(node.target);
+    if (ASTNodeKinds.getterAndSetter().includes(cachedNode.parentNode[cachedNode.key].kind)) {
+      return true;
     }
-
     return false;
 
   }

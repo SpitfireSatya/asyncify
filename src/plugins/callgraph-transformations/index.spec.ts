@@ -1,7 +1,6 @@
 
 import * as sinon from 'sinon';
 import { Node } from '../../models/node.model';
-import { ICallgraphEdge } from '../../interfaces/callgraph-edge.interface';
 import { ExtractCallTrees } from './extract-call-trees';
 import { AnalyzeCallTrees } from './analyze-call-trees';
 import { CallGraphTransformations } from '.';
@@ -20,7 +19,7 @@ describe('plugins > callgraph-transformations', (): void => {
           .returns(Promise.resolve(new Node('abc', null)));
         analyzeCallTreesStub = sinon.stub(AnalyzeCallTrees, 'analyze')
           .returns(new Node(null, 'abc'));
-        printCallTreesStub = sinon.stub(<any>CallGraphTransformations, 'printCallTrees');  
+        printCallTreesStub = sinon.stub(<any>CallGraphTransformations, 'printCallTrees');
       });
 
       afterEach((): void => {

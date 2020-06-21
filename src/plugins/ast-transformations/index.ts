@@ -13,37 +13,36 @@ export class ASTTransformations {
   public static transform = (node: Node): void => {
 
     node.children.forEach((child: Node): void => {
-      ASTTransformations.traverseAST(child);
+      ASTTransformations._traverseAST(child);
     });
 
   }
 
-  private static traverseAST = (node: Node): void => {
+  private static _traverseAST = (node: Node): void => {
 
     if (ASTTransformations._visited.includes(node.source)) {
       return;
     }
 
-    switch (ASTTransformations.getRequiredTransform(node)) {
+    switch (ASTTransformations._getRequiredTransform(node)) {
       case RequiredTransform.SYNC_TO_ASYNC:
         SyncToAwaitedPromise.transform(Store.getASTNode(node.source));
-      // tslint:disable-next-line: no-switch-case-fall-through
-      case RequiredTransform.ASYNC_AWAIT:
         AsyncAwaitMethodCalls.transform(Store.getASTNode(node.source));
         break;
+      case RequiredTransform.ASYNC_AWAIT:
       default:
-        throw new Error('Unknown transformation');
+        AsyncAwaitMethodCalls.transform(Store.getASTNode(node.source));
     }
 
     ASTTransformations._visited.push(node.source);
 
     node.children.forEach((child: Node): void => {
-      ASTTransformations.traverseAST(child);
+      ASTTransformations._traverseAST(child);
     });
 
   }
 
-  private static getRequiredTransform = (node: Node): RequiredTransform => {
+  private static _getRequiredTransform = (node: Node): RequiredTransform => {
 
     let requiredTransform: RequiredTransform = RequiredTransform.ASYNC_AWAIT;
 

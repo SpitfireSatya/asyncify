@@ -231,7 +231,7 @@ describe('plugins > callgraph-transformations', (): void => {
 
     describe('[private] _getParent()', (): void => {
 
-      it('should return a Fun node which starts before and ends after Callee', () => {
+      it('should return a Fun node which starts before and ends after Callee', (): void => {
 
         const callgraph: Array<ICallgraphEdge> = [
           { sourceNode: 'Callee(sync.js:<5,10>--<5,28>)', targetNode: 'Fun(/home/osboxes/codeql-home/codeql/javascript/tools/data/externs/nodejs/fs.js:<1155,18>--<1155,49>)' },

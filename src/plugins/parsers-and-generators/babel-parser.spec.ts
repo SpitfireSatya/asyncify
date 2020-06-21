@@ -185,7 +185,7 @@ describe('plugins > parsers-and-generators', (): void => {
 
       });
 
-      it('should do nothing if astNode is null', () => {
+      it('should do nothing if astNode is null', (): void => {
 
         const ast: any = null;
 

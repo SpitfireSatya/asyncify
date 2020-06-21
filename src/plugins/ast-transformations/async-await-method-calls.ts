@@ -5,14 +5,14 @@ import * as babelTypes from '@babel/types';
 
 export class AsyncAwaitMethodCalls {
 
-  private static asyncifiedFiles: Array<string> = [];
+  private static _asyncifiedFiles: Array<string> = [];
 
   public static transform = (nodeRef: IASTNode): void => {
-    AsyncAwaitMethodCalls.awaitMethodCall(nodeRef);
-    AsyncAwaitMethodCalls.wrapAsyncInAwait(nodeRef);
+    AsyncAwaitMethodCalls._awaitMethodCall(nodeRef);
+    AsyncAwaitMethodCalls._wrapAwaitInAsync(nodeRef);
   }
 
-  private static awaitMethodCall = (nodeRef: IASTNode): void => {
+  private static _awaitMethodCall = (nodeRef: IASTNode): void => {
     const childNode: babelTypes.CallExpression = DeepClone.clone(nodeRef.parentNode[nodeRef.key]);
 
     if (!nodeRef.parentNode.type || nodeRef.parentNode.type !== 'AwaitExpression') {
@@ -26,21 +26,22 @@ export class AsyncAwaitMethodCalls {
     }
   }
 
-  private static wrapAsyncInAwait = (nodeRef: IASTNode): void => {
+  private static _wrapAwaitInAsync = (nodeRef: IASTNode): void => {
     if (nodeRef.parentFunction === null) {
-      if (!AsyncAwaitMethodCalls.asyncifiedFiles.includes(nodeRef.fileName)) {
-        AsyncAwaitMethodCalls.addIIFE(nodeRef);
-        AsyncAwaitMethodCalls.asyncifiedFiles.push(nodeRef.fileName);
+      if (!AsyncAwaitMethodCalls._asyncifiedFiles.includes(nodeRef.fileName)) {
+        AsyncAwaitMethodCalls._addIIFE(nodeRef);
+        AsyncAwaitMethodCalls._asyncifiedFiles.push(nodeRef.fileName);
       }
     } else {
       nodeRef.parentFunction.async = true;
     }
   }
 
-  private static addIIFE = (nodeRef: IASTNode): void => {
+  private static _addIIFE = (nodeRef: IASTNode): void => {
     const programBody: Array<babelTypes.Statement> = nodeRef.fileAST.program.body;
     const programDirectives: Array<babelTypes.Directive> = nodeRef.fileAST.program.directives;
     nodeRef.fileAST.program.body = [];
+    nodeRef.fileAST.program.directives = [];
     nodeRef.fileAST.program.body.push(<any> {
       type: 'ExpressionStatement',
       expression: {

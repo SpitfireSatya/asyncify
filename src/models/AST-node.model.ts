@@ -1,4 +1,6 @@
 
+/* istanbul ignore file */
+
 import { IASTNode } from '../interfaces/AST-node.interface';
 import * as babelTypes from '@babel/types';
 

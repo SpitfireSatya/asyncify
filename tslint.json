@@ -96,7 +96,6 @@
     "no-bitwise": false,
     "no-conditional-assignment": true,
     "prefer-conditional-expression": false,
-    "use-view-encapsulation": true,
     "only-arrow-functions": false,
     "no-console": [
       true,
@@ -210,21 +209,6 @@
       "check-separator",
       "check-type"
     ],
-    "no-output-on-prefix": true,
-    "use-input-property-decorator": true,
-    "use-output-property-decorator": true,
-    "use-host-property-decorator": true,
-    "no-input-rename": true,
-    "no-output-rename": true,
-    "directive-selector": ["attribute", "app", "camelCase"],
-    "component-selector": ["element", "app", "kebab-case"],
-    "use-life-cycle-interface": true,
-    "use-pipe-transform-interface": true,
-    "component-class-suffix": [true, "Component"],
-    "directive-class-suffix": [true, "Directive"],
-    "no-attribute-parameter-decorator": true,
-    "no-forward-ref": true,
-    "pipe-naming": false,
     "cyclomatic-complexity": true
   }
 }

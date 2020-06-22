@@ -23,10 +23,10 @@ export class AnalyzeCallTrees {
         return;
       }
 
-      if (!AnalyzeCallTrees._isCallToExterns(node) && AnalyzeCallTrees._isCallToGetterOrSetter(node)) {
+      /* if (!AnalyzeCallTrees._isCallToExterns(node) && AnalyzeCallTrees._isCallToGetterOrSetter(node)) {
         isBranchInvalid = true;
         return;
-      }
+      } */
 
       if (AnalyzeCallTrees._isNewPromise(node)) {
         node.removeChildren();
@@ -73,7 +73,7 @@ export class AnalyzeCallTrees {
     return false;
   }
 
-  private static _isCallToGetterOrSetter = (node: Node): boolean => {
+  /* private static _isCallToGetterOrSetter = (node: Node): boolean => {
 
     const cachedNode: IASTNode = Store.getASTNode(node.target);
     if (ASTNodeKinds.getterAndSetter().includes(cachedNode.parentNode[cachedNode.key].kind)) {
@@ -81,6 +81,6 @@ export class AnalyzeCallTrees {
     }
     return false;
 
-  }
+  } */
 
 }

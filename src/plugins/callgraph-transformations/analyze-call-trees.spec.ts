@@ -14,7 +14,7 @@ describe('plugins > callgraph-transformations', (): void => {
     describe('analyze()', (): void => {
 
       let isCallToExternsStub: sinon.SinonStub, isCallbackFromExterns: sinon.SinonStub;
-      let isValidExternsCallStub: sinon.SinonStub, isCallToGetterOrSetterStub: sinon.SinonStub;
+      let isValidExternsCallStub: sinon.SinonStub/*, isCallToGetterOrSetterStub: sinon.SinonStub */;
       let isNewPromiseStub: sinon.SinonStub;
 
       let rootNode: Node;
@@ -24,7 +24,7 @@ describe('plugins > callgraph-transformations', (): void => {
         isCallToExternsStub = sinon.stub(<any>AnalyzeCallTrees, '_isCallToExterns');
         isCallbackFromExterns = sinon.stub(<any>AnalyzeCallTrees, '_isCallbackFromExterns');
         isValidExternsCallStub = sinon.stub(<any>AnalyzeCallTrees, '_isValidExternsCall');
-        isCallToGetterOrSetterStub = sinon.stub(<any>AnalyzeCallTrees, '_isCallToGetterOrSetter');
+        // isCallToGetterOrSetterStub = sinon.stub(<any>AnalyzeCallTrees, '_isCallToGetterOrSetter');
         isNewPromiseStub = sinon.stub(<any>AnalyzeCallTrees, '_isNewPromise');
 
         rootNode = new Node(null, null);
@@ -38,7 +38,7 @@ describe('plugins > callgraph-transformations', (): void => {
         isCallToExternsStub.restore();
         isCallbackFromExterns.restore();
         isValidExternsCallStub.restore();
-        isCallToGetterOrSetterStub.restore();
+        // isCallToGetterOrSetterStub.restore();
         isNewPromiseStub.restore();
 
         rootNode = undefined;
@@ -72,7 +72,7 @@ describe('plugins > callgraph-transformations', (): void => {
 
       });
 
-      it('should remove the branch from rootNode if it contains a call to getter or setter', (): void => {
+      /* it('should remove the branch from rootNode if it contains a call to getter or setter', (): void => {
 
         rootNode.children[0].addChild = new Node('xyz', 'xyz');
         isCallToExternsStub.onSecondCall().returns(false);
@@ -83,7 +83,7 @@ describe('plugins > callgraph-transformations', (): void => {
         sinon.assert.callCount(isCallToExternsStub, 2);
         expect(rootNode.children.length).to.equal(0);
 
-      });
+      }); */
 
       it('should remove the children of current node if it contains a call to new Promise', (): void => {
 
@@ -205,7 +205,7 @@ describe('plugins > callgraph-transformations', (): void => {
 
     });
 
-    describe('[private] _isCallToGetterOrSetter()', (): void => {
+    /* describe('[private] _isCallToGetterOrSetter()', (): void => {
 
       let getASTNodeStub: sinon.SinonStub;
 
@@ -244,7 +244,7 @@ describe('plugins > callgraph-transformations', (): void => {
 
       });
 
-    });
+    }); */
 
   });
 });

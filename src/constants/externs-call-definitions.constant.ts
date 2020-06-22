@@ -1,6 +1,4 @@
 
-/* istanbul ignore file */
-
 export class ExternsCallDefinitions {
 
   // call to map()
@@ -40,7 +38,7 @@ export class ExternsCallDefinitions {
       ExternsCallDefinitions.FOREACH_ES3,
       ExternsCallDefinitions.FOREACH_ES6,
       ExternsCallDefinitions.MAP_ES3,
-      ExternsCallDefinitions.MAP_ES6,
+      ExternsCallDefinitions.MAP_ES6
     ];
   }
 

@@ -10,11 +10,10 @@ import { IASTNode } from '../../interfaces/AST-node.interface';
 import { RequiredTransform } from '../../enums/required-transform.enum';
 import { expect } from 'chai';
 import { ExternsFuncDefinitions } from '../../constants/externs-func-definitions';
-import { ExternsCallDefinitions } from '../../constants/externs-call-definitions.constant';
 import { ForEachToForOf } from './forEach-to-forOf';
 import { WrapInPromiseAll } from './wrap-in-promise-all';
 import { CallgraphUtils } from '../../utils/callgraph-utils';
-
+import { AsyncifyGetterAndSetter } from './asyncify-getter-and-setter';
 
 describe('plugins > ast-transformations', (): void => {
   describe('ASTTransformations', (): void => {
@@ -47,6 +46,7 @@ describe('plugins > ast-transformations', (): void => {
       let syncToAwaitedPromiseStub: sinon.SinonStub, asyncAwaitMethodCallsStub: sinon.SinonStub;
       let forEachToForOfStub: sinon.SinonStub, wrapInPromiseAllStub: sinon.SinonStub;
       let getFileNameStub: sinon.SinonStub, getFileListStub: sinon.SinonStub;
+      let asyncifyGetterAndSetterStub: sinon.SinonStub;
       let node: Node, astNode: IASTNode;
 
       beforeEach((): void => {
@@ -60,6 +60,7 @@ describe('plugins > ast-transformations', (): void => {
         wrapInPromiseAllStub = sinon.stub(WrapInPromiseAll, 'transform');
         getFileNameStub = sinon.stub(CallgraphUtils, 'getFileName').returns('file');
         getFileListStub = sinon.stub(Store, 'getFileList').returns(['file']);
+        asyncifyGetterAndSetterStub = sinon.stub(AsyncifyGetterAndSetter, 'transform');
         node = new Node('source', 'target');
       });
 
@@ -73,6 +74,7 @@ describe('plugins > ast-transformations', (): void => {
         wrapInPromiseAllStub.restore();
         getFileNameStub.restore();
         getFileListStub.restore();
+        asyncifyGetterAndSetterStub.restore();
         node = undefined;
         astNode = undefined;
       });
@@ -157,6 +159,39 @@ describe('plugins > ast-transformations', (): void => {
 
       });
 
+      it('should invoke AsyncifyGetterAndSetter.transform() if target node is a getter', (): void => {
+
+        astNode = new ASTNode({ key: {kind: 'get'}}, 'key', 'file', null, <any>{});
+        getASTNodeStub.returns(astNode);
+
+        ASTTransformations['_traverseAST'](node);
+
+        sinon.assert.calledWithExactly(asyncifyGetterAndSetterStub, astNode);
+
+      });
+
+      it('should invoke AsyncifyGetterAndSetter.transform() if target node is a setter', (): void => {
+
+        astNode = new ASTNode({ key: {kind: 'set'}}, 'key', 'file', null, <any>{});
+        getASTNodeStub.returns(astNode);
+
+        ASTTransformations['_traverseAST'](node);
+
+        sinon.assert.calledWithExactly(asyncifyGetterAndSetterStub, astNode);
+
+      });
+
+      it('should not invoke AsyncifyGetterAndSetter.transform() if target node is of any other kind', (): void => {
+
+        astNode = new ASTNode({ key: {kind: 'const'}}, 'key', 'file', null, <any>{});
+        getASTNodeStub.returns(astNode);
+
+        ASTTransformations['_traverseAST'](node);
+
+        sinon.assert.notCalled(asyncifyGetterAndSetterStub);
+
+      });
+
       it('should add node.source to _visited', (): void => {
 
         ASTTransformations['_traverseAST'](node);
@@ -165,9 +200,18 @@ describe('plugins > ast-transformations', (): void => {
 
       });
 
-      it('should do nothing if node.source has already been visited', (): void => {
+      it('should add node.target to _visited', (): void => {
+
+        ASTTransformations['_traverseAST'](node);
+
+        expect(ASTTransformations['_visited'][1]).to.equal('target');
+
+      });
+
+      it('should do nothing if node.source and node.target have already been visited', (): void => {
 
         ASTTransformations['_visited'].push('source');
+        ASTTransformations['_visited'].push('target');
 
         ASTTransformations['_traverseAST'](node);
 
@@ -175,6 +219,29 @@ describe('plugins > ast-transformations', (): void => {
         sinon.assert.notCalled(getASTNodeStub);
         sinon.assert.notCalled(syncToAwaitedPromiseStub);
         sinon.assert.notCalled(asyncAwaitMethodCallsStub);
+        sinon.assert.notCalled(asyncifyGetterAndSetterStub);
+
+      });
+
+      it('should not call source transformations if node.source has already been visited', (): void => {
+
+        ASTTransformations['_visited'].push('source');
+
+        ASTTransformations['_traverseAST'](node);
+
+        sinon.assert.notCalled(getRequiredTransformStub);
+        sinon.assert.notCalled(syncToAwaitedPromiseStub);
+        sinon.assert.notCalled(asyncAwaitMethodCallsStub);
+
+      });
+
+      it('should not call target transformations if node.target has already been visited', (): void => {
+
+        ASTTransformations['_visited'].push('target');
+
+        ASTTransformations['_traverseAST'](node);
+
+        sinon.assert.notCalled(asyncifyGetterAndSetterStub);
 
       });
 

@@ -123,6 +123,30 @@ describe('plugins > ast-transformations', (): void => {
 
       });
 
+      it('should do nothing if parent function is a getter', (): void => {
+
+        const astNode: IASTNode = new ASTNode({key: {}}, 'key', 'file', <any>{ kind: 'get'}, <any>{});
+
+        AsyncAwaitMethodCalls['_wrapAwaitInAsync'](astNode);
+
+        expect(astNode.parentNode).to.eql({
+          key: { }
+        });
+
+      });
+
+      it('should do nothing if parent function is a setter', (): void => {
+
+        const astNode: IASTNode = new ASTNode({key: {}}, 'key', 'file', <any>{ kind: 'set'}, <any>{});
+
+        AsyncAwaitMethodCalls['_wrapAwaitInAsync'](astNode);
+
+        expect(astNode.parentNode).to.eql({
+          key: { }
+        });
+
+      });
+
       it('should do nothing if file has already been asyncified', (): void => {
 
         AsyncAwaitMethodCalls['_asyncifiedFiles'].push('file');

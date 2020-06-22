@@ -1,6 +1,4 @@
 
-/* istanbul ignore file */
-
 export class ExternsFuncDefinitions {
 
   // Sync functions

@@ -2,6 +2,7 @@
 import { DeepClone } from '../../utils/deep-clone';
 import { IASTNode } from '../../interfaces/AST-node.interface';
 import * as babelTypes from '@babel/types';
+import { ASTNodeKinds } from '../../constants/ast-node-kinds.constant';
 
 export class AsyncAwaitMethodCalls {
 
@@ -33,7 +34,9 @@ export class AsyncAwaitMethodCalls {
         AsyncAwaitMethodCalls._asyncifiedFiles.push(nodeRef.fileName);
       }
     } else {
-      nodeRef.parentFunction.async = true;
+      if (!ASTNodeKinds.getterAndSetter().includes((<any>nodeRef.parentFunction).kind)) {
+        nodeRef.parentFunction.async = true;
+      }
     }
   }
 

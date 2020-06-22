@@ -1,6 +1,4 @@
 
-/* istanbul ignore file */
-
 export class Node {
 
   private _id: number = 0;

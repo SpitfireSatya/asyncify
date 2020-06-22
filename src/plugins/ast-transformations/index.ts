@@ -9,6 +9,8 @@ import { WrapInPromiseAll } from './wrap-in-promise-all';
 import { ForEachToForOf } from './forEach-to-forOf';
 import { IASTNode } from '../../interfaces/AST-node.interface';
 import { CallgraphUtils } from '../../utils/callgraph-utils';
+import { AsyncifyGetterAndSetter } from './asyncify-getter-and-setter';
+import { ASTNodeKinds } from '../../constants/ast-node-kinds.constant';
 
 export class ASTTransformations {
 
@@ -24,38 +26,56 @@ export class ASTTransformations {
 
   private static _traverseAST = (node: Node): void => {
 
-    if (ASTTransformations._visited.includes(node.source)) {
+    if (ASTTransformations._visited.includes(node.source) && ASTTransformations._visited.includes(node.target)) {
       return;
     }
 
-    if (Store.getFileList().includes(CallgraphUtils.getFileName(node.source))) {
+    if (!ASTTransformations._visited.includes(node.source)) {
+      if (Store.getFileList().includes(CallgraphUtils.getFileName(node.source))) {
 
-      const nodeOfInterest: IASTNode = Store.getASTNode(node.source);
+        const nodeOfInterest: IASTNode = Store.getASTNode(node.source);
 
-      switch (ASTTransformations._getRequiredTransform(node)) {
+        switch (ASTTransformations._getRequiredTransform(node)) {
 
-        case RequiredTransform.SYNC_TO_ASYNC:
-          SyncToAwaitedPromise.transform(nodeOfInterest);
-          AsyncAwaitMethodCalls.transform(nodeOfInterest);
-          break;
+          case RequiredTransform.SYNC_TO_ASYNC:
+            SyncToAwaitedPromise.transform(nodeOfInterest);
+            AsyncAwaitMethodCalls.transform(nodeOfInterest);
+            break;
 
-        case RequiredTransform.PROMISE_ALL:
-          WrapInPromiseAll.transform(nodeOfInterest);
-          AsyncAwaitMethodCalls.transform(nodeOfInterest);
-          break;
+          case RequiredTransform.PROMISE_ALL:
+            WrapInPromiseAll.transform(nodeOfInterest);
+            AsyncAwaitMethodCalls.transform(nodeOfInterest);
+            break;
 
-        case RequiredTransform.FOR_OF_LOOP:
-          ForEachToForOf.transform(nodeOfInterest);
-          AsyncAwaitMethodCalls.transform(nodeOfInterest);
-          break;
+          case RequiredTransform.FOR_OF_LOOP:
+            ForEachToForOf.transform(nodeOfInterest);
+            AsyncAwaitMethodCalls.transform(nodeOfInterest);
+            break;
 
-        case RequiredTransform.ASYNC_AWAIT:
-        default:
-          AsyncAwaitMethodCalls.transform(nodeOfInterest);
+          case RequiredTransform.ASYNC_AWAIT:
+          default:
+            AsyncAwaitMethodCalls.transform(nodeOfInterest);
+        }
+
       }
-
-      ASTTransformations._visited.push(node.source);
     }
+
+    if (!ASTTransformations._visited.includes(node.target)) {
+      if (Store.getFileList().includes(CallgraphUtils.getFileName(node.target))) {
+
+        const nodeOfInterest: IASTNode = Store.getASTNode(node.target);
+
+        if (nodeOfInterest.parentNode[nodeOfInterest.key] &&
+          ASTNodeKinds.getterAndSetter().includes(nodeOfInterest.parentNode[nodeOfInterest.key].kind)) {
+
+            AsyncifyGetterAndSetter.transform(Store.getASTNode(node.target));
+
+        }
+      }
+    }
+
+    ASTTransformations._visited.push(node.source);
+    ASTTransformations._visited.push(node.target);
 
     node.children.forEach((child: Node): void => {
       ASTTransformations._traverseAST(child);

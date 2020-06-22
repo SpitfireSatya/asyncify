@@ -1,11 +1,11 @@
 const fs = require('fs');
 
-function doNotConvert1() {
-  return fs.readFileSync('');
+async function doNotConvert1() {
+  return await fs.promises.readFile('');
 }
 
-function doNotConvert2() {
-  return fs.readFileSync('');
+async function doNotConvert2() {
+  return await fs.promises.readFile('');
 }
 
 function doNotConvert3() {

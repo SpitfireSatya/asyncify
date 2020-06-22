@@ -10,6 +10,10 @@ import { IASTNode } from '../../interfaces/AST-node.interface';
 import { RequiredTransform } from '../../enums/required-transform.enum';
 import { expect } from 'chai';
 import { ExternsFuncDefinitions } from '../../constants/externs-func-definitions';
+import { ExternsCallDefinitions } from '../../constants/externs-call-definitions.constant';
+import { ForEachToForOf } from './forEach-to-forOf';
+import { WrapInPromiseAll } from './wrap-in-promise-all';
+import { CallgraphUtils } from '../../utils/callgraph-utils';
 
 
 describe('plugins > ast-transformations', (): void => {
@@ -41,6 +45,8 @@ describe('plugins > ast-transformations', (): void => {
 
       let getRequiredTransformStub: sinon.SinonStub, getASTNodeStub: sinon.SinonStub;
       let syncToAwaitedPromiseStub: sinon.SinonStub, asyncAwaitMethodCallsStub: sinon.SinonStub;
+      let forEachToForOfStub: sinon.SinonStub, wrapInPromiseAllStub: sinon.SinonStub;
+      let getFileNameStub: sinon.SinonStub, getFileListStub: sinon.SinonStub;
       let node: Node, astNode: IASTNode;
 
       beforeEach((): void => {
@@ -50,6 +56,10 @@ describe('plugins > ast-transformations', (): void => {
         getASTNodeStub = sinon.stub(Store, 'getASTNode').returns(astNode);
         syncToAwaitedPromiseStub = sinon.stub(SyncToAwaitedPromise, 'transform');
         asyncAwaitMethodCallsStub = sinon.stub(AsyncAwaitMethodCalls, 'transform');
+        forEachToForOfStub = sinon.stub(ForEachToForOf, 'transform');
+        wrapInPromiseAllStub = sinon.stub(WrapInPromiseAll, 'transform');
+        getFileNameStub = sinon.stub(CallgraphUtils, 'getFileName').returns('file');
+        getFileListStub = sinon.stub(Store, 'getFileList').returns(['file']);
         node = new Node('source', 'target');
       });
 
@@ -59,6 +69,10 @@ describe('plugins > ast-transformations', (): void => {
         getASTNodeStub.restore();
         syncToAwaitedPromiseStub.restore();
         asyncAwaitMethodCallsStub.restore();
+        forEachToForOfStub.restore();
+        wrapInPromiseAllStub.restore();
+        getFileNameStub.restore();
+        getFileListStub.restore();
         node = undefined;
         astNode = undefined;
       });
@@ -68,6 +82,16 @@ describe('plugins > ast-transformations', (): void => {
         ASTTransformations['_traverseAST'](node);
 
         sinon.assert.calledWithExactly(getRequiredTransformStub, node);
+
+      });
+
+      it('should do nothing if file is not present in fileList', (): void => {
+
+        getFileNameStub.returns('externs');
+
+        ASTTransformations['_traverseAST'](node);
+
+        sinon.assert.notCalled(getRequiredTransformStub);
 
       });
 
@@ -100,6 +124,36 @@ describe('plugins > ast-transformations', (): void => {
         sinon.assert.calledWithExactly(getASTNodeStub, 'source');
         sinon.assert.calledWithExactly(syncToAwaitedPromiseStub, astNode);
         sinon.assert.calledWithExactly(asyncAwaitMethodCallsStub, astNode);
+
+        sinon.assert.callOrder(syncToAwaitedPromiseStub, asyncAwaitMethodCallsStub);
+
+      });
+
+      it('should invoke ForEachToForOf.transform() and AsyncAwaitMethodCalls.transform() with astNode for node.source is required transform is FOR_OF_LOOP', (): void => {
+
+        getRequiredTransformStub.returns(RequiredTransform.FOR_OF_LOOP);
+
+        ASTTransformations['_traverseAST'](node);
+
+        sinon.assert.calledWithExactly(getASTNodeStub, 'source');
+        sinon.assert.calledWithExactly(forEachToForOfStub, astNode);
+        sinon.assert.calledWithExactly(asyncAwaitMethodCallsStub, astNode);
+
+        sinon.assert.callOrder(forEachToForOfStub, asyncAwaitMethodCallsStub);
+
+      });
+
+      it('should invoke WrapInPromiseAll.transform() and AsyncAwaitMethodCalls.transform() with astNode for node.source is required transform is PROMISE_ALL', (): void => {
+
+        getRequiredTransformStub.returns(RequiredTransform.PROMISE_ALL);
+
+        ASTTransformations['_traverseAST'](node);
+
+        sinon.assert.calledWithExactly(getASTNodeStub, 'source');
+        sinon.assert.calledWithExactly(wrapInPromiseAllStub, astNode);
+        sinon.assert.calledWithExactly(asyncAwaitMethodCallsStub, astNode);
+
+        sinon.assert.callOrder(wrapInPromiseAllStub, asyncAwaitMethodCallsStub);
 
       });
 
@@ -138,20 +192,28 @@ describe('plugins > ast-transformations', (): void => {
 
     describe('[private] _getRequiredTransform()', (): void => {
 
-      function testSyncToAsync(nodeTarget: string): void {
+      function testTransforms(nodeSource: string, nodeTarget: string, requiredTransform: RequiredTransform): void {
 
-        it(`should return "SYNC_TO_ASYNC" if node target is "${nodeTarget}"`, (): void => {
+        it(`should return ${requiredTransform} if node source is "${nodeSource}" and node target is "${nodeTarget}"`, (): void => {
 
-          const result: RequiredTransform = ASTTransformations['_getRequiredTransform'](new Node('', nodeTarget));
+          const result: RequiredTransform = ASTTransformations['_getRequiredTransform'](new Node(nodeSource, nodeTarget));
 
-          expect(result).to.equal(RequiredTransform.SYNC_TO_ASYNC);
+          expect(result).to.equal(requiredTransform);
 
         });
 
       }
 
       ExternsFuncDefinitions.syncFunctions.forEach((func: string): void => {
-        testSyncToAsync(func);
+        testTransforms('', func, RequiredTransform.SYNC_TO_ASYNC);
+      });
+
+      ExternsFuncDefinitions.forEachFunctions.forEach((func: string): void => {
+        testTransforms('', func, RequiredTransform.FOR_OF_LOOP);
+      });
+
+      ExternsFuncDefinitions.mapFunctions.forEach((func: string): void => {
+        testTransforms('', func, RequiredTransform.PROMISE_ALL);
       });
 
       it('should return "ASYNC_AWAIT" by default', (): void => {

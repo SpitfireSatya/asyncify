@@ -52,8 +52,9 @@ describe('plugins > callgraph-transformations', (): void => {
       it('should resgister the _readyCallback() for the event "ready"', async (): Promise<void> => {
 
         ExtractCallTrees.extract(callGraph);
-
-        sinon.assert.calledWithExactly(registerStub, 'ready', ExtractCallTrees['_readyCallback']);
+        registerStub.callArg(1);
+        sinon.assert.called(registerStub);
+        sinon.assert.calledOnce(readyCallbackStub);
 
       });
 

@@ -14,7 +14,7 @@ export class ExtractCallTrees {
       const root: Node = new Node(null, null);
       ExtractCallTrees._extractSyncFunctionCallers(root, callGraph);
       ExtractCallTrees._extractRelatedCalls(root, callGraph);
-      Events.register('ready', ExtractCallTrees._readyCallback);
+      Events.register('ready', (): void => ExtractCallTrees._readyCallback(resolve, root));
       Events.dispatch('notify-when-ready', null);
     });
   }

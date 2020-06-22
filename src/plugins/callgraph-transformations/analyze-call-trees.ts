@@ -55,7 +55,7 @@ export class AnalyzeCallTrees {
   }
 
   private static _isNewPromise = (node: Node): boolean => {
-    return (node.source === ExternsCallDefinitions.NEW_PROMISE);
+    return (ExternsCallDefinitions.callsToNewPromise.includes(node.source));
   }
 
   private static _isCallToExterns = (node: Node): boolean => {

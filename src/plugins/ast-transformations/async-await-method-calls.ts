@@ -28,6 +28,9 @@ export class AsyncAwaitMethodCalls {
   }
 
   private static _wrapAwaitInAsync = (nodeRef: IASTNode): void => {
+    if (nodeRef.parentNode.async !== undefined) {
+      nodeRef.parentNode.async = true;
+    }
     if (nodeRef.parentFunction === null) {
       if (!AsyncAwaitMethodCalls._asyncifiedFiles.includes(nodeRef.fileName)) {
         AsyncAwaitMethodCalls._addIIFE(nodeRef);

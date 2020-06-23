@@ -7,9 +7,8 @@ import { Node } from './models/node.model';
 import { Store } from './plugins/store/store';
 import { BabelGenerator } from './plugins/parsers-and-generators/babel-generator';
 import * as babelTypes from '@babel/types';
-// import * as path from 'path';
 
-export class Asyncify {
+export default class Asyncify {
 
   public static initialize = async (pathToCallgraphCSV: string): Promise<void> => {
     const callgraph: Array<ICallgraphEdge> = await FileOps.readCSVFile(pathToCallgraphCSV, true);
@@ -36,4 +35,4 @@ export class Asyncify {
 
 }
 
-// Asyncify.initialize(path.resolve('mock', 'test.csv'));
+module.exports = Asyncify;

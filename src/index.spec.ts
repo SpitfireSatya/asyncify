@@ -1,6 +1,6 @@
 
 import { expect } from 'chai';
-import { Asyncify } from './index';
+import Asyncify from './index';
 import * as sinon from 'sinon';
 import { BabelGenerator } from './plugins/parsers-and-generators/babel-generator';
 import { FileOps } from './plugins/file-ops/file-ops';

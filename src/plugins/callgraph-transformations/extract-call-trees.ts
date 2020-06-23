@@ -8,12 +8,17 @@ import { ExternsFuncDefinitions } from '../../constants/externs-func-definitions
 export class ExtractCallTrees {
 
   private static _nativeCallers: Array<string> = [];
+  private static _sourcesAdded: Array<string> = [];
 
   public static extract = (callGraph: Array<ICallgraphEdge>): Promise<Node> => {
     return new Promise((resolve: any, reject: any): void => {
       const root: Node = new Node(null, null);
       ExtractCallTrees._extractSyncFunctionCallers(root, callGraph);
-      ExtractCallTrees._extractRelatedCalls(root, callGraph);
+      root.children.forEach((child: Node): void => {
+        ExtractCallTrees._sourcesAdded = [];
+        ExtractCallTrees._extractRelatedCalls(child, callGraph);
+      });
+      ExtractCallTrees._sourcesAdded = [];
       Events.register('ready', (): void => ExtractCallTrees._readyCallback(resolve, root));
       Events.dispatch('notify-when-ready', null);
     });
@@ -35,39 +40,43 @@ export class ExtractCallTrees {
 
   private static _extractRelatedCalls = (callTreeNode: Node, callGraph: Array<ICallgraphEdge>): void => {
 
-    if (callTreeNode.children.length > 0) {
+    if (ExtractCallTrees._sourcesAdded.includes(callTreeNode.source) && ExtractCallTrees._sourcesAdded.includes(callTreeNode.target)) {
+      return;
+    }
 
-      callTreeNode.children.forEach((childNode: Node): void => {
+    ExtractCallTrees._sourcesAdded.push(callTreeNode.source);
+    ExtractCallTrees._sourcesAdded.push(callTreeNode.target);
 
-        const newTarget: string = ExtractCallTrees._getParent(childNode.source, callGraph);
+    const newTarget: string = ExtractCallTrees._getParent(callTreeNode.source, callGraph);
 
-        if (newTarget) {
-          for (let i: number = 0; i < callGraph.length; i++) {
-            if (callGraph[i].targetNode === newTarget && callGraph[i].sourceNode !== callTreeNode.source) {
-              if (newTarget.indexOf('codeql-home') !== -1) {
-                const index: number = ExtractCallTrees._nativeCallers
-                  .indexOf(callGraph[i].sourceNode.slice(callGraph[i].sourceNode.indexOf('('), callGraph[i].sourceNode.indexOf(',')));
-                if (index !== -1) {
-                  ExtractCallTrees._addNode(childNode, new Node(callGraph[i].sourceNode, callGraph[i].targetNode));
-                  ExtractCallTrees._nativeCallers.splice(index, 1);
-                }
-              } else {
-                ExtractCallTrees._addNode(childNode, new Node(callGraph[i].sourceNode, callGraph[i].targetNode));
-                if (callGraph[i].sourceNode.indexOf('codeql-home') !== -1) {
-                  const targetSubString: string = callGraph[i].targetNode
-                    .slice(callGraph[i].targetNode.indexOf('('), callGraph[i].targetNode.indexOf(','));
-                  ExtractCallTrees._nativeCallers.push(targetSubString);
-                }
-              }
+    if (newTarget) {
+      for (let i: number = 0; i < callGraph.length; i++) {
+        if (callGraph[i].targetNode === newTarget) {
+          if (newTarget.indexOf('codeql-home') !== -1) {
+            const index: number = ExtractCallTrees._nativeCallers
+              .indexOf(callGraph[i].sourceNode.slice(callGraph[i].sourceNode.indexOf('('), callGraph[i].sourceNode.indexOf(',')));
+            if (index !== -1) {
+              ExtractCallTrees._addNode(callTreeNode, new Node(callGraph[i].sourceNode, callGraph[i].targetNode));
+              ExtractCallTrees._nativeCallers.splice(index, 1);
+            }
+          } else {
+            ExtractCallTrees._addNode(callTreeNode, new Node(callGraph[i].sourceNode, callGraph[i].targetNode));
+            if (callGraph[i].sourceNode.indexOf('codeql-home') !== -1) {
+              const targetSubString: string = callGraph[i].targetNode
+                .slice(callGraph[i].targetNode.indexOf('('), callGraph[i].targetNode.indexOf(','));
+              ExtractCallTrees._nativeCallers.push(targetSubString);
             }
           }
-
-          ExtractCallTrees._extractRelatedCalls(childNode, callGraph);
-
         }
+      }
+    }
 
+    if (callTreeNode.children.length > 0) {
+      callTreeNode.children.forEach((childNode: Node): void => {
+        ExtractCallTrees._extractRelatedCalls(childNode, callGraph);
       });
     }
+
 
   }
 

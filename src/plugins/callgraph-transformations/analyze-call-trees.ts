@@ -70,6 +70,7 @@ export class AnalyzeCallTrees {
     if (ExternsCallDefinitions.validExternsCalls.includes(node.source)) {
       return true;
     }
+    console.log(node.source);
     return false;
   }
 

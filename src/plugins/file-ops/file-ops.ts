@@ -3,18 +3,24 @@ import * as fs from 'fs';
 // import * as path from 'path';
 import * as csv from 'csv-parser';
 import { ICallgraphEdge } from '../../interfaces/callgraph-edge.interface';
+import { FunkyLogger } from '../../utils/funky-logger';
 
 export class FileOps {
 
   public static readFile(filePath: string): Promise<string> {
+    console.log(FunkyLogger.color('cyan', 'Reading file: '), FunkyLogger.color('magenta', filePath));
     if (!fs.existsSync(filePath)) {
       return Promise.reject(new Error('File not found'));
     }
-    return fs.promises.readFile(filePath, 'utf8');
+    return fs.promises.readFile(filePath, 'utf8')
+    .then((contents: string): string => {
+      console.log(FunkyLogger.color('green', 'File read complete: '), FunkyLogger.color('magenta', filePath));
+      return contents;
+    });
   }
 
   public static readCSVFile(filePath: string, lineNoCorrection: boolean = false): Promise<Array<ICallgraphEdge>> {
-
+    console.log(FunkyLogger.color('cyan', 'Reading CSV file '), FunkyLogger.color('magenta', filePath));
     return new Promise((resolve: any, reject: any): void => {
 
       const csvResults: Array<ICallgraphEdge> = [];
@@ -33,13 +39,19 @@ export class FileOps {
           csvResults.push(data);
         })
         .on('end', (): void => {
+          console.log(FunkyLogger.color('green', 'CSV File read complete: '), FunkyLogger.color('magenta', filePath));
           resolve(csvResults);
         });
     });
   }
 
   public static writeFile(filePath: string, data: string): Promise<any> {
-    return fs.promises.writeFile(filePath, data, 'utf8');
+    console.log(FunkyLogger.color('cyan', 'Writing file: '), FunkyLogger.color('magenta', filePath));
+    return fs.promises.writeFile(filePath, data, 'utf8')
+    .then((): void => {
+      console.log(FunkyLogger.color('green', 'File write complete: '), FunkyLogger.color('magenta', filePath));
+      return;
+    });
   }
 
   /* public static generateFileList(filePath: string): Promise<Array<string>> {

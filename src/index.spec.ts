@@ -11,7 +11,7 @@ import { ASTTransformations } from './plugins/ast-transformations';
 
 describe('Asyncify', (): void => {
 
-  describe('initialize()', (): void => {
+  describe('showTransformations()', (): void => {
 
     let readCSVFileStub: sinon.SinonStub, cgTransformStub: sinon.SinonStub, astTransformStub: sinon.SinonStub;
     let writeTransformedFilesStub: sinon.SinonStub;
@@ -34,28 +34,28 @@ describe('Asyncify', (): void => {
 
     it('should invoke FileOps.readCSVFile with file path', async (): Promise<void> => {
 
-      await Asyncify.initialize('filePath');
+      await Asyncify.showTransformations('filePath');
       sinon.assert.calledWithExactly(readCSVFileStub, 'filePath', true);
 
     });
 
     it('should invoke CallGraphTransformations.transform with callgraph from csv', async (): Promise<void> => {
 
-      await Asyncify.initialize('filePath');
+      await Asyncify.showTransformations('filePath');
       sinon.assert.calledWithExactly(cgTransformStub, [{sourceNode: '', targetNode: ''}]);
 
     });
 
     it('should invoke ASTTransformations.transform with node returned by cgTransform', async (): Promise<void> => {
 
-      await Asyncify.initialize('filePath');
+      await Asyncify.showTransformations('filePath');
       sinon.assert.calledWithExactly(astTransformStub, mockNode);
 
     });
 
     it('should invoke Asyncify.writeTransformedFiles()', async (): Promise<void> => {
 
-      await Asyncify.initialize('filePath');
+      await Asyncify.showTransformations('filePath');
       sinon.assert.calledWithExactly(writeTransformedFilesStub);
 
     });

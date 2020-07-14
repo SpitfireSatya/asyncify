@@ -1,23 +1,24 @@
+
 const fs = require('fs');
 
 function doNotConvert1() {
   return fs.readFileSync('');
 }
 
-async function doNotConvert2() {
-  return await fs.promises.readFile('');
+function doNotConvert2() {
+  return fs.readFileSync('');
 }
 
-async function doNotConvert3() {
-  return await fs.promises.readFile('');
+function doNotConvert3() {
+  return fs.readFileSync('');
 }
 
-async function convert1() {
-  return await fs.promises.readFile('');
+function convert1() {
+  return fs.readFileSync('');
 }
 
-async function convert2() {
-  return await fs.promises.readFile('');
+function convert2() {
+  return fs.readFileSync('');
 }
 
 module.exports = {
@@ -26,4 +27,4 @@ module.exports = {
   doNotConvert3,
   convert1,
   convert2
-};
+}

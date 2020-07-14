@@ -12,6 +12,9 @@ import { CallgraphUtils } from '../../utils/callgraph-utils';
 import { AsyncifyGetterAndSetter } from './asyncify-getter-and-setter';
 import { ASTNodeKinds } from '../../constants/ast-node-kinds.constant';
 
+import { BabelGenerator } from '../parsers-and-generators/babel-generator';
+import { ITransformationDetail } from '../../interfaces/transformation-detail.interface';
+
 export class ASTTransformations {
 
   private static _visited: Array<string> = [];
@@ -19,14 +22,28 @@ export class ASTTransformations {
   public static transform = (node: Node): void => {
 
     node.children.forEach((child: Node): void => {
-      ASTTransformations._traverseAST(child);
+      ASTTransformations._traverseCallTree(child);
     });
 
   }
 
-  private static _traverseAST = (node: Node): void => {
+  public static showTransformations = (node: Node): { [key: string]: Array<ITransformationDetail> } => {
 
-    if (ASTTransformations._visited.includes(node.source) && ASTTransformations._visited.includes(node.target)) {
+    const transformationDetails: { [key: string]: Array<ITransformationDetail> } = { };
+
+    node.children.forEach((child: Node): void => {
+      transformationDetails[child.id] = [];
+      ASTTransformations._traverseCallTree(child, false, transformationDetails[child.id]);
+    });
+
+    return transformationDetails;
+
+  }
+
+  private static _traverseCallTree = (node: Node, updateRef: boolean = true,
+    transformationDetails?: Array<ITransformationDetail>): void => {
+
+    if (updateRef && ASTTransformations._visited.includes(node.source) && ASTTransformations._visited.includes(node.target)) {
       return;
     }
 
@@ -34,6 +51,7 @@ export class ASTTransformations {
       if (Store.getFileList().includes(CallgraphUtils.getFileName(node.source))) {
 
         const nodeOfInterest: IASTNode = Store.getASTNode(node.source);
+        Store.addFileToWrite(CallgraphUtils.getFileName(node.source));
 
         switch (ASTTransformations._getRequiredTransform(node)) {
 
@@ -57,6 +75,14 @@ export class ASTTransformations {
             AsyncAwaitMethodCalls.transform(nodeOfInterest);
         }
 
+        if (!updateRef) {
+          const details: ITransformationDetail = ASTTransformations._getTransformedSourceCode(node, nodeOfInterest);
+          if (transformationDetails.filter((value: ITransformationDetail): boolean =>
+            JSON.stringify(value) === JSON.stringify(details)).length === 0) {
+              transformationDetails.push(details);
+          }
+        }
+
       }
     }
 
@@ -64,21 +90,33 @@ export class ASTTransformations {
       if (Store.getFileList().includes(CallgraphUtils.getFileName(node.target))) {
 
         const nodeOfInterest: IASTNode = Store.getASTNode(node.target);
+        Store.addFileToWrite(CallgraphUtils.getFileName(node.target));
 
         if (nodeOfInterest.parentNode[nodeOfInterest.key] &&
           ASTNodeKinds.getterAndSetter().includes(nodeOfInterest.parentNode[nodeOfInterest.key].kind)) {
 
-            AsyncifyGetterAndSetter.transform(Store.getASTNode(node.target));
+          AsyncifyGetterAndSetter.transform(nodeOfInterest);
+
+          if (!updateRef) {
+            const details: ITransformationDetail = ASTTransformations._getTransformedTargetCode(node, nodeOfInterest);
+            if (transformationDetails.filter((value: ITransformationDetail): boolean =>
+              JSON.stringify(value) === JSON.stringify(details)).length === 0) {
+                transformationDetails.push(details);
+            }
+          }
 
         }
+
       }
     }
 
-    ASTTransformations._visited.push(node.source);
-    ASTTransformations._visited.push(node.target);
+    if (updateRef) {
+      ASTTransformations._visited.push(node.source);
+      ASTTransformations._visited.push(node.target);
+    }
 
     node.children.forEach((child: Node): void => {
-      ASTTransformations._traverseAST(child);
+      ASTTransformations._traverseCallTree(child, updateRef, transformationDetails);
     });
 
   }
@@ -100,6 +138,41 @@ export class ASTTransformations {
     }
 
     return requiredTransform;
+
+  }
+
+  private static _getTransformedSourceCode = (node: Node, nodeOfInterest: IASTNode): ITransformationDetail => {
+
+    const transformation: ITransformationDetail = <ITransformationDetail>{
+      filename: CallgraphUtils.getFileName(node.source),
+      startLine: Math.floor(CallgraphUtils.getFunctionStart(node.source)),
+      endLine: Math.floor(CallgraphUtils.getFunctionEnd(node.source))
+    };
+
+    if (nodeOfInterest.parentFunction !== null) {
+      transformation.before = BabelGenerator.generateCode(<any>Store.getASTNodeCopy(node.source).parentFunction, {});
+      transformation.after = BabelGenerator.generateCode(<any>nodeOfInterest.parentFunction, {});
+    } else {
+      transformation.before = BabelGenerator.generateCode(<any>Store.getASTNodeCopy(node.source).parentNode[nodeOfInterest.key], {});
+      transformation.after = '*Note*: File will be wrapped in an IIFE \n\n' +
+        BabelGenerator.generateCode(<any>nodeOfInterest.parentNode[nodeOfInterest.key], {});
+    }
+
+    return transformation;
+
+  }
+
+  private static _getTransformedTargetCode = (node: Node, nodeOfInterest: IASTNode): ITransformationDetail => {
+
+    const transformation: ITransformationDetail = <ITransformationDetail>{
+      filename: CallgraphUtils.getFileName(node.target),
+      before: BabelGenerator.generateCode(<any>Store.getASTNodeCopy(node.target).parentNode[nodeOfInterest.key], {}),
+      after: BabelGenerator.generateCode(<any>nodeOfInterest.parentNode[nodeOfInterest.key], {}),
+      startLine: Math.floor(CallgraphUtils.getFunctionStart(node.target)),
+      endLine: Math.floor(CallgraphUtils.getFunctionEnd(node.target))
+    };
+
+    return transformation;
 
   }
 

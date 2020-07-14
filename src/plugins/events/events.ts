@@ -4,6 +4,7 @@ import { FileOps } from '../file-ops/file-ops';
 import { BabelParser } from '../parsers-and-generators/babel-parser';
 import { EventEmitter } from 'events';
 import * as babelTypes from '@babel/types';
+import { ASTUtils } from '../../utils/ast-utils';
 
 
 export class Events {
@@ -52,6 +53,8 @@ export class Events {
 
       const ast: babelTypes.File = BabelParser.generateAST(contents, {}, fileName);
       Store.setAST(fileName, ast);
+
+      ASTUtils.cacheASTNodes(ast, fileName);
 
       Events._event.emit('fetch-file-complete', fileName);
 

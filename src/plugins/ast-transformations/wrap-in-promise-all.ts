@@ -1,13 +1,12 @@
 
 import { IASTNode } from '../../interfaces/AST-node.interface';
-import { DeepClone } from '../../utils/deep-clone';
 import * as babelTypes from '@babel/types';
 
 export class WrapInPromiseAll {
 
   public static transform = (nodeRef: IASTNode): void => {
 
-    const childNode: babelTypes.CallExpression = DeepClone.clone(nodeRef.parentNode[nodeRef.key]);
+    const childNode: babelTypes.CallExpression = nodeRef.parentNode[nodeRef.key];
 
     const promiseAllNode: any = {
       type: 'CallExpression',

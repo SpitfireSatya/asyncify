@@ -20,14 +20,14 @@ describe('plugins > ast-transformations', (): void => {
 
     describe('transform()', (): void => {
 
-      it('should invoke _traverseAST() with each child node', (): void => {
+      it('should invoke _traverseCallTree() with each child node', (): void => {
 
         const rootNode: Node = new Node(null, null);
         const child1: Node = new Node('abc', 'abc');
         rootNode.addChild = child1;
         const child2: Node = new Node('def', 'def');
         rootNode.addChild = child2;
-        const traverseASTStub: sinon.SinonStub = sinon.stub(<any>ASTTransformations, '_traverseAST');
+        const traverseASTStub: sinon.SinonStub = sinon.stub(<any>ASTTransformations, '_traverseCallTree');
 
         ASTTransformations.transform(rootNode);
 
@@ -40,7 +40,7 @@ describe('plugins > ast-transformations', (): void => {
 
     });
 
-    describe('[private] _traverseAST', (): void => {
+    describe('[private] _traverseCallTree', (): void => {
 
       let getRequiredTransformStub: sinon.SinonStub, getASTNodeStub: sinon.SinonStub;
       let syncToAwaitedPromiseStub: sinon.SinonStub, asyncAwaitMethodCallsStub: sinon.SinonStub;
@@ -81,7 +81,7 @@ describe('plugins > ast-transformations', (): void => {
 
       it('should invoke _getRequiredTransform()', (): void => {
 
-        ASTTransformations['_traverseAST'](node);
+        ASTTransformations['_traverseCallTree'](node);
 
         sinon.assert.calledWithExactly(getRequiredTransformStub, node);
 
@@ -91,7 +91,7 @@ describe('plugins > ast-transformations', (): void => {
 
         getFileNameStub.returns('externs');
 
-        ASTTransformations['_traverseAST'](node);
+        ASTTransformations['_traverseCallTree'](node);
 
         sinon.assert.notCalled(getRequiredTransformStub);
 
@@ -99,7 +99,7 @@ describe('plugins > ast-transformations', (): void => {
 
       it('should invoke AsyncAwaitMethodCalls.transform() by default with astNode for node.source', (): void => {
 
-        ASTTransformations['_traverseAST'](node);
+        ASTTransformations['_traverseCallTree'](node);
 
         sinon.assert.calledWithExactly(getASTNodeStub, 'source');
         sinon.assert.calledWithExactly(asyncAwaitMethodCallsStub, astNode);
@@ -110,7 +110,7 @@ describe('plugins > ast-transformations', (): void => {
 
         getRequiredTransformStub.returns(RequiredTransform.ASYNC_AWAIT);
 
-        ASTTransformations['_traverseAST'](node);
+        ASTTransformations['_traverseCallTree'](node);
 
         sinon.assert.calledWithExactly(getASTNodeStub, 'source');
         sinon.assert.calledWithExactly(asyncAwaitMethodCallsStub, astNode);
@@ -121,7 +121,7 @@ describe('plugins > ast-transformations', (): void => {
 
         getRequiredTransformStub.returns(RequiredTransform.SYNC_TO_ASYNC);
 
-        ASTTransformations['_traverseAST'](node);
+        ASTTransformations['_traverseCallTree'](node);
 
         sinon.assert.calledWithExactly(getASTNodeStub, 'source');
         sinon.assert.calledWithExactly(syncToAwaitedPromiseStub, astNode);
@@ -135,7 +135,7 @@ describe('plugins > ast-transformations', (): void => {
 
         getRequiredTransformStub.returns(RequiredTransform.FOR_OF_LOOP);
 
-        ASTTransformations['_traverseAST'](node);
+        ASTTransformations['_traverseCallTree'](node);
 
         sinon.assert.calledWithExactly(getASTNodeStub, 'source');
         sinon.assert.calledWithExactly(forEachToForOfStub, astNode);
@@ -149,7 +149,7 @@ describe('plugins > ast-transformations', (): void => {
 
         getRequiredTransformStub.returns(RequiredTransform.PROMISE_ALL);
 
-        ASTTransformations['_traverseAST'](node);
+        ASTTransformations['_traverseCallTree'](node);
 
         sinon.assert.calledWithExactly(getASTNodeStub, 'source');
         sinon.assert.calledWithExactly(wrapInPromiseAllStub, astNode);
@@ -164,7 +164,7 @@ describe('plugins > ast-transformations', (): void => {
         astNode = new ASTNode({ key: {kind: 'get'}}, 'key', 'file', null, <any>{});
         getASTNodeStub.returns(astNode);
 
-        ASTTransformations['_traverseAST'](node);
+        ASTTransformations['_traverseCallTree'](node);
 
         sinon.assert.calledWithExactly(asyncifyGetterAndSetterStub, astNode);
 
@@ -175,7 +175,7 @@ describe('plugins > ast-transformations', (): void => {
         astNode = new ASTNode({ key: {kind: 'set'}}, 'key', 'file', null, <any>{});
         getASTNodeStub.returns(astNode);
 
-        ASTTransformations['_traverseAST'](node);
+        ASTTransformations['_traverseCallTree'](node);
 
         sinon.assert.calledWithExactly(asyncifyGetterAndSetterStub, astNode);
 
@@ -186,7 +186,7 @@ describe('plugins > ast-transformations', (): void => {
         astNode = new ASTNode({ key: {kind: 'const'}}, 'key', 'file', null, <any>{});
         getASTNodeStub.returns(astNode);
 
-        ASTTransformations['_traverseAST'](node);
+        ASTTransformations['_traverseCallTree'](node);
 
         sinon.assert.notCalled(asyncifyGetterAndSetterStub);
 
@@ -194,7 +194,7 @@ describe('plugins > ast-transformations', (): void => {
 
       it('should add node.source to _visited', (): void => {
 
-        ASTTransformations['_traverseAST'](node);
+        ASTTransformations['_traverseCallTree'](node);
 
         expect(ASTTransformations['_visited'][0]).to.equal('source');
 
@@ -202,7 +202,7 @@ describe('plugins > ast-transformations', (): void => {
 
       it('should add node.target to _visited', (): void => {
 
-        ASTTransformations['_traverseAST'](node);
+        ASTTransformations['_traverseCallTree'](node);
 
         expect(ASTTransformations['_visited'][1]).to.equal('target');
 
@@ -213,7 +213,7 @@ describe('plugins > ast-transformations', (): void => {
         ASTTransformations['_visited'].push('source');
         ASTTransformations['_visited'].push('target');
 
-        ASTTransformations['_traverseAST'](node);
+        ASTTransformations['_traverseCallTree'](node);
 
         sinon.assert.notCalled(getRequiredTransformStub);
         sinon.assert.notCalled(getASTNodeStub);
@@ -227,7 +227,7 @@ describe('plugins > ast-transformations', (): void => {
 
         ASTTransformations['_visited'].push('source');
 
-        ASTTransformations['_traverseAST'](node);
+        ASTTransformations['_traverseCallTree'](node);
 
         sinon.assert.notCalled(getRequiredTransformStub);
         sinon.assert.notCalled(syncToAwaitedPromiseStub);
@@ -239,7 +239,7 @@ describe('plugins > ast-transformations', (): void => {
 
         ASTTransformations['_visited'].push('target');
 
-        ASTTransformations['_traverseAST'](node);
+        ASTTransformations['_traverseCallTree'](node);
 
         sinon.assert.notCalled(asyncifyGetterAndSetterStub);
 
@@ -249,7 +249,7 @@ describe('plugins > ast-transformations', (): void => {
 
         node.addChild = new Node('', '');
 
-        ASTTransformations['_traverseAST'](node);
+        ASTTransformations['_traverseCallTree'](node);
 
         sinon.assert.callCount(getRequiredTransformStub, 2);
 

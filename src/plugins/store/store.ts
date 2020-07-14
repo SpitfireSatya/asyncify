@@ -6,10 +6,13 @@ import * as babelTypes from '@babel/types';
 export class Store {
 
   private static _fileList: Array<string> = [];
+  private static _filesToWrite: Array<string> = [];
   private static _files: { [key: string]: string } = {};
   private static _ASTs: { [key: string]: any } = {};
   private static _config: { [key: string]: any } = {};
   private static _ASTNodes: { [key: string]: IASTNode } = {};
+  private static _ASTNodeCopies: { [key: string]: IASTNode } = {};
+  private static _data: { [key: string]: any } = { };
 
   public static addFile(fileName: string | Array<string>, force: boolean = false): void {
     if (Array.isArray(fileName)) {
@@ -70,6 +73,29 @@ export class Store {
     return Store._ASTNodes[key];
   }
 
+  public static removeAllASTNodes(): void {
+    Store._ASTNodes = {};
+  }
+
+  public static setASTNodeCopy(key: string, value: IASTNode, force: boolean = false): void {
+    if (!force && Store._ASTNodeCopies[key] !== undefined) {
+      throw new Error(`Data already exists for "${key}"!`);
+    } else {
+      Store._ASTNodeCopies[key] = value;
+    }
+  }
+
+  public static getASTNodeCopy(key: string): IASTNode {
+    if (Store._ASTNodeCopies[key] === undefined) {
+      throw new Error(`Data does not exist for "${key}"!`);
+    }
+    return Store._ASTNodeCopies[key];
+  }
+
+  public static removeAllASTNodeCopies(): void {
+    Store._ASTNodeCopies = {};
+  }
+
   public static setFileContents(fileName: string, fileContents: string, force: boolean = false): void {
     if (!force && Store._files[fileName]) {
       throw new Error(`Contents for File "${fileName}" already exist!`);
@@ -104,6 +130,39 @@ export class Store {
     } else {
       return Store._ASTs[fileName];
     }
+  }
+
+  public static removeAllASTs(): void {
+    Store._ASTs = {};
+  }
+
+  public static setData(key: string, value: any, force: boolean = false): void {
+    if (!force && Store._data[key] !== undefined) {
+      throw new Error(`Data already exists for "${key}"!`);
+    } else {
+      Store._data[key] = value;
+    }
+  }
+
+  public static getData(key: string): any {
+    if (Store._data[key] === undefined) {
+      throw new Error(`Data does not exist for "${key}"!`);
+    }
+    return Store._data[key];
+  }
+
+  public static addFileToWrite(fileName: string): void {
+    if (!(Store._filesToWrite.indexOf(fileName) !== -1)) {
+      Store._filesToWrite.push(fileName);
+    }
+  }
+
+  public static removeAllFilesToWrite(): void {
+    Store._filesToWrite = [];
+  }
+
+  public static getFilesToWrite(): Array<string> {
+    return DeepClone.clone(Store._filesToWrite);
   }
 
 }

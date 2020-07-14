@@ -1,13 +1,12 @@
 
 import { IASTNode } from '../../interfaces/AST-node.interface';
-import { DeepClone } from '../../utils/deep-clone';
 import * as babelTypes from '@babel/types';
 
 export class AsyncifyGetterAndSetter {
 
   public static transform = (nodeRef: IASTNode): void => {
 
-    const childNode: babelTypes.FunctionExpression = DeepClone.clone(nodeRef.parentNode[nodeRef.key]);
+    const childNode: babelTypes.FunctionExpression = nodeRef.parentNode[nodeRef.key];
     const childBody: any = childNode.body;
 
     const asyncIIFENode: any = {

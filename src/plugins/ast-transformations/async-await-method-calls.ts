@@ -1,5 +1,4 @@
 
-import { DeepClone } from '../../utils/deep-clone';
 import { IASTNode } from '../../interfaces/AST-node.interface';
 import * as babelTypes from '@babel/types';
 import { ASTNodeKinds } from '../../constants/ast-node-kinds.constant';
@@ -14,7 +13,7 @@ export class AsyncAwaitMethodCalls {
   }
 
   private static _awaitMethodCall = (nodeRef: IASTNode): void => {
-    const childNode: babelTypes.CallExpression = DeepClone.clone(nodeRef.parentNode[nodeRef.key]);
+    const childNode: babelTypes.CallExpression = nodeRef.parentNode[nodeRef.key];
 
     if (!nodeRef.parentNode.type || nodeRef.parentNode.type !== 'AwaitExpression') {
       nodeRef.parentNode[nodeRef.key] = {

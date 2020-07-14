@@ -11,7 +11,7 @@ export class CallGraphTransformations {
     return ExtractCallTrees.extract(callgraph)
     .then((rootNode: Node): Node => {
         rootNode = AnalyzeCallTrees.analyze(rootNode);
-        CallGraphTransformations.printCallTrees(rootNode, '');
+        // CallGraphTransformations.printCallTrees(rootNode, '');
         return rootNode;
     });
   }

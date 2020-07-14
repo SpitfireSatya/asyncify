@@ -1,13 +1,12 @@
 
 import { IASTNode } from '../../interfaces/AST-node.interface';
-import { DeepClone } from '../../utils/deep-clone';
 import * as babelTypes from '@babel/types';
 
 export class ForEachToForOf {
 
   public static transform(astNode: IASTNode): void {
 
-    const childNode: babelTypes.CallExpression = DeepClone.clone(astNode.parentNode[astNode.key]);
+    const childNode: babelTypes.CallExpression = astNode.parentNode[astNode.key];
 
     const callbackBody: Array<babelTypes.Statement> | babelTypes.BlockStatement = (<any>childNode.arguments[0]).body;
     const callbackParams: Array<babelTypes.Identifier> = (<any>childNode.arguments[0]).params;

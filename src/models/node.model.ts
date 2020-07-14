@@ -49,6 +49,10 @@ export class Node {
     return Object.values(this._children);
   }
 
+  public get childKeys(): Array<string> {
+    return Object.keys(this._children);
+  }
+
   public removeChildren(): void {
     this._children = {};
   }

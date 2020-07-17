@@ -7,6 +7,7 @@ export class Store {
 
   private static _fileList: Array<string> = [];
   private static _filesToWrite: Array<string> = [];
+  private static _asyncifiedFiles: Array<string> = [];
   private static _files: { [key: string]: string } = {};
   private static _ASTs: { [key: string]: any } = {};
   private static _config: { [key: string]: any } = {};
@@ -163,6 +164,20 @@ export class Store {
 
   public static getFilesToWrite(): Array<string> {
     return DeepClone.clone(Store._filesToWrite);
+  }
+
+  public static addFileToAsyncifiedFiles(fileName: string): void {
+    if (!(Store._asyncifiedFiles.indexOf(fileName) !== -1)) {
+      Store._asyncifiedFiles.push(fileName);
+    }
+  }
+
+  public static removeAllasyncifiedFiles(): void {
+    Store._asyncifiedFiles = [];
+  }
+
+  public static getasyncifiedFiles(): Array<string> {
+    return DeepClone.clone(Store._asyncifiedFiles);
   }
 
 }

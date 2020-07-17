@@ -22,7 +22,7 @@ export class ASTTransformations {
   public static transform = (node: Node): void => {
 
     node.children.forEach((child: Node): void => {
-      ASTTransformations._traverseCallTree(child);
+      ASTTransformations._traverseCallTree(child, true, undefined);
     });
 
   }

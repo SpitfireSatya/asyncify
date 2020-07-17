@@ -7,8 +7,9 @@
   const fs = require('fs');
   const asyncify = require('../dist/asyncify');
 
-  await asyncify.showTransformations(path.resolve(__dirname, 'NodeBlendCallGraph.csv'));
-  // await asyncify.showTransformations(path.resolve(__dirname, 'LumoCallGraph.csv'));
+  // await asyncify.showTransformations(path.resolve(__dirname, 'NodeBlendCallGraph.csv'));
+  await asyncify.showTransformations(path.resolve(__dirname, 'LumoCallGraph.csv'));
+  // await asyncify.showTransformations(path.resolve(__dirname, 'HackMyResumeCallGraph.csv'));
   // asyncify.transform();
 
   /* fs.rmdirSync(path.resolve(__dirname, '.tmp'), { recursive: true });

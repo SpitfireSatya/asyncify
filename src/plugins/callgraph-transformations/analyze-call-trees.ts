@@ -23,12 +23,12 @@ export class AnalyzeCallTrees {
         return;
       }
 
-      /* if (!AnalyzeCallTrees._isCallToExterns(node) && AnalyzeCallTrees._isCallToGetterOrSetter(node)) {
+      if (!AnalyzeCallTrees._isCallToExterns(node) && AnalyzeCallTrees._isCallToConstructor(node)) {
         isBranchInvalid = true;
         return;
-      } */
+      }
 
-      if (AnalyzeCallTrees._isNewPromise(node)) {
+      if (AnalyzeCallTrees._isNewPromise(node) || AnalyzeCallTrees._isCallToSpecMethod(node)) {
         node.removeChildren();
       }
 
@@ -52,6 +52,18 @@ export class AnalyzeCallTrees {
 
     return rootNode;
 
+  }
+
+  private static _isCallToConstructor = (node: Node): boolean => {
+    const cachedNode: IASTNode = Store.getASTNode(node.target);
+    if (cachedNode.parentNode[cachedNode.key].kind === ASTNodeKinds.CONSTRUCTOR) {
+      return true;
+    }
+    return false;
+  }
+
+  private static _isCallToSpecMethod = (node: Node): boolean => {
+    return (ExternsCallDefinitions.callsToSpecMethods.includes(node.source));
   }
 
   private static _isNewPromise = (node: Node): boolean => {

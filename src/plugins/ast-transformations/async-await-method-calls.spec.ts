@@ -84,12 +84,10 @@ describe('plugins > ast-transformations', (): void => {
       let addIIFEStub: sinon.SinonStub;
 
       beforeEach((): void => {
-        AsyncAwaitMethodCalls['_asyncifiedFiles'] = [];
         addIIFEStub = sinon.stub(<any>AsyncAwaitMethodCalls, '_addIIFE');
       });
 
       afterEach((): void => {
-        AsyncAwaitMethodCalls['_asyncifiedFiles'] = [];
         addIIFEStub.restore();
       });
 
@@ -113,7 +111,7 @@ describe('plugins > ast-transformations', (): void => {
 
       });
 
-      it('should add fileName to _asyncifiedFiles if parentFunction is null and file hasnt been asyncified', (): void => {
+      /* it('should add fileName to _asyncifiedFiles if parentFunction is null and file hasnt been asyncified', (): void => {
 
         const astNode: IASTNode = new ASTNode({ }, '', 'file', null, <any>{ });
 
@@ -121,7 +119,7 @@ describe('plugins > ast-transformations', (): void => {
 
         expect(AsyncAwaitMethodCalls['_asyncifiedFiles'][0]).to.equal('file');
 
-      });
+      }); */
 
       it('should do nothing if parent function is a getter', (): void => {
 
@@ -147,7 +145,7 @@ describe('plugins > ast-transformations', (): void => {
 
       });
 
-      it('should do nothing if file has already been asyncified', (): void => {
+      /* it('should do nothing if file has already been asyncified', (): void => {
 
         AsyncAwaitMethodCalls['_asyncifiedFiles'].push('file');
         const astNode: IASTNode = new ASTNode({ }, '', 'file', null, <any>{ });
@@ -156,7 +154,7 @@ describe('plugins > ast-transformations', (): void => {
 
         sinon.assert.notCalled(addIIFEStub);
 
-      });
+      }); */
 
     });
 

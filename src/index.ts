@@ -9,14 +9,17 @@ import { BabelGenerator } from './plugins/parsers-and-generators/babel-generator
 import * as babelTypes from '@babel/types';
 import { BabelParser } from './plugins/parsers-and-generators/babel-parser';
 import { ASTUtils } from './utils/ast-utils';
+import { ITransformationDetail } from './interfaces/transformation-detail.interface';
 
 export default class Asyncify {
 
-  public static showTransformations = async (pathToCallgraphCSV: string): Promise<void> => {
+  public static showTransformations = async (pathToCallgraphCSV: string): Promise<{[key: string]: Array<ITransformationDetail>}> => {
     const callgraph: Array<ICallgraphEdge> = await FileOps.readCSVFile(pathToCallgraphCSV, true);
     const callTree: Node = await CallGraphTransformations.transform(callgraph);
     Store.setData('callTree', callTree);
-    await FileOps.writeFile('listOfTransformations.txt', JSON.stringify(ASTTransformations.showTransformations(callTree), null, 2));
+    const transformations: {[key: string]: Array<ITransformationDetail>} = ASTTransformations.showTransformations(callTree);
+    await FileOps.writeFile('listOfTransformations.txt', JSON.stringify(transformations, null, 2));
+    return transformations;
   }
 
   public static transform = async (nodesToTransform: Array<string> = []): Promise<void> => {
@@ -33,6 +36,7 @@ export default class Asyncify {
 
   private static rebuildASTCache(): void {
 
+    Store.removeAllasyncifiedFiles();
     Store.removeAllFilesToWrite();
     Store.removeAllASTNodeCopies();
     Store.removeAllASTNodes();

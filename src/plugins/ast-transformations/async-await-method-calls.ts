@@ -2,10 +2,9 @@
 import { IASTNode } from '../../interfaces/AST-node.interface';
 import * as babelTypes from '@babel/types';
 import { ASTNodeKinds } from '../../constants/ast-node-kinds.constant';
+import { Store } from '../store/store';
 
 export class AsyncAwaitMethodCalls {
-
-  private static _asyncifiedFiles: Array<string> = [];
 
   public static transform = (nodeRef: IASTNode): void => {
     AsyncAwaitMethodCalls._awaitMethodCall(nodeRef);
@@ -15,7 +14,7 @@ export class AsyncAwaitMethodCalls {
   private static _awaitMethodCall = (nodeRef: IASTNode): void => {
     const childNode: babelTypes.CallExpression = nodeRef.parentNode[nodeRef.key];
 
-    if (!nodeRef.parentNode.type || nodeRef.parentNode.type !== 'AwaitExpression') {
+    if (!(nodeRef.parentNode.type === 'AwaitExpression' || nodeRef.parentNode[nodeRef.key].type === 'AwaitExpression')) {
       nodeRef.parentNode[nodeRef.key] = {
         type: 'AwaitExpression',
         argument: childNode,
@@ -31,9 +30,9 @@ export class AsyncAwaitMethodCalls {
       nodeRef.parentNode.async = true;
     }
     if (nodeRef.parentFunction === null) {
-      if (!AsyncAwaitMethodCalls._asyncifiedFiles.includes(nodeRef.fileName)) {
+      if (!Store.getasyncifiedFiles().includes(nodeRef.fileName)) {
         AsyncAwaitMethodCalls._addIIFE(nodeRef);
-        AsyncAwaitMethodCalls._asyncifiedFiles.push(nodeRef.fileName);
+        Store.addFileToAsyncifiedFiles(nodeRef.fileName);
       }
     } else {
       if (!ASTNodeKinds.getterAndSetter().includes((<any>nodeRef.parentFunction).kind)) {

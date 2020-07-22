@@ -19,17 +19,18 @@ export default class Asyncify {
     Store.setData('callTree', callTree);
     const transformations: {[key: string]: Array<ITransformationDetail>} = ASTTransformations.showTransformations(callTree);
     await FileOps.writeFile('listOfTransformations.txt', JSON.stringify(transformations, null, 2));
+    Asyncify.transform();
     return transformations;
   }
 
   public static transform = async (nodesToTransform: Array<string> = []): Promise<void> => {
     Asyncify.rebuildASTCache();
     const callTree: Node = <Node>Store.getData('callTree');
-    callTree.childKeys
+    /* callTree.childKeys
       .filter((key: string): boolean => !nodesToTransform.includes(key))
       .forEach((key: string): void => {
         callTree.removeChild(parseInt(key, 10));
-      });
+      }); */
     ASTTransformations.transform(callTree);
     await Asyncify.writeTransformedFiles();
   }

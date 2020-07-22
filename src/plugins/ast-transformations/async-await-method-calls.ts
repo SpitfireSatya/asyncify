@@ -44,8 +44,15 @@ export class AsyncAwaitMethodCalls {
   private static _addIIFE = (nodeRef: IASTNode): void => {
     const programBody: Array<babelTypes.Statement> = nodeRef.fileAST.program.body;
     const programDirectives: Array<babelTypes.Directive> = nodeRef.fileAST.program.directives;
+    const importNodes: Array<any> = [];
+    programBody.forEach((node: any): void => {
+      if (node.type === 'ImportDeclaration') {
+        importNodes.push(...programBody.splice(programBody.indexOf(node), 1));
+      }
+    });
     nodeRef.fileAST.program.body = [];
     nodeRef.fileAST.program.directives = [];
+    nodeRef.fileAST.program.body.push(...importNodes);
     nodeRef.fileAST.program.body.push(<any> {
       type: 'ExpressionStatement',
       expression: {

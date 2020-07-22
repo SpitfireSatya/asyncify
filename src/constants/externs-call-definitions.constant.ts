@@ -24,12 +24,13 @@ export class ExternsCallDefinitions {
   public static readonly PROCESS_NEXT_TICK: string = 'Callee(/home/osboxes/codeql-home/codeql/javascript/tools/data/externs/nodejs/globals.js:<989,76>--<989,86>)';
 
   // call to jest
-  public static readonly JEST_DESCRIBE: string = 'Callee(/home/osboxes/codeql-home/codeql/javascript/tools/data/externs/lib/jest.js:<40,30>--<40,34>)';
+  public static readonly JEST_DESCRIBE: string = 'Callee(/home/osboxes/codeql-home/codeql/javascript/tools/data/externs/lib/jest.js:<38,30>--<38,34>)';
   public static readonly JEST_IT: string = 'Callee(/home/osboxes/codeql-home/codeql/javascript/tools/data/externs/lib/jest.js:<57,34>--<57,37>)';
   public static readonly JEST_BEFORE: string = '';
-  public static readonly JEST_BEFORE_EACH: string = '';
+  public static readonly JEST_BEFORE_EACH: string = 'Callee(/home/osboxes/codeql-home/codeql/javascript/tools/data/externs/lib/jest.js:<36,35>--<36,39>)';
   public static readonly JEST_AFTER: string = '';
   public static readonly JEST_AFTER_EACH: string = '';
+  public static readonly JEST_FN: string = 'Callee(/home/osboxes/codeql-home/codeql/javascript/tools/data/externs/lib/jest.js:<167,34>--<167,50>)';
 
   public static get callsToForEach(): Array<string> {
     return [
@@ -54,7 +55,8 @@ export class ExternsCallDefinitions {
   public static get callsToSpecMethods(): Array<string> {
     return [
       ExternsCallDefinitions.JEST_DESCRIBE,
-      ExternsCallDefinitions.JEST_IT
+      ExternsCallDefinitions.JEST_IT,
+      ExternsCallDefinitions.JEST_BEFORE_EACH
     ];
   }
 
@@ -72,7 +74,10 @@ export class ExternsCallDefinitions {
       ExternsCallDefinitions.NET_SERVER_LISTEN_3,
       ExternsCallDefinitions.NET_SERVER_LISTEN_4,
       ExternsCallDefinitions.PROCESS_NEXT_TICK,
-      ExternsCallDefinitions.JEST_DESCRIBE
+      ExternsCallDefinitions.JEST_DESCRIBE,
+      ExternsCallDefinitions.JEST_IT,
+      ExternsCallDefinitions.JEST_FN,
+      ExternsCallDefinitions.JEST_BEFORE_EACH
     ];
   }
 

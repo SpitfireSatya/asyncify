@@ -16,6 +16,9 @@ describe('plugins > callgraph-transformations', (): void => {
       let isCallToExternsStub: sinon.SinonStub, isCallbackFromExterns: sinon.SinonStub;
       let isValidExternsCallStub: sinon.SinonStub/*, isCallToGetterOrSetterStub: sinon.SinonStub */;
       let isNewPromiseStub: sinon.SinonStub;
+      let isCallToConstructorStub: sinon.SinonStub;
+      let isCallToSpecMethodStub: sinon.SinonStub;
+      let isCallToEventListenerStub: sinon.SinonStub;
 
       let rootNode: Node;
       let childNode: Node;
@@ -26,6 +29,9 @@ describe('plugins > callgraph-transformations', (): void => {
         isValidExternsCallStub = sinon.stub(<any>AnalyzeCallTrees, '_isValidExternsCall');
         // isCallToGetterOrSetterStub = sinon.stub(<any>AnalyzeCallTrees, '_isCallToGetterOrSetter');
         isNewPromiseStub = sinon.stub(<any>AnalyzeCallTrees, '_isNewPromise');
+        isCallToConstructorStub = sinon.stub(<any>AnalyzeCallTrees, '_isCallToConstructor');
+        isCallToSpecMethodStub = sinon.stub(<any>AnalyzeCallTrees, '_isCallToSpecMethod');
+        isCallToEventListenerStub = sinon.stub(<any>AnalyzeCallTrees, '_isCallToEventListener');
 
         rootNode = new Node(null, null);
         childNode = new Node('abc', 'abc');
@@ -40,6 +46,9 @@ describe('plugins > callgraph-transformations', (): void => {
         isValidExternsCallStub.restore();
         // isCallToGetterOrSetterStub.restore();
         isNewPromiseStub.restore();
+        isCallToConstructorStub.restore();
+        isCallToSpecMethodStub.restore();
+        isCallToEventListenerStub.restore();
 
         rootNode = undefined;
         childNode = undefined;

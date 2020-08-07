@@ -28,8 +28,9 @@ export class AnalyzeCallTrees {
         return;
       }
 
-      if (AnalyzeCallTrees._isNewPromise(node) || AnalyzeCallTrees._isCallToSpecMethod(node) || AnalyzeCallTrees._isEventListener(node)) {
-        node.removeChildren();
+      if (AnalyzeCallTrees._isNewPromise(node) || AnalyzeCallTrees._isCallToSpecMethod(node) ||
+        AnalyzeCallTrees._isCallToEventListener(node)) {
+          node.removeChildren();
       }
 
       if (node.children.length === 0) {
@@ -63,7 +64,7 @@ export class AnalyzeCallTrees {
     return false;
   }
 
-  private static _isEventListener = (node: Node): boolean => {
+  private static _isCallToEventListener = (node: Node): boolean => {
     return [ExternsCallDefinitions.FS_READSTREAM_ON, ExternsCallDefinitions.FS_WRITESTREAM_ON].includes(node.source);
   }
 

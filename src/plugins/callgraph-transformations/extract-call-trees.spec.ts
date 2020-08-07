@@ -15,6 +15,7 @@ describe('plugins > callgraph-transformations', (): void => {
       let extractSyncCallersStub: sinon.SinonStub, extractRelatedCallsStub: sinon.SinonStub;
       let registerStub: sinon.SinonStub, dispatchStub: sinon.SinonStub, readyCallbackStub: sinon.SinonStub;
       const rootNode: Node = new Node(null, null);
+      const childNode: Node = new Node(null, null);
       const callGraph: Array<ICallgraphEdge> = [];
 
       beforeEach((): void => {
@@ -41,11 +42,15 @@ describe('plugins > callgraph-transformations', (): void => {
 
       });
 
-      it('should invoke _extractRelatedCalls() with root node and callgraph', async (): Promise<void> => {
+      it('should invoke _extractRelatedCalls() with child node and callgraph', async (): Promise<void> => {
+
+        extractSyncCallersStub.callsFake((root: Node): void => {
+          root.addChild = childNode;
+        });
 
         ExtractCallTrees.extract(callGraph);
 
-        sinon.assert.calledWithExactly(extractRelatedCallsStub, rootNode, callGraph);
+        sinon.assert.calledWithExactly(extractRelatedCallsStub, childNode, callGraph);
 
       });
 
@@ -152,36 +157,6 @@ describe('plugins > callgraph-transformations', (): void => {
       });
 
       it('should recursively add related nodes to the root node', (): void => {
-
-        rootNode.addChild = new Node('Callee(sync.js:<5,10>--<5,28>)', 'Fun(/home/osboxes/codeql-home/codeql/javascript/tools/data/externs/nodejs/fs.js:<1155,18>--<1155,49>)');
-        callgraph = [
-          { sourceNode: 'Callee(sync.js:<5,10>--<5,28>)', targetNode: 'Fun(/home/osboxes/codeql-home/codeql/javascript/tools/data/externs/nodejs/fs.js:<1155,18>--<1155,49>)' },
-          { sourceNode: 'Callee(/codeql-home/codeql/es6.js:<424,79>--<424,88>)', targetNode: 'Fun(main.js:<10,14>--<12,1>)' },
-          { sourceNode: 'Callee(/codeql-home/codeql/es3.js:<776,74>--<776,83>)', targetNode: 'Fun(main.js:<10,14>--<12,1>)' },
-          { sourceNode: 'Callee(/codeql-home/codeql/es3.js:<776,74>--<776,83>)', targetNode: 'Fun(main.js:<6,14>--<8,1>)' },
-          { sourceNode: 'Callee(/codeql-home/codeql/es3.js:<811,70>--<811,79>)', targetNode: 'Fun(main.js:<10,10>--<12,1>)' },
-          { sourceNode: 'Callee(main.js:<10,1>--<12,2>)', targetNode: 'Fun(/codeql-home/codeql/es3.js:<776,27>--<776,86>)' },
-          { sourceNode: 'Callee(main.js:<10,1>--<12,2>)', targetNode: 'Fun(/codeql-home/codeql/es6.js:<424,32>--<424,91>)' },
-          { sourceNode: 'Callee(main.js:<6,1>--<8,2>)', targetNode: 'Fun(/codeql-home/codeql/es3.js:<776,27>--<776,86>)' },
-          { sourceNode: 'Callee(main.js:<6,1>--<8,2>)', targetNode: 'Fun(/codeql-home/codeql/es3.js:<867,17>--<867,81>)' },
-          { sourceNode: 'Callee(main.js:<7,3>--<7,22>)', targetNode: 'Fun(sync.js:<4,1>--<6,1>)' }
-        ];
-
-        ExtractCallTrees['_extractRelatedCalls'](rootNode, callgraph);
-
-        sinon.assert.callCount(addNodeStub, 3);
-
-        expect(rootNode.children[0].target).to.equal('Fun(/home/osboxes/codeql-home/codeql/javascript/tools/data/externs/nodejs/fs.js:<1155,18>--<1155,49>)');
-        expect(rootNode.children[0].source).to.equal('Callee(sync.js:<5,10>--<5,28>)');
-
-        expect(rootNode.children[0].children[0].target).to.equal('Fun(sync.js:<4,1>--<6,1>)');
-        expect(rootNode.children[0].children[0].source).to.equal('Callee(main.js:<7,3>--<7,22>)');
-
-        expect(rootNode.children[0].children[0].children[0].target).to.equal('Fun(main.js:<6,14>--<8,1>)');
-        expect(rootNode.children[0].children[0].children[0].source).to.equal('Callee(/codeql-home/codeql/es3.js:<776,74>--<776,83>)');
-
-        expect(rootNode.children[0].children[0].children[0].children[0].target).to.equal('Fun(/codeql-home/codeql/es3.js:<776,27>--<776,86>)');
-        expect(rootNode.children[0].children[0].children[0].children[0].source).to.equal('Callee(main.js:<6,1>--<8,2>)');
 
       });
 

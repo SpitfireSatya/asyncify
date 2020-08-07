@@ -19,16 +19,18 @@ describe('utils', (): void => {
       const callExpressionNode: any = { type: 'CallExpression', loc: {start: {line: 1, column: 1}, end: {line: 1, column: 1 }}};
       const memberExpressionNode: any = { type: 'MemberExpression', loc: {start: {line: 1, column: 1}, end: {line: 1, column: 1 }}};
 
-      let setASTNodeStub: sinon.SinonStub;
+      let setASTNodeStub: sinon.SinonStub, setASTNodeCopyStub: sinon.SinonStub;
       const cacheKeyFun: string = 'Fun(file:<1,1>--<1,1>)';
       const cacheKeyCallee: string = 'Callee(file:<1,1>--<1,1>)';
 
       beforeEach((): void => {
         setASTNodeStub = sinon.stub(Store, 'setASTNode');
+        setASTNodeCopyStub = sinon.stub(Store, 'setASTNodeCopy');
       });
 
       afterEach((): void => {
         setASTNodeStub.restore();
+        setASTNodeCopyStub.restore();
       });
 
       it('should populate ASTNode and add to store for function declaration', (): void => {

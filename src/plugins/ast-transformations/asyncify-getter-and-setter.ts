@@ -7,7 +7,7 @@ export class AsyncifyGetterAndSetter {
   public static transform = (nodeRef: IASTNode): void => {
 
     const childNode: babelTypes.FunctionExpression = nodeRef.parentNode[nodeRef.key];
-    const childBody: any = childNode.body;
+    const childBody: any = Object.assign({}, childNode.body);
 
     const asyncIIFENode: any = {
       type: 'ReturnStatement',
@@ -31,7 +31,7 @@ export class AsyncifyGetterAndSetter {
       }
     };
 
-    nodeRef.parentNode[nodeRef.key].body.body = [];
+    nodeRef.parentNode[nodeRef.key].body = { body: [] };
     nodeRef.parentNode[nodeRef.key].body.body.push(asyncIIFENode);
 
   }

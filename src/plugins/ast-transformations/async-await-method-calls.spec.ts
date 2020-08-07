@@ -4,6 +4,7 @@ import { AsyncAwaitMethodCalls } from './async-await-method-calls';
 import { IASTNode } from '../../interfaces/AST-node.interface';
 import { ASTNode } from '../../models/AST-node.model';
 import { expect } from 'chai';
+import { Store } from '../store/store';
 
 
 describe('plugins > ast-transformations', (): void => {
@@ -85,10 +86,12 @@ describe('plugins > ast-transformations', (): void => {
 
       beforeEach((): void => {
         addIIFEStub = sinon.stub(<any>AsyncAwaitMethodCalls, '_addIIFE');
+        (<any>Store)._asyncifiedFiles = [];
       });
 
       afterEach((): void => {
         addIIFEStub.restore();
+        (<any>Store)._asyncifiedFiles = [];
       });
 
       it('should set parentFunction.async to true', (): void => {
@@ -111,15 +114,15 @@ describe('plugins > ast-transformations', (): void => {
 
       });
 
-      /* it('should add fileName to _asyncifiedFiles if parentFunction is null and file hasnt been asyncified', (): void => {
+      it('should add fileName to _asyncifiedFiles if parentFunction is null and file hasnt been asyncified', (): void => {
 
         const astNode: IASTNode = new ASTNode({ }, '', 'file', null, <any>{ });
 
         AsyncAwaitMethodCalls['_wrapAwaitInAsync'](astNode);
 
-        expect(AsyncAwaitMethodCalls['_asyncifiedFiles'][0]).to.equal('file');
+        expect(Store.getasyncifiedFiles()[0]).to.equal('file');
 
-      }); */
+      });
 
       it('should do nothing if parent function is a getter', (): void => {
 
@@ -145,16 +148,16 @@ describe('plugins > ast-transformations', (): void => {
 
       });
 
-      /* it('should do nothing if file has already been asyncified', (): void => {
+      it('should do nothing if file has already been asyncified', (): void => {
 
-        AsyncAwaitMethodCalls['_asyncifiedFiles'].push('file');
+        Store.addFileToAsyncifiedFiles('file');
         const astNode: IASTNode = new ASTNode({ }, '', 'file', null, <any>{ });
 
         AsyncAwaitMethodCalls['_wrapAwaitInAsync'](astNode);
 
         sinon.assert.notCalled(addIIFEStub);
 
-      }); */
+      });
 
     });
 
@@ -164,7 +167,7 @@ describe('plugins > ast-transformations', (): void => {
 
         const program: any = {
           program: {
-            body: { },
+            body: [],
             directives: []
           }
         };
@@ -186,7 +189,7 @@ describe('plugins > ast-transformations', (): void => {
                   params: [],
                   body: <any>{
                     type: 'BlockStatement',
-                    body: {},
+                    body: [],
                     directives: []
                   }
                 },

@@ -31,8 +31,8 @@ describe('plugins > ast-transformations', (): void => {
 
         ASTTransformations.transform(rootNode);
 
-        sinon.assert.calledWithExactly(traverseASTStub.firstCall, rootNode.children[0]);
-        sinon.assert.calledWithExactly(traverseASTStub.secondCall, rootNode.children[1]);
+        sinon.assert.calledWithExactly(traverseASTStub.firstCall, rootNode.children[0], true, undefined);
+        sinon.assert.calledWithExactly(traverseASTStub.secondCall, rootNode.children[1], true, undefined);
 
         traverseASTStub.restore();
 

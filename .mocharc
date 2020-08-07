@@ -8,7 +8,7 @@
   "diff": true,
   "exit": true,
   "forbid-only": true,
-  "forbid-pending": true,
+  "forbid-pending": false,
   "full-trace": true,
   "inline-diffs": true,
   "recursive": true,

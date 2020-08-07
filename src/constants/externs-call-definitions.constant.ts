@@ -3,6 +3,8 @@ export class ExternsCallDefinitions {
 
   public static readonly FS_STAT: string = 'Callee(/home/osboxes/codeql-home/codeql/javascript/tools/data/externs/nodejs/fs.js:<722,50>--<722,60>)';
   public static readonly FS_RENAME: string = 'Callee(/home/osboxes/codeql-home/codeql/javascript/tools/data/externs/nodejs/fs.js:<523,64>--<523,74>)';
+  public static readonly FS_READSTREAM_ON: string = 'Callee(/home/osboxes/codeql-home/codeql/javascript/tools/data/externs/nodejs/fs.js:<1371,53>--<1371,63>)';
+  public static readonly FS_WRITESTREAM_ON: string = 'Callee(/home/osboxes/codeql-home/codeql/javascript/tools/data/externs/nodejs/fs.js:<1379,54>--<1379,64>)';
 
   // call to map()
   public static readonly MAP_ES3: string = 'Callee(/home/osboxes/codeql-home/codeql/javascript/tools/data/externs/es/es3.js:<811,69>--<811,79>)';
@@ -26,7 +28,7 @@ export class ExternsCallDefinitions {
   // call to jest
   public static readonly JEST_DESCRIBE: string = 'Callee(/home/osboxes/codeql-home/codeql/javascript/tools/data/externs/lib/jest.js:<38,30>--<38,34>)';
   public static readonly JEST_IT: string = 'Callee(/home/osboxes/codeql-home/codeql/javascript/tools/data/externs/lib/jest.js:<57,34>--<57,37>)';
-  public static readonly JEST_BEFORE: string = '';
+  public static readonly JEST_BEFORE: string = 'Callee(/home/osboxes/codeql-home/codeql/javascript/tools/data/externs/lib/jest.js:<32,31>--<32,35>)';
   public static readonly JEST_BEFORE_EACH: string = 'Callee(/home/osboxes/codeql-home/codeql/javascript/tools/data/externs/lib/jest.js:<36,35>--<36,39>)';
   public static readonly JEST_AFTER: string = '';
   public static readonly JEST_AFTER_EACH: string = '';
@@ -56,7 +58,8 @@ export class ExternsCallDefinitions {
     return [
       ExternsCallDefinitions.JEST_DESCRIBE,
       ExternsCallDefinitions.JEST_IT,
-      ExternsCallDefinitions.JEST_BEFORE_EACH
+      ExternsCallDefinitions.JEST_BEFORE_EACH,
+      ExternsCallDefinitions.JEST_BEFORE
     ];
   }
 
@@ -64,6 +67,8 @@ export class ExternsCallDefinitions {
     return [
       ExternsCallDefinitions.FS_STAT,
       ExternsCallDefinitions.FS_RENAME,
+      ExternsCallDefinitions.FS_READSTREAM_ON,
+      ExternsCallDefinitions.FS_WRITESTREAM_ON,
       ExternsCallDefinitions.NEW_PROMISE,
       ExternsCallDefinitions.FOREACH_ES3,
       ExternsCallDefinitions.FOREACH_ES6,
@@ -77,7 +82,8 @@ export class ExternsCallDefinitions {
       ExternsCallDefinitions.JEST_DESCRIBE,
       ExternsCallDefinitions.JEST_IT,
       ExternsCallDefinitions.JEST_FN,
-      ExternsCallDefinitions.JEST_BEFORE_EACH
+      ExternsCallDefinitions.JEST_BEFORE_EACH,
+      ExternsCallDefinitions.JEST_BEFORE
     ];
   }
 

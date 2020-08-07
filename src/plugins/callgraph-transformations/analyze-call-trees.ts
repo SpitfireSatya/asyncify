@@ -28,7 +28,7 @@ export class AnalyzeCallTrees {
         return;
       }
 
-      if (AnalyzeCallTrees._isNewPromise(node) || AnalyzeCallTrees._isCallToSpecMethod(node)) {
+      if (AnalyzeCallTrees._isNewPromise(node) || AnalyzeCallTrees._isCallToSpecMethod(node) || AnalyzeCallTrees._isEventListener(node)) {
         node.removeChildren();
       }
 
@@ -57,9 +57,14 @@ export class AnalyzeCallTrees {
   private static _isCallToConstructor = (node: Node): boolean => {
     const cachedNode: IASTNode = Store.getASTNode(node.target);
     if (cachedNode.parentNode[cachedNode.key].kind === ASTNodeKinds.CONSTRUCTOR) {
+      console.log('Removing branch: ', node.target);
       return true;
     }
     return false;
+  }
+
+  private static _isEventListener = (node: Node): boolean => {
+    return [ExternsCallDefinitions.FS_READSTREAM_ON, ExternsCallDefinitions.FS_WRITESTREAM_ON].includes(node.source);
   }
 
   private static _isCallToSpecMethod = (node: Node): boolean => {

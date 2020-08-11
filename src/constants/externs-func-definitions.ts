@@ -6,6 +6,15 @@ export class ExternsFuncDefinitions {
   // Sync functions
   public static readonly READ_FILE_SYNC: string = `Fun(${Global.HOME_DIR}/codeql-home/codeql/javascript/tools/data/externs/nodejs/fs.js:<1155,18>--<1155,49>)`;
   public static readonly WRITE_FILE_SYNC: string = `Fun(${Global.HOME_DIR}/codeql-home/codeql/javascript/tools/data/externs/nodejs/fs.js:<1203,19>--<1203,55>)`;
+  public static readonly READDIR_SYNC: string = `Fun(${Global.HOME_DIR}/codeql-home/codeql/javascript/tools/data/externs/nodejs/fs.js:<904,13>--<904,66>)`;
+  public static readonly ACCESS_SYNC: string = `Fun(${Global.HOME_DIR}/codeql-home/codeql/javascript/tools/data/externs/nodejs/fs.js:<1363,16>--<1363,39>)`;
+  public static readonly APPEND_FILE_SYNC: string = `Fun(${Global.HOME_DIR}/codeql-home/codeql/javascript/tools/data/externs/nodejs/fs.js:<1244,21>--<1245,56>)`;
+  public static readonly CHMOD_SYNC: string = `Fun(${Global.HOME_DIR}/codeql-home/codeql/javascript/tools/data/externs/nodejs/fs.js:<648,15>--<648,38>)`;
+  public static readonly CHOWN_SYNC: string = `Fun(${Global.HOME_DIR}/codeql-home/codeql/javascript/tools/data/externs/nodejs/fs.js:<591,15>--<591,42>)`;
+  public static readonly MKDIR_SYNC: string = `Fun(${Global.HOME_DIR}/codeql-home/codeql/javascript/tools/data/externs/nodejs/fs.js:<884,15>--<884,38>)`;
+  public static readonly STAT_SYNC: string = `Fun(${Global.HOME_DIR}/codeql-home/codeql/javascript/tools/data/externs/nodejs/fs.js:<742,14>--<742,31>)`;
+  public static readonly RENAME_SYNC: string = `Fun(${Global.HOME_DIR}/codeql-home/codeql/javascript/tools/data/externs/nodejs/fs.js:<530,16>--<530,45>)`;
+  public static readonly OPEN_SYNC: string = `Fun(${Global.HOME_DIR}/codeql-home/codeql/javascript/tools/data/externs/nodejs/fs.js:<948,14>--<948,44>)`;
 
   // map functions
   public static readonly MAP_ES3_1: string = `Fun(${Global.HOME_DIR}/codeql-home/codeql/javascript/tools/data/externs/ES/es3.js:<811,22>--<811,82>)`;
@@ -25,7 +34,16 @@ export class ExternsFuncDefinitions {
   public static get syncFunctions(): Array<string> {
     return [
       ExternsFuncDefinitions.READ_FILE_SYNC,
-      ExternsFuncDefinitions.WRITE_FILE_SYNC
+      ExternsFuncDefinitions.WRITE_FILE_SYNC,
+      ExternsFuncDefinitions.READDIR_SYNC,
+      ExternsFuncDefinitions.ACCESS_SYNC,
+      ExternsFuncDefinitions.APPEND_FILE_SYNC,
+      ExternsFuncDefinitions.CHMOD_SYNC,
+      ExternsFuncDefinitions.CHOWN_SYNC,
+      ExternsFuncDefinitions.MKDIR_SYNC,
+      ExternsFuncDefinitions.STAT_SYNC,
+      ExternsFuncDefinitions.RENAME_SYNC,
+      ExternsFuncDefinitions.OPEN_SYNC
     ];
   }
 

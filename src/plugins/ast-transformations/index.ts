@@ -18,13 +18,15 @@ import { ITransformationDetail } from '../../interfaces/transformation-detail.in
 export class ASTTransformations {
 
   private static _visited: Array<string> = [];
+  private static _relatedFunctionsTransformed: number = 0;
 
-  public static transform = (node: Node): void => {
+  public static transform = (node: Node): number => {
 
+    ASTTransformations._relatedFunctionsTransformed = 0;
     node.children.forEach((child: Node): void => {
       ASTTransformations._traverseCallTree(child, true, undefined);
     });
-
+    return ASTTransformations._relatedFunctionsTransformed;
   }
 
   public static showTransformations = (node: Node): { [key: string]: Array<ITransformationDetail> } => {
@@ -75,6 +77,8 @@ export class ASTTransformations {
             AsyncAwaitMethodCalls.transform(nodeOfInterest);
         }
 
+        ASTTransformations._relatedFunctionsTransformed++;
+
         if (!updateRef) {
           const details: ITransformationDetail = ASTTransformations._getTransformedSourceCode(node, nodeOfInterest);
           if (transformationDetails.filter((value: ITransformationDetail): boolean =>
@@ -96,6 +100,7 @@ export class ASTTransformations {
           ASTNodeKinds.getterAndSetter().includes(nodeOfInterest.parentNode[nodeOfInterest.key].kind)) {
 
           AsyncifyGetterAndSetter.transform(nodeOfInterest);
+          ASTTransformations._relatedFunctionsTransformed++;
 
           if (!updateRef) {
             const details: ITransformationDetail = ASTTransformations._getTransformedTargetCode(node, nodeOfInterest);

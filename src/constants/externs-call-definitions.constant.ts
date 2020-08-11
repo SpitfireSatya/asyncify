@@ -34,8 +34,8 @@ export class ExternsCallDefinitions {
   public static readonly JEST_IT: string = `Callee(${Global.HOME_DIR}/codeql-home/codeql/javascript/tools/data/externs/lib/jest.js:<57,34>--<57,37>)`;
   public static readonly JEST_BEFORE: string = `Callee(${Global.HOME_DIR}/codeql-home/codeql/javascript/tools/data/externs/lib/jest.js:<32,31>--<32,35>)`;
   public static readonly JEST_BEFORE_EACH: string = `Callee(${Global.HOME_DIR}/codeql-home/codeql/javascript/tools/data/externs/lib/jest.js:<36,35>--<36,39>)`;
-  public static readonly JEST_AFTER: string = `;
-  public static readonly JEST_AFTER_EACH: string = `;
+  public static readonly JEST_AFTER: string = ``;
+  public static readonly JEST_AFTER_EACH: string = ``;
   public static readonly JEST_FN: string = `Callee(${Global.HOME_DIR}/codeql-home/codeql/javascript/tools/data/externs/lib/jest.js:<167,34>--<167,50>)`;
 
   public static get callsToForEach(): Array<string> {

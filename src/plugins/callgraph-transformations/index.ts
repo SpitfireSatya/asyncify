@@ -10,6 +10,7 @@ export class CallGraphTransformations {
   public static transform = (callgraph: Array<ICallgraphEdge>): Promise<Node> => {
     return ExtractCallTrees.extract(callgraph)
     .then((rootNode: Node): Node => {
+        console.log('Sync functions identified: ', rootNode.children.length);
         rootNode = AnalyzeCallTrees.analyze(rootNode);
         // CallGraphTransformations.printCallTrees(rootNode, '');
         return rootNode;

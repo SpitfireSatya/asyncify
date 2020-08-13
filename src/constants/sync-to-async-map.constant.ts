@@ -7,7 +7,9 @@ export class SyncToAsyncMap {
   public static readonly appendFileSync: string = 'appendFile';
   public static readonly chmodSync: string = 'chmod';
   public static readonly chownSync: string = 'chown';
+  public static readonly mkdirSync: string = 'mkdir';
   public static readonly statSync: string = 'stat';
   public static readonly renameSync: string = 'rename';
   public static readonly openSync: string = 'open';
+  // public static readonly existsSync: string = 'exists';
 }

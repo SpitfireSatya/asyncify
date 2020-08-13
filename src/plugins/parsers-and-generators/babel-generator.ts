@@ -9,6 +9,7 @@ export class BabelGenerator {
       const code: string = babelGenerator.default(ast, config).code;
       return code;
     } catch (e) {
+      console.log(JSON.stringify(ast, null, 2));
       throw new Error('Error generating Code from AST');
     }
   }

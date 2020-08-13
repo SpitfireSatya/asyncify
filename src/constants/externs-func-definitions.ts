@@ -15,6 +15,7 @@ export class ExternsFuncDefinitions {
   public static readonly STAT_SYNC: string = `Fun(${Global.HOME_DIR}/codeql-home/codeql/javascript/tools/data/externs/nodejs/fs.js:<742,14>--<742,31>)`;
   public static readonly RENAME_SYNC: string = `Fun(${Global.HOME_DIR}/codeql-home/codeql/javascript/tools/data/externs/nodejs/fs.js:<530,16>--<530,45>)`;
   public static readonly OPEN_SYNC: string = `Fun(${Global.HOME_DIR}/codeql-home/codeql/javascript/tools/data/externs/nodejs/fs.js:<948,14>--<948,44>)`;
+  public static readonly EXISTS_SYNC: string = `Fun(${Global.HOME_DIR}/codeql-home/codeql/javascript/tools/data/externs/nodejs/fs.js:<1311,16>--<1311,33>)`;
 
   // map functions
   public static readonly MAP_ES3_1: string = `Fun(${Global.HOME_DIR}/codeql-home/codeql/javascript/tools/data/externs/ES/es3.js:<811,22>--<811,82>)`;
@@ -43,7 +44,8 @@ export class ExternsFuncDefinitions {
       ExternsFuncDefinitions.MKDIR_SYNC,
       ExternsFuncDefinitions.STAT_SYNC,
       ExternsFuncDefinitions.RENAME_SYNC,
-      ExternsFuncDefinitions.OPEN_SYNC
+      ExternsFuncDefinitions.OPEN_SYNC,
+      // ExternsFuncDefinitions.EXISTS_SYNC
     ];
   }
 

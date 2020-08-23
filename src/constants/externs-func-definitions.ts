@@ -6,7 +6,7 @@ export class ExternsFuncDefinitions {
   // Sync functions
   public static readonly READ_FILE_SYNC: string = `Fun(${Global.HOME_DIR}/codeql-home/codeql/javascript/tools/data/externs/nodejs/fs.js:<1155,18>--<1155,49>)`;
   public static readonly WRITE_FILE_SYNC: string = `Fun(${Global.HOME_DIR}/codeql-home/codeql/javascript/tools/data/externs/nodejs/fs.js:<1203,19>--<1203,55>)`;
-  public static readonly READDIR_SYNC: string = `Fun(${Global.HOME_DIR}/codeql-home/codeql/javascript/tools/data/externs/nodejs/fs.js:<904,13>--<904,66>)`;
+  public static readonly READDIR_SYNC: string = `Fun(${Global.HOME_DIR}/codeql-home/codeql/javascript/tools/data/externs/nodejs/fs.js:<910,18>--<910,34>)`;
   public static readonly ACCESS_SYNC: string = `Fun(${Global.HOME_DIR}/codeql-home/codeql/javascript/tools/data/externs/nodejs/fs.js:<1363,16>--<1363,39>)`;
   public static readonly APPEND_FILE_SYNC: string = `Fun(${Global.HOME_DIR}/codeql-home/codeql/javascript/tools/data/externs/nodejs/fs.js:<1244,21>--<1245,56>)`;
   public static readonly CHMOD_SYNC: string = `Fun(${Global.HOME_DIR}/codeql-home/codeql/javascript/tools/data/externs/nodejs/fs.js:<648,15>--<648,38>)`;

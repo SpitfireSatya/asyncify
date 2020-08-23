@@ -19,18 +19,26 @@ export class AnalyzeCallTrees {
       }
 
       if (AnalyzeCallTrees._isCallbackFromExterns(node) && !AnalyzeCallTrees._isValidExternsCall(node)) {
+        console.log('Invalid externs call: ', node.source);
         isBranchInvalid = true;
         return;
       }
 
       if (!AnalyzeCallTrees._isCallToExterns(node) && AnalyzeCallTrees._isCallToConstructor(node)) {
+        console.log('Invalid call to constructor: ', node.target);
         isBranchInvalid = true;
         return;
       }
 
-      if (AnalyzeCallTrees._isNewPromise(node) || AnalyzeCallTrees._isCallToSpecMethod(node) ||
+      if (AnalyzeCallTrees._isCallToPromise(node) || AnalyzeCallTrees._isCallToSpecMethod(node) ||
         AnalyzeCallTrees._isCallToEventListener(node)) {
           node.removeChildren();
+      }
+
+      if (!AnalyzeCallTrees._isCallToExterns(node) && AnalyzeCallTrees._containsImplicitPromise(node)) {
+        console.log('Invalid call to Implicit promise');
+        isBranchInvalid = true;
+        return;
       }
 
       if (node.children.length === 0) {
@@ -58,22 +66,22 @@ export class AnalyzeCallTrees {
   private static _isCallToConstructor = (node: Node): boolean => {
     const cachedNode: IASTNode = Store.getASTNode(node.target);
     if (cachedNode.parentNode[cachedNode.key].kind === ASTNodeKinds.CONSTRUCTOR) {
-      console.log('Removing branch: ', node.target);
       return true;
     }
     return false;
   }
 
   private static _isCallToEventListener = (node: Node): boolean => {
-    return [ExternsCallDefinitions.FS_READSTREAM_ON, ExternsCallDefinitions.FS_WRITESTREAM_ON].includes(node.source);
+    return [ExternsCallDefinitions.FS_READSTREAM_ON, ExternsCallDefinitions.FS_WRITESTREAM_ON, ExternsCallDefinitions.FS_READDIR]
+      .includes(node.source);
   }
 
   private static _isCallToSpecMethod = (node: Node): boolean => {
     return (ExternsCallDefinitions.callsToSpecMethods.includes(node.source));
   }
 
-  private static _isNewPromise = (node: Node): boolean => {
-    return (ExternsCallDefinitions.callsToNewPromise.includes(node.source));
+  private static _isCallToPromise = (node: Node): boolean => {
+    return (ExternsCallDefinitions.callsToPromise.includes(node.source));
   }
 
   private static _isCallToExterns = (node: Node): boolean => {
@@ -88,8 +96,18 @@ export class AnalyzeCallTrees {
     if (ExternsCallDefinitions.validExternsCalls.includes(node.source)) {
       return true;
     }
-    console.log(node.source);
     return false;
+  }
+
+  private static _containsImplicitPromise = (node: Node): boolean => {
+    if (node.parent !== undefined) {
+      return Store.getImplicitPromises().map(e => e.parent).includes(node.parentFunction);
+    } else {
+      return !!Store.getImplicitPromises()
+        .filter(e => CallgraphUtils.getFileName(e.source) === CallgraphUtils.getFileName(node.source))
+        .filter(e => e.parent === node.parentFunction)
+        .length;
+    }
   }
 
   /* private static _isCallToGetterOrSetter = (node: Node): boolean => {

@@ -17,12 +17,12 @@ export default class Asyncify {
     const callgraph: Array<ICallgraphEdge> = await FileOps.readCSVFile(pathToCallgraphCSV, true);
     const callTree: Node = await CallGraphTransformations.transform(callgraph);
     Store.setData('callTree', callTree);
-    const transformations: {[key: string]: Array<ITransformationDetail>} = ASTTransformations.showTransformations(callTree);
-    await FileOps.writeFile('listOfTransformations.txt', JSON.stringify(transformations, null, 2));
+    // const transformations: {[key: string]: Array<ITransformationDetail>} = ASTTransformations.showTransformations(callTree);
+    // await FileOps.writeFile('listOfTransformations.txt', JSON.stringify(transformations, null, 2));
     const numberOfFuncsTransformed: number = await Asyncify.transform();
     console.log('Sync functions transformed: ', callTree.children.length);
     console.log('Related functions transformed: ', numberOfFuncsTransformed - callTree.children.length);
-    return transformations;
+    // return transformations;
   }
 
   public static transform = async (nodesToTransform: Array<string> = []): Promise<number> => {

@@ -4,13 +4,15 @@ export class Node {
   private _id: number = 0;
   private _source: string;
   private _target: string;
+  private _parentFunction: string;
   private _children: { [key: number]: Node } = {};
   private _parent: Node = null;
   private _nextChildId: number = 0;
 
-  constructor(source: string, target: string) {
+  constructor(source: string, target: string, parentFunction: string) {
     this._source = source;
     this._target = target;
+    this._parentFunction = parentFunction;
   }
 
   public get source(): string {
@@ -21,6 +23,9 @@ export class Node {
     return this._target;
   }
 
+  public get parentFunction(): string {
+    return this._parentFunction;
+  }
 
   public get id(): number {
     return this._id;

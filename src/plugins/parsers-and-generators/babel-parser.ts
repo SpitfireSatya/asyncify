@@ -7,6 +7,7 @@ export class BabelParser {
   public static generateAST(sourceCode: string, config: babelParser.ParserOptions, filePath: string): babelTypes.File {
     config = {
       'sourceType': 'module',
+      'strictMode': false,
       'plugins': [
         'jsx',
         'flow',

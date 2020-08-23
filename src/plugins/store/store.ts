@@ -6,6 +6,7 @@ import * as babelTypes from '@babel/types';
 export class Store {
 
   private static _fileList: Array<string> = [];
+  private static _implicitPromises: Array<{ parent: string, source: string }> = [];
   private static _filesToWrite: Array<string> = [];
   private static _asyncifiedFiles: Array<string> = [];
   private static _files: { [key: string]: string } = {};
@@ -178,6 +179,14 @@ export class Store {
 
   public static getasyncifiedFiles(): Array<string> {
     return DeepClone.clone(Store._asyncifiedFiles);
+  }
+
+  public static addImplicitPromises(locations: Array<{ parent: string, source: string }>): void {
+      Store._implicitPromises.push(...locations);
+  }
+
+  public static getImplicitPromises(): Array<{ parent: string, source: string }> {
+    return Store._implicitPromises;
   }
 
 }

@@ -4,6 +4,7 @@ import { Events } from '../events/events';
 import { Node } from '../../models/node.model';
 import { ICallgraphEdge } from '../../interfaces/callgraph-edge.interface';
 import { ExternsFuncDefinitions } from '../../constants/externs-func-definitions';
+import { Store } from '../store/store';
 
 export class ExtractCallTrees {
 
@@ -12,7 +13,8 @@ export class ExtractCallTrees {
 
   public static extract = (callGraph: Array<ICallgraphEdge>): Promise<Node> => {
     return new Promise((resolve: any, reject: any): void => {
-      const root: Node = new Node(null, null);
+      const root: Node = new Node(null, null, null);
+      ExtractCallTrees._extractImplicitPromises(callGraph);
       ExtractCallTrees._extractSyncFunctionCallers(root, callGraph);
       root.children.forEach((child: Node): void => {
         ExtractCallTrees._sourcesAdded = [];
@@ -32,7 +34,8 @@ export class ExtractCallTrees {
 
     for (let i: number = 0; i < callGraph.length; i++) {
       if (ExternsFuncDefinitions.syncFunctions.indexOf(callGraph[i].targetNode) !== -1) {
-        ExtractCallTrees._addNode(rootNode, new Node(callGraph[i].sourceNode, callGraph[i].targetNode));
+        const parent: string = ExtractCallTrees._getParent(callGraph[i].sourceNode, callGraph);
+        ExtractCallTrees._addNode(rootNode, new Node(callGraph[i].sourceNode, callGraph[i].targetNode, parent));
       }
     }
 
@@ -56,11 +59,13 @@ export class ExtractCallTrees {
             const index: number = ExtractCallTrees._nativeCallers
               .indexOf(callGraph[i].sourceNode.slice(callGraph[i].sourceNode.indexOf('('), callGraph[i].sourceNode.indexOf(',')));
             if (index !== -1) {
-              ExtractCallTrees._addNode(callTreeNode, new Node(callGraph[i].sourceNode, callGraph[i].targetNode));
+              const parent: string = ExtractCallTrees._getParent(callGraph[i].sourceNode, callGraph);
+              ExtractCallTrees._addNode(callTreeNode, new Node(callGraph[i].sourceNode, callGraph[i].targetNode, parent));
               ExtractCallTrees._nativeCallers.splice(index, 1);
             }
           } else {
-            ExtractCallTrees._addNode(callTreeNode, new Node(callGraph[i].sourceNode, callGraph[i].targetNode));
+            const parent: string = ExtractCallTrees._getParent(callGraph[i].sourceNode, callGraph);
+            ExtractCallTrees._addNode(callTreeNode, new Node(callGraph[i].sourceNode, callGraph[i].targetNode, parent));
             if (callGraph[i].sourceNode.indexOf('codeql-home') !== -1) {
               const targetSubString: string = callGraph[i].targetNode
                 .slice(callGraph[i].targetNode.indexOf('('), callGraph[i].targetNode.indexOf(','));
@@ -96,6 +101,20 @@ export class ExtractCallTrees {
       }
     }
     return parent.targetNode;
+  }
+
+  private static _extractImplicitPromises = (callGraph: Array<ICallgraphEdge>): void => {
+    const callsToPromises: Array<{ parent: string, source: string }> = callGraph.filter((edge: ICallgraphEdge): boolean =>
+      (edge.targetNode === ExternsFuncDefinitions.PROMISE_THEN || edge.targetNode === ExternsFuncDefinitions.PROMISE_CATCH))
+      .map((edge: ICallgraphEdge): { parent: string, source: string } => {
+        return {
+          parent: ExtractCallTrees._getParent(edge.sourceNode, callGraph),
+          source: edge.sourceNode
+        };
+      });
+
+    Store.addImplicitPromises(callsToPromises);
+
   }
 
 }

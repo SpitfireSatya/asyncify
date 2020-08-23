@@ -7,6 +7,7 @@ export class ExternsCallDefinitions {
   public static readonly FS_RENAME: string = `Callee(${Global.HOME_DIR}/codeql-home/codeql/javascript/tools/data/externs/nodejs/fs.js:<523,64>--<523,74>)`;
   public static readonly FS_READSTREAM_ON: string = `Callee(${Global.HOME_DIR}/codeql-home/codeql/javascript/tools/data/externs/nodejs/fs.js:<1371,53>--<1371,63>)`;
   public static readonly FS_WRITESTREAM_ON: string = `Callee(${Global.HOME_DIR}/codeql-home/codeql/javascript/tools/data/externs/nodejs/fs.js:<1379,54>--<1379,64>)`;
+  public static readonly FS_READDIR: string = `Callee(${Global.HOME_DIR}/codeql-home/codeql/javascript/tools/data/externs/nodejs/fs.js:<904,53>--<904,63>)`;
 
   // call to map()
   public static readonly MAP_ES3: string = `Callee(${Global.HOME_DIR}/codeql-home/codeql/javascript/tools/data/externs/es/es3.js:<811,69>--<811,79>)`;
@@ -18,7 +19,8 @@ export class ExternsCallDefinitions {
 
   // callS to Promise
   public static readonly NEW_PROMISE: string = `Callee(${Global.HOME_DIR}/codeql-home/codeql/javascript/tools/data/externs/es/es6.js:<1105,42>--<1105,52>)`;
-  public static readonly PROMISE_THEN: string = `Callee(${Global.HOME_DIR}/codeql-home/codeql/javascript/tools/data/externs/es/es6.js:<1184,89>--<1184,106>)`;
+  public static readonly PROMISE_THEN_1: string = `Callee(${Global.HOME_DIR}/codeql-home/codeql/javascript/tools/data/externs/es/es6.js:<1184,89>--<1184,106>)`;
+  public static readonly PROMISE_THEN_2: string = `Callee(${Global.HOME_DIR}/codeql-home/codeql/javascript/tools/data/externs/es/es6.js:<1093,91>--<1093,108>)`;
   public static readonly PROMISE_CATCH: string = `Callee(${Global.HOME_DIR}/codeql-home/codeql/javascript/tools/data/externs/es/es6.js:<1192,64>--<1192,76>)`;
 
   public static readonly NET_SERVER_LISTEN_1: string = `Callee(${Global.HOME_DIR}/codeql-home/codeql/javascript/tools/data/externs/nodejs/net.js:<308,88>--<308,107>)`;
@@ -55,9 +57,12 @@ export class ExternsCallDefinitions {
     ];
   }
 
-  public static get callsToNewPromise(): Array<string> {
+  public static get callsToPromise(): Array<string> {
     return [
-      ExternsCallDefinitions.NEW_PROMISE
+      ExternsCallDefinitions.NEW_PROMISE,
+      ExternsCallDefinitions.PROMISE_THEN_1,
+      ExternsCallDefinitions.PROMISE_THEN_2,
+      ExternsCallDefinitions.PROMISE_CATCH
     ];
   }
 
@@ -76,7 +81,11 @@ export class ExternsCallDefinitions {
       ExternsCallDefinitions.FS_RENAME,
       ExternsCallDefinitions.FS_READSTREAM_ON,
       ExternsCallDefinitions.FS_WRITESTREAM_ON,
+      ExternsCallDefinitions.FS_READDIR,
       ExternsCallDefinitions.NEW_PROMISE,
+      ExternsCallDefinitions.PROMISE_THEN_1,
+      ExternsCallDefinitions.PROMISE_THEN_2,
+      ExternsCallDefinitions.PROMISE_CATCH,
       ExternsCallDefinitions.FOREACH_ES3,
       ExternsCallDefinitions.FOREACH_ES6,
       ExternsCallDefinitions.MAP_ES3,

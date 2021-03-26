@@ -8,6 +8,8 @@ export class ExternsCallDefinitions {
   public static readonly FS_READSTREAM_ON: string = `Callee(${Global.HOME_DIR}/codeql-home/codeql/javascript/tools/data/externs/nodejs/fs.js:<1371,53>--<1371,63>)`;
   public static readonly FS_WRITESTREAM_ON: string = `Callee(${Global.HOME_DIR}/codeql-home/codeql/javascript/tools/data/externs/nodejs/fs.js:<1379,54>--<1379,64>)`;
   public static readonly FS_READDIR: string = `Callee(${Global.HOME_DIR}/codeql-home/codeql/javascript/tools/data/externs/nodejs/fs.js:<904,53>--<904,63>)`;
+  public static readonly FS_READFILE: string = `Callee(${Global.HOME_DIR}/codeql-home/codeql/javascript/tools/data/externs/nodejs/fs.js:<1125,68>--<1125,78>)`;
+  public static readonly FS_WRITEFILE: string = `Callee(${Global.HOME_DIR}/codeql-home/codeql/javascript/tools/data/externs/nodejs/fs.js:<1186,74>--<1186,84>)`;
 
   // call to map()
   public static readonly MAP_ES3: string = `Callee(${Global.HOME_DIR}/codeql-home/codeql/javascript/tools/data/externs/es/es3.js:<811,69>--<811,79>)`;
@@ -27,6 +29,10 @@ export class ExternsCallDefinitions {
   public static readonly NET_SERVER_LISTEN_2: string = `Callee(${Global.HOME_DIR}/codeql-home/codeql/javascript/tools/data/externs/nodejs/net.js:<323,88>--<323,107>)`;
   public static readonly NET_SERVER_LISTEN_3: string = `Callee(${Global.HOME_DIR}/codeql-home/codeql/javascript/tools/data/externs/nodejs/net.js:<338,90>--<338,109>)`;
   public static readonly NET_SERVER_LISTEN_4: string = `Callee(${Global.HOME_DIR}/codeql-home/codeql/javascript/tools/data/externs/nodejs/net.js:<345,91>--<345,110>)`;
+
+  public static readonly HTTP_GET: string = `Callee(${Global.HOME_DIR}/codeql-home/codeql/javascript/tools/data/externs/nodejs/http.js:<614,54>--<614,64>)`;
+  public static readonly HTTPS_GET: string = `Callee(${Global.HOME_DIR}/codeql-home/codeql/javascript/tools/data/externs/nodejs/https.js:<244,55>--<244,65>)`;
+  public static readonly HTTP_SET_TIMEOUT: string = `Callee(${Global.HOME_DIR}/codeql-home/codeql/javascript/tools/data/externs/nodejs/http.js:<118,76>--<118,86>)`;
 
   // call to process
   public static readonly PROCESS_NEXT_TICK: string = `Callee(${Global.HOME_DIR}/codeql-home/codeql/javascript/tools/data/externs/nodejs/globals.js:<989,76>--<989,86>)`;
@@ -62,7 +68,12 @@ export class ExternsCallDefinitions {
       ExternsCallDefinitions.NEW_PROMISE,
       ExternsCallDefinitions.PROMISE_THEN_1,
       ExternsCallDefinitions.PROMISE_THEN_2,
-      ExternsCallDefinitions.PROMISE_CATCH
+      ExternsCallDefinitions.PROMISE_CATCH,
+      ExternsCallDefinitions.HTTP_GET,
+      ExternsCallDefinitions.HTTPS_GET,
+      ExternsCallDefinitions.HTTP_SET_TIMEOUT,
+      ExternsCallDefinitions.FS_READFILE,
+      ExternsCallDefinitions.FS_WRITEFILE
     ];
   }
 
@@ -99,7 +110,12 @@ export class ExternsCallDefinitions {
       ExternsCallDefinitions.JEST_IT,
       ExternsCallDefinitions.JEST_FN,
       ExternsCallDefinitions.JEST_BEFORE_EACH,
-      ExternsCallDefinitions.JEST_BEFORE
+      ExternsCallDefinitions.JEST_BEFORE,
+      ExternsCallDefinitions.HTTP_GET,
+      ExternsCallDefinitions.HTTPS_GET,
+      ExternsCallDefinitions.HTTP_SET_TIMEOUT,
+      ExternsCallDefinitions.FS_READFILE,
+      ExternsCallDefinitions.FS_WRITEFILE
     ];
   }
 

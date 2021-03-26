@@ -9,7 +9,7 @@ export class ASTNodeTypes {
   public static readonly OBJECT_METHOD: string = 'ObjectMethod';
 
   public static readonly CALL_EXPRESSION: string = 'CallExpression';
-  // public static readonly MEMBER_EXPRESSION: string = 'MemberExpression';
+  public static readonly MEMBER_EXPRESSION: string = 'MemberExpression';
   public static readonly NEW_EXPRESSION: string = 'NewExpression';
 
   public static get functionDeclarations(): Array<string> {
@@ -26,7 +26,7 @@ export class ASTNodeTypes {
   public static get functionCalls(): Array<string> {
     return [
       ASTNodeTypes.CALL_EXPRESSION,
-      // ASTNodeTypes.MEMBER_EXPRESSION,
+      ASTNodeTypes.MEMBER_EXPRESSION,
       ASTNodeTypes.NEW_EXPRESSION
     ];
   }

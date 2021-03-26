@@ -22,7 +22,7 @@ export default class Asyncify {
     const numberOfFuncsTransformed: number = await Asyncify.transform();
     console.log('Sync functions transformed: ', callTree.children.length);
     console.log('Related functions transformed: ', numberOfFuncsTransformed - callTree.children.length);
-    // return transformations;
+    return;
   }
 
   public static transform = async (nodesToTransform: Array<string> = []): Promise<number> => {

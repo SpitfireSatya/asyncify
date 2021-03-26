@@ -58,16 +58,19 @@ export class ASTTransformations {
         switch (ASTTransformations._getRequiredTransform(node)) {
 
           case RequiredTransform.SYNC_TO_ASYNC:
+            console.log('SYNC_TO_ASYNC');
             SyncToAwaitedPromise.transform(nodeOfInterest);
             AsyncAwaitMethodCalls.transform(nodeOfInterest);
             break;
 
           case RequiredTransform.PROMISE_ALL:
+            console.log('PROMISE_ALL');
             WrapInPromiseAll.transform(nodeOfInterest);
             AsyncAwaitMethodCalls.transform(nodeOfInterest);
             break;
 
           case RequiredTransform.FOR_OF_LOOP:
+            console.log('FOR_OF_LOOP');
             ForEachToForOf.transform(nodeOfInterest);
             AsyncAwaitMethodCalls.transform(nodeOfInterest);
             break;
@@ -99,7 +102,7 @@ export class ASTTransformations {
         if (nodeOfInterest.parentNode[nodeOfInterest.key] &&
           ASTNodeKinds.getterAndSetter().includes(nodeOfInterest.parentNode[nodeOfInterest.key].kind)) {
 
-          AsyncifyGetterAndSetter.transform(nodeOfInterest);
+          // AsyncifyGetterAndSetter.transform(nodeOfInterest);
           ASTTransformations._relatedFunctionsTransformed++;
 
           if (!updateRef) {

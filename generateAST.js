@@ -3,7 +3,8 @@
   const babelParser = require('@babel/parser');
 
   // const sourceCode = `const readFilePromise = require('util').promisify(require('fs').readFile);`;
-  const sourceCode = `readFilePromise('');`;
+  // const sourceCode = `readFilePromise('');`;
+  const sourceCode = `function func() { return (async function(){}()) }`;
 
   config = {
     'sourceType': 'module',

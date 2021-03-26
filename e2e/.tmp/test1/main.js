@@ -12,8 +12,10 @@
   }));
   const obj = {
     get someProp() {
-      await sync.doNotConvert3();
-      return '';
+      return async function () {
+        await sync.doNotConvert3();
+        return '';
+      }();
     }
 
   };

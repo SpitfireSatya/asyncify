@@ -8,6 +8,7 @@ import { Store } from '../store/store';
 
 export class ExtractCallTrees {
 
+  private static _sourceNodesAdded: Array<string> = [];
   private static _nativeCallers: Array<string> = [];
   private static _sourcesAdded: Array<string> = [];
 
@@ -32,8 +33,9 @@ export class ExtractCallTrees {
 
   private static _extractSyncFunctionCallers = (rootNode: Node, callGraph: Array<ICallgraphEdge>): void => {
 
-    for (let i: number = 0; i < callGraph.length; i++) {
-      if (ExternsFuncDefinitions.syncFunctions.indexOf(callGraph[i].targetNode) !== -1) {
+    for (let i: number = callGraph.length - 1; i > -1; i--) {
+      if (!ExtractCallTrees._sourceNodesAdded.includes(callGraph[i].sourceNode) && ExternsFuncDefinitions.syncFunctions.indexOf(callGraph[i].targetNode) !== -1) {
+        ExtractCallTrees._sourceNodesAdded.push(callGraph[i].sourceNode);
         const parent: string = ExtractCallTrees._getParent(callGraph[i].sourceNode, callGraph);
         ExtractCallTrees._addNode(rootNode, new Node(callGraph[i].sourceNode, callGraph[i].targetNode, parent));
       }

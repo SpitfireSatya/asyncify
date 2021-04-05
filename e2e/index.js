@@ -30,7 +30,7 @@
   copydir.sync(path.resolve(__dirname, 'fixtures'), path.resolve(__dirname, '.tmp'))
 
   try {
-    await asyncify.showTransformations(path.resolve(__dirname, '.tmp', 'test1', 'test.csv'));
+    await asyncify.showTransformations(path.resolve(__dirname, '.tmp', 'test4', 'test.csv'));
   } catch(e) {
     console.log(e);
   }

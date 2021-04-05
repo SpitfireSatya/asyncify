@@ -14,6 +14,7 @@ import { ASTNodeKinds } from '../../constants/ast-node-kinds.constant';
 
 import { BabelGenerator } from '../parsers-and-generators/babel-generator';
 import { ITransformationDetail } from '../../interfaces/transformation-detail.interface';
+import { ForEachToMap } from './forEach-to-map';
 
 export class ASTTransformations {
 
@@ -58,7 +59,7 @@ export class ASTTransformations {
         switch (ASTTransformations._getRequiredTransform(node)) {
 
           case RequiredTransform.SYNC_TO_ASYNC:
-            SyncToAwaitedPromise.transform(nodeOfInterest);
+            SyncToAwaitedPromise.transform(nodeOfInterest, node);
             AsyncAwaitMethodCalls.transform(nodeOfInterest);
             break;
 
@@ -68,7 +69,8 @@ export class ASTTransformations {
             break;
 
           case RequiredTransform.FOR_OF_LOOP:
-            ForEachToForOf.transform(nodeOfInterest);
+            ForEachToMap.transform(nodeOfInterest);
+            // ForEachToForOf.transform(nodeOfInterest);
             AsyncAwaitMethodCalls.transform(nodeOfInterest);
             break;
 

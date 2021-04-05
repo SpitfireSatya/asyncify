@@ -68,11 +68,16 @@ export class ASTTransformations {
             AsyncAwaitMethodCalls.transform(nodeOfInterest);
             break;
 
-          case RequiredTransform.FOR_OF_LOOP:
+          case RequiredTransform.FOR_EACH_TO_MAP:
             ForEachToMap.transform(nodeOfInterest);
-            // ForEachToForOf.transform(nodeOfInterest);
             AsyncAwaitMethodCalls.transform(nodeOfInterest);
             break;
+
+          case RequiredTransform.FOR_OF_LOOP:
+            ForEachToForOf.transform(nodeOfInterest);
+            AsyncAwaitMethodCalls.transform(nodeOfInterest);
+            break;
+  
 
           case RequiredTransform.ASYNC_AWAIT:
           default:
@@ -137,7 +142,13 @@ export class ASTTransformations {
     }
 
     if (ExternsFuncDefinitions.forEachFunctions.includes(node.target)) {
-      requiredTransform = RequiredTransform.FOR_OF_LOOP;
+      const astNode: IASTNode = Store.getASTNode(node.source);
+      console.log('astNode.parentNode: ', astNode.parentNode);
+      if(astNode.parentNode.type !== 'ArrowFunctionExpression') {
+        requiredTransform = RequiredTransform.FOR_OF_LOOP;  
+      } else {
+        requiredTransform = RequiredTransform.FOR_EACH_TO_MAP;
+      }
     }
 
     if (ExternsFuncDefinitions.mapFunctions.includes(node.target)) {

@@ -14,7 +14,8 @@ export class AsyncAwaitMethodCalls {
   private static _awaitMethodCall = (nodeRef: IASTNode): void => {
     const childNode: babelTypes.CallExpression = nodeRef.parentNode[nodeRef.key];
 
-    if (!(nodeRef.parentNode.type === 'AwaitExpression' || nodeRef.parentNode[nodeRef.key].type === 'AwaitExpression')) {
+    if (!(nodeRef.parentNode.type === 'AwaitExpression' || nodeRef.parentNode[nodeRef.key].type === 'AwaitExpression' ||
+      nodeRef.parentNode.type === 'ReturnStatement' || nodeRef.parentNode[nodeRef.key].type === 'ReturnStatement')) {
       nodeRef.parentNode[nodeRef.key] = {
         type: 'AwaitExpression',
         argument: childNode,
@@ -29,7 +30,7 @@ export class AsyncAwaitMethodCalls {
     if (nodeRef.parentNode.async !== undefined) {
       nodeRef.parentNode.async = true;
     }
-    if (nodeRef.parentFunction === null) {
+    if (nodeRef.parentFunction === null && !(nodeRef.parentNode.type === 'ReturnStatement' || nodeRef.parentNode[nodeRef.key].type === 'ReturnStatement')) {
       if (!Store.getasyncifiedFiles().includes(nodeRef.fileName)) {
         AsyncAwaitMethodCalls._addIIFE(nodeRef);
         Store.addFileToAsyncifiedFiles(nodeRef.fileName);

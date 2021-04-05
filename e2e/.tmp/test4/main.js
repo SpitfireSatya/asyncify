@@ -1,170 +1,115 @@
-(async function () {
-  const fs_readdirPromise = require('util').promisify(require('fs').readdir);
 
-  const fs_accessPromise = require('util').promisify(require('fs').access);
+const fs = require('fs');
+const zlib = require('zlib');
+const cp = require('child_process');
+const crypto = require('crypto');
+const path = require('path');
+const jsonfile = require('jsonfile');
 
-  const fs_appendFilePromise = require('util').promisify(require('fs').appendFile);
+fs.readFileSync();
 
-  const fs_chmodPromise = require('util').promisify(require('fs').chmod);
+fs.writeFileSync();
 
-  const fs_fchmodPromise = require('util').promisify(require('fs').fchmod);
+fs.readdirSync();
 
-  const fs_lchmodPromise = require('util').promisify(require('fs').lchmod);
+fs.accessSync();
 
-  const fs_chownPromise = require('util').promisify(require('fs').chown);
+fs.appendFileSync();
 
-  const fs_fchownPromise = require('util').promisify(require('fs').fchown);
+fs.chmodSync();
 
-  const fs_lchownPromise = require('util').promisify(require('fs').lchown);
+fs.fchmodSync();
 
-  const fs_mkdirPromise = require('util').promisify(require('fs').mkdir);
+fs.lchmodSync();
 
-  const fs_mkdtempPromise = require('util').promisify(require('fs').mkdtemp);
+fs.chownSync();
 
-  const fs_statPromise = require('util').promisify(require('fs').stat);
+fs.fchownSync();
 
-  const fs_fstatPromise = require('util').promisify(require('fs').fstat);
+fs.lchownSync();
 
-  const fs_lstatPromise = require('util').promisify(require('fs').lstat);
+fs.mkdirSync();
 
-  const fs_linkPromise = require('util').promisify(require('fs').link);
+fs.mkdtempSync();
 
-  const fs_symlinkPromise = require('util').promisify(require('fs').symlink);
+fs.statSync();
 
-  const fs_readlinkPromise = require('util').promisify(require('fs').readlink);
+fs.fstatSync();
 
-  const fs_realpathPromise = require('util').promisify(require('fs').realpath);
+fs.lstatSync();
 
-  const fs_unlinkPromise = require('util').promisify(require('fs').unlink);
+fs.linkSync();
 
-  const fs_rmdirPromise = require('util').promisify(require('fs').rmdir);
+fs.symlinkSync();
 
-  const fs_renamePromise = require('util').promisify(require('fs').rename);
+fs.readlinkSync();
 
-  const fs_openPromise = require('util').promisify(require('fs').open);
+fs.realpathSync();
 
-  const fs_closePromise = require('util').promisify(require('fs').close);
+fs.unlinkSync();
 
-  const fs_copyFilePromise = require('util').promisify(require('fs').copyFile);
+fs.rmdirSync();
 
-  const fs_truncatePromise = require('util').promisify(require('fs').truncate);
+fs.renameSync();
 
-  const fs_ftruncatePromise = require('util').promisify(require('fs').ftruncate);
+fs.openSync();
 
-  const fs_utimesPromise = require('util').promisify(require('fs').utimes);
+fs.closeSync();
 
-  const fs_futimesPromise = require('util').promisify(require('fs').futimes);
+fs.existsSync();
 
-  const fs_fsyncPromise = require('util').promisify(require('fs').fsync);
+fs.copyFileSync();
 
-  const fs_readPromise = require('util').promisify(require('fs').read);
+fs.truncateSync();
 
-  const fs_writePromise = require('util').promisify(require('fs').write);
+fs.ftruncateSync();
 
-  const fs_fdatasyncPromise = require('util').promisify(require('fs').fdatasync);
+fs.utimesSync();
 
-  const zlib_gzipPromise = require('util').promisify(require('zlib').gzip);
+fs.futimesSync();
 
-  const zlib_gunzipPromise = require('util').promisify(require('zlib').gunzip);
+fs.fsyncSync();
 
-  const zlib_brotliCompressPromise = require('util').promisify(require('zlib').brotliCompress);
+fs.readSync();
 
-  const zlib_brotliDecompressPromise = require('util').promisify(require('zlib').brotliDecompress);
+fs.writeSync();
 
-  const zlib_deflatePromise = require('util').promisify(require('zlib').deflate);
+fs.fdatasyncSync();
 
-  const zlib_inflatePromise = require('util').promisify(require('zlib').inflate);
+zlib.gzipSync();
 
-  const zlib_deflateRawPromise = require('util').promisify(require('zlib').deflateRaw);
+zlib.gunzipSync();
 
-  const zlib_inflateRawPromise = require('util').promisify(require('zlib').inflateRaw);
+zlib.brotliCompressSync();
 
-  const zlib_unzipPromise = require('util').promisify(require('zlib').unzip);
+zlib.brotliDecompressSync();
 
-  const child_process_execPromise = require('util').promisify(require('child_process').exec);
+zlib.deflateSync();
 
-  const child_process_spawnPromise = require('util').promisify(require('child_process').spawn);
+zlib.inflateSync();
 
-  const child_process_execFilePromise = require('util').promisify(require('child_process').execFile);
+zlib.deflateRawSync();
 
-  const crypto_pbkdf2Promise = require('util').promisify(require('crypto').pbkdf2);
+zlib.inflateRawSync();
 
-  const crypto_generateKeyPairPromise = require('util').promisify(require('crypto').generateKeyPair);
+zlib.unzipSync();
 
-  const crypto_randomFillPromise = require('util').promisify(require('crypto').randomFill);
+cp.execSync();
 
-  const crypto_scryptPromise = require('util').promisify(require('crypto').scrypt);
+cp.spawnSync();
 
-  const path_existsPromise = require('util').promisify(require('path').exists);
+cp.execFileSync();
 
-  const jsonfile_readFilePromise = require('util').promisify(require('jsonfile').readFile);
+crypto.pbkdf2Sync();
 
-  const jsonfile_writeFilePromise = require('util').promisify(require('jsonfile').writeFile);
+crypto.generateKeyPairSync();
 
-  const fs = require('fs');
+crypto.randomFillSync();
 
-  const zlib = require('zlib');
+crypto.scryptSync();
 
-  const cp = require('child_process');
+path.existsSync();
 
-  const crypto = require('crypto');
+jsonfile.readFileSync();
 
-  const path = require('path');
-
-  const jsonfile = require('jsonfile');
-
-  await jsonfile_readFilePromise();
-  await jsonfile_writeFilePromise();
-  await fs_readdirPromise();
-  await fs_accessPromise();
-  await fs_appendFilePromise();
-  await fs_chmodPromise();
-  await fs_fchmodPromise();
-  await fs_lchmodPromise();
-  await fs_chownPromise();
-  await fs_fchownPromise();
-  await fs_lchownPromise();
-  await fs_mkdirPromise();
-  await fs_mkdtempPromise();
-  await fs_statPromise();
-  await fs_fstatPromise();
-  await fs_lstatPromise();
-  await fs_linkPromise();
-  await fs_symlinkPromise();
-  await fs_readlinkPromise();
-  await fs_realpathPromise();
-  await fs_unlinkPromise();
-  await fs_rmdirPromise();
-  await fs_renamePromise();
-  await fs_openPromise();
-  await fs_closePromise();
-  await path_existsPromise();
-  await fs_copyFilePromise();
-  await fs_truncatePromise();
-  await fs_ftruncatePromise();
-  await fs_utimesPromise();
-  await fs_futimesPromise();
-  await fs_fsyncPromise();
-  await fs_readPromise();
-  await fs_writePromise();
-  await fs_fdatasyncPromise();
-  await zlib_gzipPromise();
-  await zlib_gunzipPromise();
-  await zlib_brotliCompressPromise();
-  await zlib_brotliDecompressPromise();
-  await zlib_deflatePromise();
-  await zlib_inflatePromise();
-  await zlib_deflateRawPromise();
-  await zlib_inflateRawPromise();
-  await zlib_unzipPromise();
-  await child_process_execPromise();
-  await child_process_spawnPromise();
-  await child_process_execFilePromise();
-  await crypto_pbkdf2Promise();
-  await crypto_generateKeyPairPromise();
-  await crypto_randomFillPromise();
-  await crypto_scryptPromise();
-  await path_existsPromise();
-  await jsonfile_readFilePromise();
-  await jsonfile_writeFilePromise();
-})();
+jsonfile.writeFileSync();

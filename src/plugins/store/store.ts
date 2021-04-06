@@ -189,4 +189,17 @@ export class Store {
     return Store._implicitPromises;
   }
 
+  public static reset(): void {
+    Store._fileList = [];
+    Store._implicitPromises = [];
+    Store._filesToWrite = [];
+    Store._asyncifiedFiles = [];
+    Store._files = {};
+    Store._ASTs = {};
+    Store._config = {};
+    Store._ASTNodes = {};
+    Store._ASTNodeCopies = {};
+    Store._data = { };
+  }
+
 }

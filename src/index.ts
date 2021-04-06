@@ -13,21 +13,35 @@ import { ITransformationDetail } from './interfaces/transformation-detail.interf
 
 export default class Asyncify {
 
-  public static showTransformations = async (pathToCallgraphCSV: string): Promise<{[key: string]: Array<ITransformationDetail>}> => {
+  public static showTransformationsAndTransform = async (pathToCallgraphCSV: string): Promise<{[key: string]: Array<ITransformationDetail>}> => {
     const callgraph: Array<ICallgraphEdge> = await FileOps.readCSVFile(pathToCallgraphCSV, true);
     const callTree: Node = await CallGraphTransformations.transform(callgraph);
     Store.setData('callTree', callTree);
-    // const transformations: {[key: string]: Array<ITransformationDetail>} = ASTTransformations.showTransformations(callTree);
-    // await FileOps.writeFile('listOfTransformations.txt', JSON.stringify(transformations, null, 2));
-    const numberOfFuncsTransformed: number = await Asyncify.transform();
+    const transformations: {[key: string]: Array<ITransformationDetail>} = ASTTransformations.showTransformations(callTree);
+    await FileOps.writeFile('listOfTransformations.txt', JSON.stringify(transformations, null, 2));
+    
+    Asyncify.rebuildASTCache();
+
+    const numberOfFuncsTransformed: number = ASTTransformations.transform(callTree);
+    await Asyncify.writeTransformedFiles();
     console.log('Sync functions transformed: ', callTree.children.length);
     console.log('Related functions transformed: ', numberOfFuncsTransformed - callTree.children.length);
     return;
   }
 
-  public static transform = async (nodesToTransform: Array<string> = []): Promise<number> => {
-    Asyncify.rebuildASTCache();
-    const callTree: Node = <Node>Store.getData('callTree');
+  public static showTransformations = async (pathToCallgraphCSV: string): Promise<{[key: string]: Array<ITransformationDetail>}> => {
+    const callgraph: Array<ICallgraphEdge> = await FileOps.readCSVFile(pathToCallgraphCSV, true);
+    const callTree: Node = await CallGraphTransformations.transform(callgraph);
+    Store.setData('callTree', callTree);
+    const transformations: {[key: string]: Array<ITransformationDetail>} = ASTTransformations.showTransformations(callTree);
+    await FileOps.writeFile('listOfTransformations.txt', JSON.stringify(transformations, null, 2));
+    return;
+  }
+
+  public static transform = async (pathToCallgraphCSV: string, nodesToTransform: Array<string> = []): Promise<number> => {
+    const callgraph: Array<ICallgraphEdge> = await FileOps.readCSVFile(pathToCallgraphCSV, true);
+    const callTree: Node = await CallGraphTransformations.transform(callgraph);
+    Store.setData('callTree', callTree);
     /* callTree.childKeys
       .filter((key: string): boolean => !nodesToTransform.includes(key))
       .forEach((key: string): void => {

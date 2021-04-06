@@ -7,7 +7,7 @@
   const fs = require('fs');
   const asyncify = require('../dist/asyncify');
 
-  // const start = new Date().getTime();
+  const start = new Date().getTime();
 
   // await asyncify.showTransformations(path.resolve(__dirname, 'NodeBlendCallGraph.csv'));
   // await asyncify.showTransformations(path.resolve(__dirname, 'LumoCallGraph.csv'));
@@ -23,17 +23,18 @@
   // await asyncify.showTransformations(path.resolve(__dirname, 'esdocCallGraph.csv'));
   // asyncify.transform();
 
-  // const end = new Date().getTime();
-
-  // console.log('Time: ', end - start);
   fs.rmdirSync(path.resolve(__dirname, '.tmp'), { recursive: true });
   copydir.sync(path.resolve(__dirname, 'fixtures'), path.resolve(__dirname, '.tmp'))
 
   try {
-    await asyncify.showTransformations(path.resolve(__dirname, '.tmp', 'test1', 'test.csv'));
+    await asyncify.showTransformationsAndTransform(path.resolve(__dirname, '.tmp', 'test4', 'test.csv'));
   } catch(e) {
     console.log(e);
   }
+
+  const end = new Date().getTime();
+
+  console.log('Time: ', end - start);
 
 }());
 

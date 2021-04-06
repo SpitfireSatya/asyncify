@@ -23,6 +23,7 @@ export class ASTTransformations {
 
   public static transform = (node: Node): number => {
 
+    ASTTransformations._visited = [];
     ASTTransformations._relatedFunctionsTransformed = 0;
     node.children.forEach((child: Node): void => {
       ASTTransformations._traverseCallTree(child, true, undefined);
@@ -46,7 +47,7 @@ export class ASTTransformations {
   private static _traverseCallTree = (node: Node, updateRef: boolean = true,
     transformationDetails?: Array<ITransformationDetail>): void => {
 
-    if (updateRef && ASTTransformations._visited.includes(node.source) && ASTTransformations._visited.includes(node.target)) {
+    if (ASTTransformations._visited.includes(node.source) && ASTTransformations._visited.includes(node.target)) {
       return;
     }
 
@@ -75,7 +76,7 @@ export class ASTTransformations {
 
           case RequiredTransform.FOR_OF_LOOP:
             ForEachToForOf.transform(nodeOfInterest);
-            AsyncAwaitMethodCalls.transform(nodeOfInterest);
+            // AsyncAwaitMethodCalls.transform(nodeOfInterest);
             break;
   
 
@@ -122,10 +123,8 @@ export class ASTTransformations {
       }
     }
 
-    if (updateRef) {
-      ASTTransformations._visited.push(node.source);
-      ASTTransformations._visited.push(node.target);
-    }
+    ASTTransformations._visited.push(node.source);
+    ASTTransformations._visited.push(node.target);
 
     node.children.forEach((child: Node): void => {
       ASTTransformations._traverseCallTree(child, updateRef, transformationDetails);
@@ -143,7 +142,6 @@ export class ASTTransformations {
 
     if (ExternsFuncDefinitions.forEachFunctions.includes(node.target)) {
       const astNode: IASTNode = Store.getASTNode(node.source);
-      console.log('astNode.parentNode: ', astNode.parentNode);
       if(astNode.parentNode.type !== 'ArrowFunctionExpression') {
         requiredTransform = RequiredTransform.FOR_OF_LOOP;  
       } else {

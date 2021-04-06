@@ -1,1 +1,488 @@
-{}
+{
+  "0": [
+    {
+      "filename": "/home/osboxes/asyncify/e2e/.tmp/test4/main.js",
+      "startLine": 9,
+      "endLine": 9,
+      "before": "fs.readFileSync()",
+      "after": "*Note*: File will be wrapped in an IIFE \n\nawait fs_readFilePromise()"
+    }
+  ],
+  "1": [
+    {
+      "filename": "/home/osboxes/asyncify/e2e/.tmp/test4/main.js",
+      "startLine": 11,
+      "endLine": 11,
+      "before": "fs.writeFileSync()",
+      "after": "*Note*: File will be wrapped in an IIFE \n\nawait fs_writeFilePromise()"
+    }
+  ],
+  "2": [
+    {
+      "filename": "/home/osboxes/asyncify/e2e/.tmp/test4/main.js",
+      "startLine": 13,
+      "endLine": 13,
+      "before": "fs.readdirSync()",
+      "after": "*Note*: File will be wrapped in an IIFE \n\nawait fs_readdirPromise()"
+    }
+  ],
+  "3": [
+    {
+      "filename": "/home/osboxes/asyncify/e2e/.tmp/test4/main.js",
+      "startLine": 15,
+      "endLine": 15,
+      "before": "fs.accessSync()",
+      "after": "*Note*: File will be wrapped in an IIFE \n\nawait fs_accessPromise()"
+    }
+  ],
+  "4": [
+    {
+      "filename": "/home/osboxes/asyncify/e2e/.tmp/test4/main.js",
+      "startLine": 17,
+      "endLine": 17,
+      "before": "fs.appendFileSync()",
+      "after": "*Note*: File will be wrapped in an IIFE \n\nawait fs_appendFilePromise()"
+    }
+  ],
+  "5": [
+    {
+      "filename": "/home/osboxes/asyncify/e2e/.tmp/test4/main.js",
+      "startLine": 19,
+      "endLine": 19,
+      "before": "fs.chmodSync()",
+      "after": "*Note*: File will be wrapped in an IIFE \n\nawait fs_chmodPromise()"
+    }
+  ],
+  "6": [
+    {
+      "filename": "/home/osboxes/asyncify/e2e/.tmp/test4/main.js",
+      "startLine": 21,
+      "endLine": 21,
+      "before": "fs.fchmodSync()",
+      "after": "*Note*: File will be wrapped in an IIFE \n\nawait fs_fchmodPromise()"
+    }
+  ],
+  "7": [
+    {
+      "filename": "/home/osboxes/asyncify/e2e/.tmp/test4/main.js",
+      "startLine": 23,
+      "endLine": 23,
+      "before": "fs.lchmodSync()",
+      "after": "*Note*: File will be wrapped in an IIFE \n\nawait fs_lchmodPromise()"
+    }
+  ],
+  "8": [
+    {
+      "filename": "/home/osboxes/asyncify/e2e/.tmp/test4/main.js",
+      "startLine": 25,
+      "endLine": 25,
+      "before": "fs.chownSync()",
+      "after": "*Note*: File will be wrapped in an IIFE \n\nawait fs_chownPromise()"
+    }
+  ],
+  "9": [
+    {
+      "filename": "/home/osboxes/asyncify/e2e/.tmp/test4/main.js",
+      "startLine": 27,
+      "endLine": 27,
+      "before": "fs.fchownSync()",
+      "after": "*Note*: File will be wrapped in an IIFE \n\nawait fs_fchownPromise()"
+    }
+  ],
+  "10": [
+    {
+      "filename": "/home/osboxes/asyncify/e2e/.tmp/test4/main.js",
+      "startLine": 29,
+      "endLine": 29,
+      "before": "fs.lchownSync()",
+      "after": "*Note*: File will be wrapped in an IIFE \n\nawait fs_lchownPromise()"
+    }
+  ],
+  "11": [
+    {
+      "filename": "/home/osboxes/asyncify/e2e/.tmp/test4/main.js",
+      "startLine": 31,
+      "endLine": 31,
+      "before": "fs.mkdirSync()",
+      "after": "*Note*: File will be wrapped in an IIFE \n\nawait fs_mkdirPromise()"
+    }
+  ],
+  "12": [
+    {
+      "filename": "/home/osboxes/asyncify/e2e/.tmp/test4/main.js",
+      "startLine": 33,
+      "endLine": 33,
+      "before": "fs.mkdtempSync()",
+      "after": "*Note*: File will be wrapped in an IIFE \n\nawait fs_mkdtempPromise()"
+    }
+  ],
+  "13": [
+    {
+      "filename": "/home/osboxes/asyncify/e2e/.tmp/test4/main.js",
+      "startLine": 35,
+      "endLine": 35,
+      "before": "fs.statSync()",
+      "after": "*Note*: File will be wrapped in an IIFE \n\nawait fs_statPromise()"
+    }
+  ],
+  "14": [
+    {
+      "filename": "/home/osboxes/asyncify/e2e/.tmp/test4/main.js",
+      "startLine": 37,
+      "endLine": 37,
+      "before": "fs.fstatSync()",
+      "after": "*Note*: File will be wrapped in an IIFE \n\nawait fs_fstatPromise()"
+    }
+  ],
+  "15": [
+    {
+      "filename": "/home/osboxes/asyncify/e2e/.tmp/test4/main.js",
+      "startLine": 39,
+      "endLine": 39,
+      "before": "fs.lstatSync()",
+      "after": "*Note*: File will be wrapped in an IIFE \n\nawait fs_lstatPromise()"
+    }
+  ],
+  "16": [
+    {
+      "filename": "/home/osboxes/asyncify/e2e/.tmp/test4/main.js",
+      "startLine": 41,
+      "endLine": 41,
+      "before": "fs.linkSync()",
+      "after": "*Note*: File will be wrapped in an IIFE \n\nawait fs_linkPromise()"
+    }
+  ],
+  "17": [
+    {
+      "filename": "/home/osboxes/asyncify/e2e/.tmp/test4/main.js",
+      "startLine": 43,
+      "endLine": 43,
+      "before": "fs.symlinkSync()",
+      "after": "*Note*: File will be wrapped in an IIFE \n\nawait fs_symlinkPromise()"
+    }
+  ],
+  "18": [
+    {
+      "filename": "/home/osboxes/asyncify/e2e/.tmp/test4/main.js",
+      "startLine": 45,
+      "endLine": 45,
+      "before": "fs.readlinkSync()",
+      "after": "*Note*: File will be wrapped in an IIFE \n\nawait fs_readlinkPromise()"
+    }
+  ],
+  "19": [
+    {
+      "filename": "/home/osboxes/asyncify/e2e/.tmp/test4/main.js",
+      "startLine": 47,
+      "endLine": 47,
+      "before": "fs.realpathSync()",
+      "after": "*Note*: File will be wrapped in an IIFE \n\nawait fs_realpathPromise()"
+    }
+  ],
+  "20": [
+    {
+      "filename": "/home/osboxes/asyncify/e2e/.tmp/test4/main.js",
+      "startLine": 49,
+      "endLine": 49,
+      "before": "fs.unlinkSync()",
+      "after": "*Note*: File will be wrapped in an IIFE \n\nawait fs_unlinkPromise()"
+    }
+  ],
+  "21": [
+    {
+      "filename": "/home/osboxes/asyncify/e2e/.tmp/test4/main.js",
+      "startLine": 51,
+      "endLine": 51,
+      "before": "fs.rmdirSync()",
+      "after": "*Note*: File will be wrapped in an IIFE \n\nawait fs_rmdirPromise()"
+    }
+  ],
+  "22": [
+    {
+      "filename": "/home/osboxes/asyncify/e2e/.tmp/test4/main.js",
+      "startLine": 53,
+      "endLine": 53,
+      "before": "fs.renameSync()",
+      "after": "*Note*: File will be wrapped in an IIFE \n\nawait fs_renamePromise()"
+    }
+  ],
+  "23": [
+    {
+      "filename": "/home/osboxes/asyncify/e2e/.tmp/test4/main.js",
+      "startLine": 55,
+      "endLine": 55,
+      "before": "fs.openSync()",
+      "after": "*Note*: File will be wrapped in an IIFE \n\nawait fs_openPromise()"
+    }
+  ],
+  "24": [
+    {
+      "filename": "/home/osboxes/asyncify/e2e/.tmp/test4/main.js",
+      "startLine": 57,
+      "endLine": 57,
+      "before": "fs.closeSync()",
+      "after": "*Note*: File will be wrapped in an IIFE \n\nawait fs_closePromise()"
+    }
+  ],
+  "25": [
+    {
+      "filename": "/home/osboxes/asyncify/e2e/.tmp/test4/main.js",
+      "startLine": 59,
+      "endLine": 59,
+      "before": "fs.existsSync()",
+      "after": "*Note*: File will be wrapped in an IIFE \n\nawait fs_existsPromise()"
+    }
+  ],
+  "26": [
+    {
+      "filename": "/home/osboxes/asyncify/e2e/.tmp/test4/main.js",
+      "startLine": 61,
+      "endLine": 61,
+      "before": "fs.copyFileSync()",
+      "after": "*Note*: File will be wrapped in an IIFE \n\nawait fs_copyFilePromise()"
+    }
+  ],
+  "27": [
+    {
+      "filename": "/home/osboxes/asyncify/e2e/.tmp/test4/main.js",
+      "startLine": 63,
+      "endLine": 63,
+      "before": "fs.truncateSync()",
+      "after": "*Note*: File will be wrapped in an IIFE \n\nawait fs_truncatePromise()"
+    }
+  ],
+  "28": [
+    {
+      "filename": "/home/osboxes/asyncify/e2e/.tmp/test4/main.js",
+      "startLine": 65,
+      "endLine": 65,
+      "before": "fs.ftruncateSync()",
+      "after": "*Note*: File will be wrapped in an IIFE \n\nawait fs_ftruncatePromise()"
+    }
+  ],
+  "29": [
+    {
+      "filename": "/home/osboxes/asyncify/e2e/.tmp/test4/main.js",
+      "startLine": 67,
+      "endLine": 67,
+      "before": "fs.utimesSync()",
+      "after": "*Note*: File will be wrapped in an IIFE \n\nawait fs_utimesPromise()"
+    }
+  ],
+  "30": [
+    {
+      "filename": "/home/osboxes/asyncify/e2e/.tmp/test4/main.js",
+      "startLine": 69,
+      "endLine": 69,
+      "before": "fs.futimesSync()",
+      "after": "*Note*: File will be wrapped in an IIFE \n\nawait fs_futimesPromise()"
+    }
+  ],
+  "31": [
+    {
+      "filename": "/home/osboxes/asyncify/e2e/.tmp/test4/main.js",
+      "startLine": 71,
+      "endLine": 71,
+      "before": "fs.fsyncSync()",
+      "after": "*Note*: File will be wrapped in an IIFE \n\nawait fs_fsyncPromise()"
+    }
+  ],
+  "32": [
+    {
+      "filename": "/home/osboxes/asyncify/e2e/.tmp/test4/main.js",
+      "startLine": 73,
+      "endLine": 73,
+      "before": "fs.readSync()",
+      "after": "*Note*: File will be wrapped in an IIFE \n\nawait fs_readPromise()"
+    }
+  ],
+  "33": [
+    {
+      "filename": "/home/osboxes/asyncify/e2e/.tmp/test4/main.js",
+      "startLine": 75,
+      "endLine": 75,
+      "before": "fs.writeSync()",
+      "after": "*Note*: File will be wrapped in an IIFE \n\nawait fs_writePromise()"
+    }
+  ],
+  "34": [
+    {
+      "filename": "/home/osboxes/asyncify/e2e/.tmp/test4/main.js",
+      "startLine": 77,
+      "endLine": 77,
+      "before": "fs.fdatasyncSync()",
+      "after": "*Note*: File will be wrapped in an IIFE \n\nawait fs_fdatasyncPromise()"
+    }
+  ],
+  "35": [
+    {
+      "filename": "/home/osboxes/asyncify/e2e/.tmp/test4/main.js",
+      "startLine": 79,
+      "endLine": 79,
+      "before": "zlib.gzipSync()",
+      "after": "*Note*: File will be wrapped in an IIFE \n\nawait zlib_gzipPromise()"
+    }
+  ],
+  "36": [
+    {
+      "filename": "/home/osboxes/asyncify/e2e/.tmp/test4/main.js",
+      "startLine": 81,
+      "endLine": 81,
+      "before": "zlib.gunzipSync()",
+      "after": "*Note*: File will be wrapped in an IIFE \n\nawait zlib_gunzipPromise()"
+    }
+  ],
+  "37": [
+    {
+      "filename": "/home/osboxes/asyncify/e2e/.tmp/test4/main.js",
+      "startLine": 83,
+      "endLine": 83,
+      "before": "zlib.brotliCompressSync()",
+      "after": "*Note*: File will be wrapped in an IIFE \n\nawait zlib_brotliCompressPromise()"
+    }
+  ],
+  "38": [
+    {
+      "filename": "/home/osboxes/asyncify/e2e/.tmp/test4/main.js",
+      "startLine": 85,
+      "endLine": 85,
+      "before": "zlib.brotliDecompressSync()",
+      "after": "*Note*: File will be wrapped in an IIFE \n\nawait zlib_brotliDecompressPromise()"
+    }
+  ],
+  "39": [
+    {
+      "filename": "/home/osboxes/asyncify/e2e/.tmp/test4/main.js",
+      "startLine": 87,
+      "endLine": 87,
+      "before": "zlib.deflateSync()",
+      "after": "*Note*: File will be wrapped in an IIFE \n\nawait zlib_deflatePromise()"
+    }
+  ],
+  "40": [
+    {
+      "filename": "/home/osboxes/asyncify/e2e/.tmp/test4/main.js",
+      "startLine": 89,
+      "endLine": 89,
+      "before": "zlib.inflateSync()",
+      "after": "*Note*: File will be wrapped in an IIFE \n\nawait zlib_inflatePromise()"
+    }
+  ],
+  "41": [
+    {
+      "filename": "/home/osboxes/asyncify/e2e/.tmp/test4/main.js",
+      "startLine": 91,
+      "endLine": 91,
+      "before": "zlib.deflateRawSync()",
+      "after": "*Note*: File will be wrapped in an IIFE \n\nawait zlib_deflateRawPromise()"
+    }
+  ],
+  "42": [
+    {
+      "filename": "/home/osboxes/asyncify/e2e/.tmp/test4/main.js",
+      "startLine": 93,
+      "endLine": 93,
+      "before": "zlib.inflateRawSync()",
+      "after": "*Note*: File will be wrapped in an IIFE \n\nawait zlib_inflateRawPromise()"
+    }
+  ],
+  "43": [
+    {
+      "filename": "/home/osboxes/asyncify/e2e/.tmp/test4/main.js",
+      "startLine": 95,
+      "endLine": 95,
+      "before": "zlib.unzipSync()",
+      "after": "*Note*: File will be wrapped in an IIFE \n\nawait zlib_unzipPromise()"
+    }
+  ],
+  "44": [
+    {
+      "filename": "/home/osboxes/asyncify/e2e/.tmp/test4/main.js",
+      "startLine": 97,
+      "endLine": 97,
+      "before": "cp.execSync()",
+      "after": "*Note*: File will be wrapped in an IIFE \n\nawait child_process_execPromise()"
+    }
+  ],
+  "45": [
+    {
+      "filename": "/home/osboxes/asyncify/e2e/.tmp/test4/main.js",
+      "startLine": 99,
+      "endLine": 99,
+      "before": "cp.spawnSync()",
+      "after": "*Note*: File will be wrapped in an IIFE \n\nawait child_process_spawnPromise()"
+    }
+  ],
+  "46": [
+    {
+      "filename": "/home/osboxes/asyncify/e2e/.tmp/test4/main.js",
+      "startLine": 101,
+      "endLine": 101,
+      "before": "cp.execFileSync()",
+      "after": "*Note*: File will be wrapped in an IIFE \n\nawait child_process_execFilePromise()"
+    }
+  ],
+  "47": [
+    {
+      "filename": "/home/osboxes/asyncify/e2e/.tmp/test4/main.js",
+      "startLine": 103,
+      "endLine": 103,
+      "before": "crypto.pbkdf2Sync()",
+      "after": "*Note*: File will be wrapped in an IIFE \n\nawait crypto_pbkdf2Promise()"
+    }
+  ],
+  "48": [
+    {
+      "filename": "/home/osboxes/asyncify/e2e/.tmp/test4/main.js",
+      "startLine": 105,
+      "endLine": 105,
+      "before": "crypto.generateKeyPairSync()",
+      "after": "*Note*: File will be wrapped in an IIFE \n\nawait crypto_generateKeyPairPromise()"
+    }
+  ],
+  "49": [
+    {
+      "filename": "/home/osboxes/asyncify/e2e/.tmp/test4/main.js",
+      "startLine": 107,
+      "endLine": 107,
+      "before": "crypto.randomFillSync()",
+      "after": "*Note*: File will be wrapped in an IIFE \n\nawait crypto_randomFillPromise()"
+    }
+  ],
+  "50": [
+    {
+      "filename": "/home/osboxes/asyncify/e2e/.tmp/test4/main.js",
+      "startLine": 109,
+      "endLine": 109,
+      "before": "crypto.scryptSync()",
+      "after": "*Note*: File will be wrapped in an IIFE \n\nawait crypto_scryptPromise()"
+    }
+  ],
+  "51": [
+    {
+      "filename": "/home/osboxes/asyncify/e2e/.tmp/test4/main.js",
+      "startLine": 111,
+      "endLine": 111,
+      "before": "path.existsSync()",
+      "after": "*Note*: File will be wrapped in an IIFE \n\nawait fs_existsPromise()"
+    }
+  ],
+  "52": [
+    {
+      "filename": "/home/osboxes/asyncify/e2e/.tmp/test4/main.js",
+      "startLine": 113,
+      "endLine": 113,
+      "before": "jsonfile.readFileSync()",
+      "after": "*Note*: File will be wrapped in an IIFE \n\nawait fs_readFilePromise()"
+    }
+  ],
+  "53": [
+    {
+      "filename": "/home/osboxes/asyncify/e2e/.tmp/test4/main.js",
+      "startLine": 115,
+      "endLine": 115,
+      "before": "jsonfile.writeFileSync()",
+      "after": "*Note*: File will be wrapped in an IIFE \n\nawait fs_writeFilePromise()"
+    }
+  ]
+}

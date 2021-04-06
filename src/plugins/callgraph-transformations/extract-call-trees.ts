@@ -13,6 +13,9 @@ export class ExtractCallTrees {
   private static _sourcesAdded: Array<string> = [];
 
   public static extract = (callGraph: Array<ICallgraphEdge>): Promise<Node> => {
+    ExtractCallTrees._sourceNodesAdded = [];
+    ExtractCallTrees._nativeCallers = [];
+    ExtractCallTrees._sourcesAdded = [];
     return new Promise((resolve: any, reject: any): void => {
       const root: Node = new Node(null, null, null);
       ExtractCallTrees._extractImplicitPromises(callGraph);
@@ -33,7 +36,7 @@ export class ExtractCallTrees {
 
   private static _extractSyncFunctionCallers = (rootNode: Node, callGraph: Array<ICallgraphEdge>): void => {
 
-    for (let i: number = callGraph.length - 1; i > -1; i--) {
+    for (let i: number = 0; i < callGraph.length; i++) {
       if (!ExtractCallTrees._sourceNodesAdded.includes(callGraph[i].sourceNode) && ExternsFuncDefinitions.syncFunctions.indexOf(callGraph[i].targetNode) !== -1) {
         ExtractCallTrees._sourceNodesAdded.push(callGraph[i].sourceNode);
         const parent: string = ExtractCallTrees._getParent(callGraph[i].sourceNode, callGraph);

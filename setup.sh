@@ -8,7 +8,13 @@ cd "desynchronizer/"
 
 mkdir "codeql-home"
 cd "codeql-home/"
-unzip ~/asyncify/codeql.zip
+mkdir "codeql"
+cd "codeql"
+unzip ~/asyncify/codeql1.zip
+unzip ~/asyncify/codeql2.zip
+unzip ~/asyncify/codeql3.zip
+
+cd ..
 
 git clone "https://github.com/SpitfireSatya/ql"
 

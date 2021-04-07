@@ -37,9 +37,5 @@
 
   console.log('Time: ', end - start);
 
-  const end = new Date().getTime();
-
-  console.log('Time: ', end - start);
-
 }());
 

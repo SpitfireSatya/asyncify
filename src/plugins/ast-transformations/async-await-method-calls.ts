@@ -16,6 +16,9 @@ export class AsyncAwaitMethodCalls {
 
     if (!(nodeRef.parentNode.type === 'AwaitExpression' || nodeRef.parentNode[nodeRef.key].type === 'AwaitExpression' ||
       nodeRef.parentNode.type === 'ReturnStatement' || nodeRef.parentNode[nodeRef.key].type === 'ReturnStatement')) {
+      if((nodeRef.parentNode.type === 'AssignmentExpression' && JSON.stringify(nodeRef.parentNode.left).indexOf('exports') !== -1)) {
+        return;
+      }
       nodeRef.parentNode[nodeRef.key] = {
         type: 'AwaitExpression',
         argument: childNode,

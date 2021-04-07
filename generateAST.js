@@ -5,7 +5,8 @@
   // const sourceCode = `const readFilePromise = require('util').promisify(require('fs').readFile);`;
   // const sourceCode = `readFilePromise('');`;
   // const sourceCode = `function func() { return (async function(){}()) }`;
-  const sourceCode = `export function something() {}`;
+  // const sourceCode = `export function something() {}`;
+  const sourceCode = `module.exports = function() { }();`
 
   config = {
     'sourceType': 'module',

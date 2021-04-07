@@ -37,7 +37,8 @@ export class SyncToAwaitedPromise {
       .replace(/functionName/g, (<any>SyncToAsyncMap)[functionName])
       .replace(/parentLib/g, parentLib);
 
-    if(nodeRef.fileAST.program.body[0] && nodeRef.fileAST.program.body[0].type === 'ExpressionStatement') {
+    if(nodeRef.fileAST.program.body[0] && nodeRef.fileAST.program.body[0].type === 'ExpressionStatement'
+      && (<any>nodeRef.fileAST.program.body[0]).expression.callee) {
       const promisifiedRequire = (<any>nodeRef.fileAST.program.body[0]).expression
         .callee.body.body.find((node: any) => (JSON.stringify(node) === requireStmt));
       if(!promisifiedRequire) {

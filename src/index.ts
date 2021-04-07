@@ -17,8 +17,8 @@ export default class Asyncify {
     const callgraph: Array<ICallgraphEdge> = await FileOps.readCSVFile(pathToCallgraphCSV, true);
     const callTree: Node = await CallGraphTransformations.transform(callgraph);
     Store.setData('callTree', callTree);
-    const transformations: {[key: string]: Array<ITransformationDetail>} = ASTTransformations.showTransformations(callTree);
-    await FileOps.writeFile('listOfTransformations.txt', JSON.stringify(transformations, null, 2));
+    // const transformations: {[key: string]: Array<ITransformationDetail>} = ASTTransformations.showTransformations(callTree);
+    // await FileOps.writeFile('listOfTransformations.txt', JSON.stringify(transformations, null, 2));
     
     Asyncify.rebuildASTCache();
 

@@ -21,7 +21,21 @@
   // await asyncify.showTransformations(path.resolve(__dirname, 'flatsheetCallGraph.csv'));
   // await asyncify.showTransformations(path.resolve(__dirname, 'neoan3CallGraph.csv'));
   // await asyncify.showTransformations(path.resolve(__dirname, 'esdocCallGraph.csv'));
-  await asyncify.showTransformationsAndTransform(path.resolve(__dirname, 'FiltersCompilerCallGraph.csv'));
+
+  // await asyncify.showTransformationsAndTransform(path.resolve(__dirname, 'FiltersCompilerCallGraph.csv'));
+  // await asyncify.showTransformationsAndTransform(path.resolve(__dirname, 'AllyMetricsCallGraph.csv'));
+  await asyncify.showTransformationsAndTransform(path.resolve(__dirname, 'JugglingdbCallGraph.csv'));
+  // await asyncify.showTransformationsAndTransform(path.resolve(__dirname, 'EmberWatsonCallGraph.csv'));
+  // await asyncify.showTransformationsAndTransform(path.resolve(__dirname, 'AbecmsCallGraph.csv'));
+  // await asyncify.showTransformationsAndTransform(path.resolve(__dirname, 'ReactorSandboxCallGraph.csv'));
+  // await asyncify.showTransformationsAndTransform(path.resolve(__dirname, 'AdaptAuthoringCallGraph.csv'));
+  // await asyncify.showTransformationsAndTransform(path.resolve(__dirname, 'NowSyncCallGraph.csv'));
+  // await asyncify.showTransformationsAndTransform(path.resolve(__dirname, 'TurboScriptCallGraph.csv'));
+  // await asyncify.showTransformationsAndTransform(path.resolve(__dirname, 'UserAgentCallGraph.csv'));
+  // await asyncify.showTransformationsAndTransform(path.resolve(__dirname, 'AckPugBundlerCallGraph.csv'));
+  // await asyncify.showTransformationsAndTransform(path.resolve(__dirname, 'DrakovCallGraph.csv'));
+  // await asyncify.showTransformationsAndTransform(path.resolve(__dirname, 'YaddaCallGraph.csv'));
+  // await asyncify.showTransformationsAndTransform(path.resolve(__dirname, 'Crx2ffCallGraph.csv'));
   // asyncify.transform();
 
   // fs.rmdirSync(path.resolve(__dirname, '.tmp'), { recursive: true });

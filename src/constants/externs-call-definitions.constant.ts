@@ -45,7 +45,7 @@ export class ExternsCallDefinitions {
 
   // call to jest
   public static readonly JEST_DESCRIBE: string = `Callee(${Global.HOME_DIR}/codeql-home/codeql/javascript/tools/data/externs/lib/jest.js:<38,30>--<38,34>)`;
-  public static readonly JEST_IT: string = `Callee(${Global.HOME_DIR}/codeql-home/codeql/javascript/tools/data/externs/lib/jest.js:<57,34>--<57,37>)`;
+  public static readonly JEST_IT: string = `Callee(${Global.HOME_DIR}/codeql-home/codeql/javascript/tools/data/externs/lib/jest.js:<53,33>--<53,37>)`;
   public static readonly JEST_BEFORE: string = `Callee(${Global.HOME_DIR}/codeql-home/codeql/javascript/tools/data/externs/lib/jest.js:<32,31>--<32,35>)`;
   public static readonly JEST_BEFORE_EACH: string = `Callee(${Global.HOME_DIR}/codeql-home/codeql/javascript/tools/data/externs/lib/jest.js:<36,35>--<36,39>)`;
   public static readonly JEST_BEFORE_ALL: string = `Callee(${Global.HOME_DIR}/codeql-home/codeql/javascript/tools/data/externs/lib/jest.js:<34,34>--<34,38>)`;

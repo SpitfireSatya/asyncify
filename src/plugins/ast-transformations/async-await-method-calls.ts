@@ -34,6 +34,9 @@ export class AsyncAwaitMethodCalls {
       nodeRef.parentNode.async = true;
     }
     if (nodeRef.parentFunction === null && !(nodeRef.parentNode.type === 'ReturnStatement' || nodeRef.parentNode[nodeRef.key].type === 'ReturnStatement')) {
+      if((nodeRef.parentNode.type === 'AssignmentExpression' && JSON.stringify(nodeRef.parentNode.left).indexOf('exports') !== -1)) {
+        return;
+      }
       if (!Store.getasyncifiedFiles().includes(nodeRef.fileName)) {
         AsyncAwaitMethodCalls._addIIFE(nodeRef);
         Store.addFileToAsyncifiedFiles(nodeRef.fileName);

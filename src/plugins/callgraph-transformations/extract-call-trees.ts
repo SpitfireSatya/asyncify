@@ -97,12 +97,16 @@ export class ExtractCallTrees {
 
   private static _getParent = (target: string, callGraph: Array<ICallgraphEdge>): string => {
     let parent: ICallgraphEdge = <ICallgraphEdge>{};
+    let funcLen = Number.MAX_SAFE_INTEGER;
     for (let i: number = 0; i < callGraph.length; i++) {
       if ((CallgraphUtils.getFileName(callGraph[i].targetNode) === CallgraphUtils.getFileName(target)) &&
         (CallgraphUtils.getFunctionStart(callGraph[i].targetNode) < CallgraphUtils.getFunctionStart(target)) &&
         (CallgraphUtils.getFunctionEnd(callGraph[i].targetNode) > CallgraphUtils.getFunctionEnd(target))) {
-        parent = callGraph[i];
-        break;
+        let newFunLen = CallgraphUtils.getFunctionEnd(callGraph[i].targetNode) - CallgraphUtils.getFunctionStart(callGraph[i].targetNode);
+        if(newFunLen < funcLen) {
+          parent = callGraph[i];
+          funcLen = newFunLen;
+        }
       }
     }
     return parent.targetNode;

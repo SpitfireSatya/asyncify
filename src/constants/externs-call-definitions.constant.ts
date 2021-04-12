@@ -57,11 +57,11 @@ export class ExternsCallDefinitions {
 
   // call to express
   public static readonly EXPRESS_LISTEN: string = `Callee(${Global.HOME_DIR}/codeql-home/codeql/javascript/tools/data/externs/nodejs/express.js:<9,61>--<9,65>)`;
-  public static readonly EXPRESS_GET: string = `Callee(${Global.HOME_DIR}/codeql-home/codeql/javascript/tools/data/externs/nodejs/express.js:<11,52>--<11,56>)`;
-  public static readonly EXPRESS_POST: string = `Callee(${Global.HOME_DIR}/codeql-home/codeql/javascript/tools/data/externs/nodejs/express.js:<13,53>--<13,57>)`;
-  public static readonly EXPRESS_PUT: string = `Callee(${Global.HOME_DIR}/codeql-home/codeql/javascript/tools/data/externs/nodejs/express.js:<15,53>--<15,56>)`;
-  public static readonly EXPRESS_DELETE: string = `Callee(${Global.HOME_DIR}/codeql-home/codeql/javascript/tools/data/externs/nodejs/express.js:<17,56>--<17,59>)`;
-  public static readonly EXPRESS_PATCH: string = `Callee(${Global.HOME_DIR}/codeql-home/codeql/javascript/tools/data/externs/nodejs/express.js:<19,55>--<19,58>)`;  
+  public static readonly EXPRESS_GET: string = `Callee(${Global.HOME_DIR}/codeql-home/codeql/javascript/tools/data/externs/nodejs/express.js:<11,42>--<11,46>)`;
+  public static readonly EXPRESS_POST: string = `Callee(${Global.HOME_DIR}/codeql-home/codeql/javascript/tools/data/externs/nodejs/express.js:<13,43>--<13,47>)`;
+  public static readonly EXPRESS_PUT: string = `Callee(${Global.HOME_DIR}/codeql-home/codeql/javascript/tools/data/externs/nodejs/express.js:<15,42>--<15,46>)`;
+  public static readonly EXPRESS_DELETE: string = `Callee(${Global.HOME_DIR}/codeql-home/codeql/javascript/tools/data/externs/nodejs/express.js:<17,46>--<17,50>)`;
+  public static readonly EXPRESS_PATCH: string = `Callee(${Global.HOME_DIR}/codeql-home/codeql/javascript/tools/data/externs/nodejs/express.js:<19,45>--<19,49>)`;  
 
   // call to zlib
   public static readonly ZLIB_GZIP: string = `Callee(${Global.HOME_DIR}/codeql-home/codeql/javascript/tools/data/externs/nodejs/zlib.js:<194,51>--<194,61>)`;

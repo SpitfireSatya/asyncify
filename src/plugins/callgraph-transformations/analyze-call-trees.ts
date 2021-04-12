@@ -93,8 +93,7 @@ export class AnalyzeCallTrees {
   }
 
   private static _isCallToEventListener = (node: Node): boolean => {
-    return [ExternsCallDefinitions.FS_READSTREAM_ON, ExternsCallDefinitions.FS_WRITESTREAM_ON,
-      ExternsCallDefinitions.FS_READDIR]
+    return [ExternsCallDefinitions.FS_READSTREAM_ON, ExternsCallDefinitions.FS_WRITESTREAM_ON]
       .includes(node.source);
   }
 

@@ -1,7 +1,7 @@
 "sourceNode","targetNode"
 "Callee(/home/osboxes/codeql-home/codeql/javascript/tools/data/externs/es/es3.js:<811,70>--<811,79>)","Fun(/home/osboxes/asyncify/e2e/.tmp/test2/main.js:<8,23>--<9,59>)"
 "Callee(/home/osboxes/codeql-home/codeql/javascript/tools/data/externs/es/es6.js:<479,75>--<479,84>)","Fun(/home/osboxes/asyncify/e2e/.tmp/test2/main.js:<8,23>--<9,59>)"
-"Callee(/home/osboxes/codeql-home/codeql/javascript/tools/data/externs/nodejs/express.js:<11,53>--<11,56>)","Fun(/home/osboxes/asyncify/e2e/.tmp/test2/main.js:<15,29>--<18,1>)"
+"Callee(/home/osboxes/codeql-home/codeql/javascript/tools/data/externs/nodejs/express.js:<11,43>--<11,46>)","Fun(/home/osboxes/asyncify/e2e/.tmp/test2/main.js:<15,29>--<18,1>)"
 "Callee(/home/osboxes/asyncify/e2e/.tmp/test2/main.js:<7,20>--<7,43>)","Fun(/home/osboxes/codeql-home/codeql/javascript/tools/data/externs/nodejs/fs.js:<910,18>--<910,34>)"
 "Callee(/home/osboxes/asyncify/e2e/.tmp/test2/main.js:<8,10>--<10,3>)","Fun(/home/osboxes/codeql-home/codeql/javascript/tools/data/externs/es/es3.js:<811,23>--<811,82>)"
 "Callee(/home/osboxes/asyncify/e2e/.tmp/test2/main.js:<8,10>--<10,3>)","Fun(/home/osboxes/codeql-home/codeql/javascript/tools/data/externs/es/es3.js:<900,13>--<900,77>)"

@@ -36,17 +36,37 @@
   // await asyncify.showTransformationsAndTransform(path.resolve(__dirname, 'DrakovCallGraph.csv'));
   // await asyncify.showTransformationsAndTransform(path.resolve(__dirname, 'YaddaCallGraph.csv'));
   // await asyncify.showTransformationsAndTransform(path.resolve(__dirname, 'Crx2ffCallGraph.csv'));
-  await asyncify.showTransformationsAndTransform(path.resolve(__dirname, 'MeteorDesktopCallGraph.csv'));
+  // await asyncify.showTransformationsAndTransform(path.resolve(__dirname, 'NodeWantsitCallGraph.csv'));
+  // await asyncify.showTransformationsAndTransform(path.resolve(__dirname, 'AdslotCallGraph.csv'));
+  // await asyncify.showTransformationsAndTransform(path.resolve(__dirname, 'BrowserifyWrapCallGraph.csv'));
+  // await asyncify.showTransformationsAndTransform(path.resolve(__dirname, 'ManaCallGraph.csv'));
+  // await asyncify.showTransformationsAndTransform(path.resolve(__dirname, 'NodeSfxCallGraph.csv'));
+  // await asyncify.showTransformationsAndTransform(path.resolve(__dirname, 'AbigailPluginParseCallGraph.csv'));
+  // await asyncify.showTransformationsAndTransform(path.resolve(__dirname, 'EmberCliDeployRedisIndexAdapterCallGraph.csv'));
+  // await asyncify.showTransformationsAndTransform(path.resolve(__dirname, 'ReactSpringCallGraph.csv'));
+  // await asyncify.showTransformationsAndTransform(path.resolve(__dirname, 'VuepressCallGraph.csv'));
+  // await asyncify.showTransformationsAndTransform(path.resolve(__dirname, 'ButtercupDesktopCallGraph.csv'));
+  // await asyncify.showTransformationsAndTransform(path.resolve(__dirname, 'ConsolaCallGraph.csv'));
+  // await asyncify.showTransformationsAndTransform(path.resolve(__dirname, 'DraggableCallGraph.csv'));
+  // await asyncify.showTransformationsAndTransform(path.resolve(__dirname, 'NodeBlendCallGraph.csv'));
+  // await asyncify.showTransformationsAndTransform(path.resolve(__dirname, 'DeepforgeCallGraph.csv'));
+  // await asyncify.showTransformationsAndTransform(path.resolve(__dirname, 'MeteorDesktopCallGraph.csv'));
+  // await asyncify.showTransformationsAndTransform(path.resolve(__dirname, 'AppsCallGraph.csv'));
+  // await asyncify.showTransformationsAndTransform(path.resolve(__dirname, 'SwitchBoardCallGraph.csv'));
+  // await asyncify.showTransformationsAndTransform(path.resolve(__dirname, 'FlatsheetCallGraph.csv'));
+  // await asyncify.showTransformationsAndTransform(path.resolve(__dirname, 'BonescriptCallGraph.csv'));
+  // await asyncify.showTransformationsAndTransform(path.resolve(__dirname, 'Neoan3CliCallGraph.csv'));
+  // await asyncify.showTransformationsAndTransform(path.resolve(__dirname, 'electron-apps.csv'));
   // asyncify.transform();
 
-  // fs.rmdirSync(path.resolve(__dirname, '.tmp'), { recursive: true });
-  // copydir.sync(path.resolve(__dirname, 'fixtures'), path.resolve(__dirname, '.tmp'))
+  fs.rmdirSync(path.resolve(__dirname, '.tmp'), { recursive: true });
+  copydir.sync(path.resolve(__dirname, 'fixtures'), path.resolve(__dirname, '.tmp'))
 
-  // try {
-  //   await asyncify.showTransformationsAndTransform(path.resolve(__dirname, '.tmp', 'test4', 'test.csv'));
-  // } catch(e) {
-  //   console.log(e);
-  // }
+  try {
+    await asyncify.showTransformationsAndTransform(path.resolve(__dirname, '.tmp', 'test2', 'test.csv'));
+  } catch(e) {
+    console.log(e);
+  }
 
   const end = new Date().getTime();
 

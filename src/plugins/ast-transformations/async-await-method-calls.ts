@@ -54,7 +54,11 @@ export class AsyncAwaitMethodCalls {
     const importNodes: Array<any> = [];
     programBody.forEach((node: any): void => {
       if (node.type === 'ImportDeclaration') {
-        importNodes.push(...programBody.splice(programBody.indexOf(node), 1));
+        for(let i=0; i<programBody.length; i++) {
+          if(JSON.stringify(node) === JSON.stringify(programBody[i])) {
+            importNodes.push(...programBody.splice(i, 1));
+          }
+        }
       }
     });
     nodeRef.fileAST.program.body = [];

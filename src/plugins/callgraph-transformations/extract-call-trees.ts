@@ -30,6 +30,12 @@ export class ExtractCallTrees {
     });
   }
 
+  public static resetData(): void {
+    ExtractCallTrees._sourceNodesAdded = [];
+    ExtractCallTrees._nativeCallers = [];
+    ExtractCallTrees._sourcesAdded = [];
+  }
+
   private static _readyCallback = (resolve: any, root: Node): void => {
     resolve(root);
   }

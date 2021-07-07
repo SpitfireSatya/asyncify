@@ -10,6 +10,7 @@ import * as babelTypes from '@babel/types';
 import { BabelParser } from './plugins/parsers-and-generators/babel-parser';
 import { ASTUtils } from './utils/ast-utils';
 import { ITransformationDetail } from './interfaces/transformation-detail.interface';
+import { ExtractCallTrees } from './plugins/callgraph-transformations/extract-call-trees';
 
 export default class Asyncify {
 
@@ -17,12 +18,12 @@ export default class Asyncify {
     const callgraph: Array<ICallgraphEdge> = await FileOps.readCSVFile(pathToCallgraphCSV, true);
     const callTree: Node = await CallGraphTransformations.transform(callgraph);
     Store.setData('callTree', callTree);
-    // const transformations: {[key: string]: Array<ITransformationDetail>} = ASTTransformations.showTransformations(callTree);
-    // await FileOps.writeFile('listOfTransformations.txt', JSON.stringify(transformations, null, 2));
+    const transformations: {[key: string]: Array<ITransformationDetail>} = ASTTransformations.showTransformations(callTree);
+    await FileOps.writeFile('listOfTransformations.txt', JSON.stringify(transformations, null, 2));
     
-    Asyncify.rebuildASTCache();
+    await Asyncify.rebuildASTCache(pathToCallgraphCSV);
 
-    const numberOfFuncsTransformed: number = ASTTransformations.transform(callTree);
+    const numberOfFuncsTransformed: number = ASTTransformations.transform(Store.getData('callTree'));
     await Asyncify.writeTransformedFiles();
     console.log('Sync functions transformed: ', callTree.children.length);
     console.log('Related functions transformed: ', numberOfFuncsTransformed - callTree.children.length);
@@ -38,37 +39,31 @@ export default class Asyncify {
     return;
   }
 
-  public static transform = async (pathToCallgraphCSV: string, nodesToTransform: Array<string> = []): Promise<number> => {
+  public static transform = async (pathToCallgraphCSV: string, nodesToTransform?: Array<string>): Promise<number> => {
     const callgraph: Array<ICallgraphEdge> = await FileOps.readCSVFile(pathToCallgraphCSV, true);
     const callTree: Node = await CallGraphTransformations.transform(callgraph);
     Store.setData('callTree', callTree);
-    /* callTree.childKeys
-      .filter((key: string): boolean => !nodesToTransform.includes(key))
-      .forEach((key: string): void => {
-        callTree.removeChild(parseInt(key, 10));
-      }); */
+    if(nodesToTransform) {
+      callTree.childKeys
+        .filter((key: string): boolean => !nodesToTransform.includes(key))
+        .forEach((key: string): void => {
+          callTree.removeChild(parseInt(key, 10));
+        });
+    }
     const numberOfFuncsTransformed: number = ASTTransformations.transform(callTree);
     await Asyncify.writeTransformedFiles();
     return numberOfFuncsTransformed;
   }
 
-  private static rebuildASTCache(): void {
+  private static rebuildASTCache = async (pathToCallgraphCSV: string) => {
 
-    Store.removeAllasyncifiedFiles();
-    Store.removeAllFilesToWrite();
-    Store.removeAllASTNodeCopies();
-    Store.removeAllASTNodes();
-    Store.removeAllASTs();
+    Store.reset();
 
-    Store.getFileList().forEach((fileName: string): void => {
+    ExtractCallTrees.resetData();
 
-      const contents: string = Store.getFileContents(fileName);
-      const ast: babelTypes.File = BabelParser.generateAST(contents, {}, fileName);
-      Store.setAST(fileName, ast);
-
-      ASTUtils.cacheASTNodes(ast, fileName, false);
-
-    });
+    const callgraph: Array<ICallgraphEdge> = await FileOps.readCSVFile(pathToCallgraphCSV, true);
+    const callTree: Node = await CallGraphTransformations.transform(callgraph);
+    Store.setData('callTree', callTree);
 
   }
 

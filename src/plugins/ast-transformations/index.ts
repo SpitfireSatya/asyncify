@@ -31,8 +31,10 @@ export class ASTTransformations {
     return ASTTransformations._relatedFunctionsTransformed;
   }
 
-  public static showTransformations = (node: Node): { [key: string]: Array<ITransformationDetail> } => {
+  public static showTransformations = (node: Node): { statistics: any, suggestions: { [key: string]: Array<ITransformationDetail>} } => {
 
+    ASTTransformations._visited = [];
+    ASTTransformations._relatedFunctionsTransformed = 0;
     const transformationDetails: { [key: string]: Array<ITransformationDetail> } = { };
 
     node.children.forEach((child: Node): void => {
@@ -40,7 +42,14 @@ export class ASTTransformations {
       ASTTransformations._traverseCallTree(child, false, transformationDetails[child.id]);
     });
 
-    return transformationDetails;
+    return {
+      statistics: {
+        syncTransformed: node.children.length,
+        relatedTransformed: ASTTransformations._relatedFunctionsTransformed,
+        filesChanged: Store.getFilesToWrite().length
+      },
+      suggestions: transformationDetails 
+    };
 
   }
 

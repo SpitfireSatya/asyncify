@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link type="text/css" rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <title>Code Duplicity Report</title>
+    <style>
+        
+        .badge-error {
+            background-color: tomato;
+        }
+        .error-div span {
+            padding: 10px;
+            min-height: 55px;
+        }
+    </style>
+</head>
+
+<body style="background-color:lightyellow">
+
+    <div class="container" >
+    
+        <h1 class="text-center">Suggested transformations</h1>
+
+        <div class="row error-div">
+            <h3 class="text-center col-lg-4">Files Changed: 5</h3>
+            <h3 class="text-center col-lg-4">Sync Functions: 11</h3>
+            <h3 class="text-center col-lg-4">Other changes*: 17</h3>
+        </div>
+        <p>* Note: Other changes required are identified for each sync call and may contain duplicates.</p>
+
+        <hr>
+
+            <div class="row text-center error-div" style="background-color: lavender; border: 1px solid; margin: 10px;">
+                <span class="col-lg-8" style="border-top:1px solid; border-left:1px solid">id 0</span>
+                <span class="col-lg-4" style="border-top:1px solid; border-right:1px solid"><button id="button0" class="btn btn-success" onclick="expandTable(0)">Show Details</button></span>
+
+                <div id="detail0" class="col-lg-12" style="display: none; border: 1px solid">
+                <div style="margin-bottom: 5px; border: 1px solid;">
+                    <div>
+
+                        <div class="row text-center" style="background-color: lightgoldenrodyellow;">
+                            <span class="col-lg-6" style="margin-top: 10px;"><b>File:</b> /home/osboxes/desynchronizer/bonescript/test/TODO/eeprom.js</span>
+                            <span class="col-lg-3" style="margin-top: 10px;"><b>Start line:</b> 62</span>
+                            <span class="col-lg-3" style="margin-top: 10px;"><b>End line:</b> 62</span>
+                        </div>
+
+                        <div class="text-left">
+                            <span class="col-lg-6" style="border: 1px solid; background-color: lightyellow"><b>Before</b></span>
+                            <span class="col-lg-6" style="border: 1px solid; background-color: lightyellow"><b>After</b></span>
+                        </div>
+
+                        <div class="text-left">
+                            <span class="col-lg-6" style="border: 1px solid; height: 150px; overflow-y: scroll; background-color: lightgreen">
+                                <pre style="background-color: inherit; border: 0px; padding: inherit; margin: inherit;">fs.readFileSync(sourceJSON, &#x27;ascii&#x27;)</pre>
+                            </span>
+                            <span class="col-lg-6" style="border: 1px solid; height: 150px; overflow-y: scroll; background-color: lightcoral">
+                                <pre style="background-color: inherit; border: 0px; padding: inherit; margin: inherit;">*Note*: File will be wrapped in an IIFE 
+
+await fs_readFilePromise(sourceJSON, &#x27;ascii&#x27;)</pre>
+                            </span>
+                        </div>
+
+                    </div>
+                </div>
+                <br>
+            </div>
+            <br>
+        </div>
+            <div class="row text-center error-div" style="background-color: lavender; border: 1px solid; margin: 10px;">
+                <span class="col-lg-8" style="border-top:1px solid; border-left:1px solid">id 1</span>
+                <span class="col-lg-4" style="border-top:1px solid; border-right:1px solid"><button id="button1" class="btn btn-success" onclick="expandTable(1)">Show Details</button></span>
+
+                <div id="detail1" class="col-lg-12" style="display: none; border: 1px solid">
+                <div style="margin-bottom: 5px; border: 1px solid;">
+                    <div>
+
+                        <div class="row text-center" style="background-color: lightgoldenrodyellow;">
+                            <span class="col-lg-6" style="margin-top: 10px;"><b>File:</b> /home/osboxes/desynchronizer/bonescript/test/TODO/eeprom.js</span>
+                            <span class="col-lg-3" style="margin-top: 10px;"><b>Start line:</b> 86</span>
+                            <span class="col-lg-3" style="margin-top: 10px;"><b>End line:</b> 86</span>
+                        </div>
+
+                        <div class="text-left">
+                            <span class="col-lg-6" style="border: 1px solid; background-color: lightyellow"><b>Before</b></span>
+                            <span class="col-lg-6" style="border: 1px solid; background-color: lightyellow"><b>After</b></span>
+                        </div>
+
+                        <div class="text-left">
+                            <span class="col-lg-6" style="border: 1px solid; height: 150px; overflow-y: scroll; background-color: lightgreen">
+                                <pre style="background-color: inherit; border: 0px; padding: inherit; margin: inherit;">fs.writeFileSync(x, eepromData)</pre>
+                            </span>
+                            <span class="col-lg-6" style="border: 1px solid; height: 150px; overflow-y: scroll; background-color: lightcoral">
+                                <pre style="background-color: inherit; border: 0px; padding: inherit; margin: inherit;">*Note*: File will be wrapped in an IIFE 
+
+await fs_writeFilePromise(x, eepromData)</pre>
+                            </span>
+                        </div>
+
+                    </div>
+                </div>
+                <br>
+            </div>
+            <br>
+        </div>
+            <div class="row text-center error-div" style="background-color: lavender; border: 1px solid; margin: 10px;">
+                <span class="col-lg-8" style="border-top:1px solid; border-left:1px solid">id 2</span>
+                <span class="col-lg-4" style="border-top:1px solid; border-right:1px solid"><button id="button2" class="btn btn-success" onclick="expandTable(2)">Show Details</button></span>
+
+                <div id="detail2" class="col-lg-12" style="display: none; border: 1px solid">
+                <div style="margin-bottom: 5px; border: 1px solid;">
+                    <div>
+
+                        <div class="row text-center" style="background-color: lightgoldenrodyellow;">
+                            <span class="col-lg-6" style="margin-top: 10px;"><b>File:</b> /home/osboxes/desynchronizer/bonescript/test/TODO/eeprom.js</span>
+                            <span class="col-lg-3" style="margin-top: 10px;"><b>Start line:</b> 89</span>
+                            <span class="col-lg-3" style="margin-top: 10px;"><b>End line:</b> 89</span>
+                        </div>
+
+                        <div class="text-left">
+                            <span class="col-lg-6" style="border: 1px solid; background-color: lightyellow"><b>Before</b></span>
+                            <span class="col-lg-6" style="border: 1px solid; background-color: lightyellow"><b>After</b></span>
+                        </div>
+
+                        <div class="text-left">
+                            <span class="col-lg-6" style="border: 1px solid; height: 150px; overflow-y: scroll; background-color: lightgreen">
+                                <pre style="background-color: inherit; border: 0px; padding: inherit; margin: inherit;">fs.writeFileSync(destinationEeprom, eepromData)</pre>
+                            </span>
+                            <span class="col-lg-6" style="border: 1px solid; height: 150px; overflow-y: scroll; background-color: lightcoral">
+                                <pre style="background-color: inherit; border: 0px; padding: inherit; margin: inherit;">*Note*: File will be wrapped in an IIFE 
+
+await fs_writeFilePromise(destinationEeprom, eepromData)</pre>
+                            </span>
+                        </div>
+
+                    </div>
+                </div>
+                <br>
+            </div>
+            <br>
+        </div>
+            <div class="row text-center error-div" style="background-color: lavender; border: 1px solid; margin: 10px;">
+                <span class="col-lg-8" style="border-top:1px solid; border-left:1px solid">id 3</span>
+                <span class="col-lg-4" style="border-top:1px solid; border-right:1px solid"><button id="button3" class="btn btn-success" onclick="expandTable(3)">Show Details</button></span>
+
+                <div id="detail3" class="col-lg-12" style="display: none; border: 1px solid">
+                <div style="margin-bottom: 5px; border: 1px solid;">
+                    <div>
+
+                        <div class="row text-center" style="background-color: lightgoldenrodyellow;">
+                            <span class="col-lg-6" style="margin-top: 10px;"><b>File:</b> /home/osboxes/desynchronizer/bonescript/test/TODO/eeprom.js</span>
+                            <span class="col-lg-3" style="margin-top: 10px;"><b>Start line:</b> 125</span>
+                            <span class="col-lg-3" style="margin-top: 10px;"><b>End line:</b> 125</span>
+                        </div>
+
+                        <div class="text-left">
+                            <span class="col-lg-6" style="border: 1px solid; background-color: lightyellow"><b>Before</b></span>
+                            <span class="col-lg-6" style="border: 1px solid; background-color: lightyellow"><b>After</b></span>
+                        </div>
+
+                        <div class="text-left">
+                            <span class="col-lg-6" style="border: 1px solid; height: 150px; overflow-y: scroll; background-color: lightgreen">
+                                <pre style="background-color: inherit; border: 0px; padding: inherit; margin: inherit;">fs.writeFileSync(destinationJSON, eepromsString)</pre>
+                            </span>
+                            <span class="col-lg-6" style="border: 1px solid; height: 150px; overflow-y: scroll; background-color: lightcoral">
+                                <pre style="background-color: inherit; border: 0px; padding: inherit; margin: inherit;">*Note*: File will be wrapped in an IIFE 
+
+await fs_writeFilePromise(destinationJSON, eepromsString)</pre>
+                            </span>
+                        </div>
+
+                    </div>
+                </div>
+                <br>
+            </div>
+            <br>
+        </div>
+            <div class="row text-center error-div" style="background-color: lavender; border: 1px solid; margin: 10px;">
+                <span class="col-lg-8" style="border-top:1px solid; border-left:1px solid">id 4</span>
+                <span class="col-lg-4" style="border-top:1px solid; border-right:1px solid"><button id="button4" class="btn btn-success" onclick="expandTable(4)">Show Details</button></span>
+
+                <div id="detail4" class="col-lg-12" style="display: none; border: 1px solid">
+                <div style="margin-bottom: 5px; border: 1px solid;">
+                    <div>
+
+                        <div class="row text-center" style="background-color: lightgoldenrodyellow;">
+                            <span class="col-lg-6" style="margin-top: 10px;"><b>File:</b> /home/osboxes/desynchronizer/bonescript/test/TODO/remote_bonetest.js</span>
+                            <span class="col-lg-3" style="margin-top: 10px;"><b>Start line:</b> 107</span>
+                            <span class="col-lg-3" style="margin-top: 10px;"><b>End line:</b> 107</span>
+                        </div>
+
+                        <div class="text-left">
+                            <span class="col-lg-6" style="border: 1px solid; background-color: lightyellow"><b>Before</b></span>
+                            <span class="col-lg-6" style="border: 1px solid; background-color: lightyellow"><b>After</b></span>
+                        </div>
+
+                        <div class="text-left">
+                            <span class="col-lg-6" style="border: 1px solid; height: 150px; overflow-y: scroll; background-color: lightgreen">
+                                <pre style="background-color: inherit; border: 0px; padding: inherit; margin: inherit;">function () {
+  try {
+    console.log(&#x27;Loading &#x27; + process.argv[2]);
+    var script &#x3D; fs.readFileSync(process.argv[2], &#x27;ascii&#x27;); //console.log(&#x27;Executing: &#x27; + script);
+
+    eval(script);
+  } catch (ex) {
+    console.log(&#x27;***FAIL*** &#x27; + ex);
+    process.exit(-2);
+  }
+}</pre>
+                            </span>
+                            <span class="col-lg-6" style="border: 1px solid; height: 150px; overflow-y: scroll; background-color: lightcoral">
+                                <pre style="background-color: inherit; border: 0px; padding: inherit; margin: inherit;">async function () {
+  try {
+    console.log(&#x27;Loading &#x27; + process.argv[2]);
+    var script &#x3D; await fs_readFilePromise(process.argv[2], &#x27;ascii&#x27;); //console.log(&#x27;Executing: &#x27; + script);
+
+    eval(script);
+  } catch (ex) {
+    console.log(&#x27;***FAIL*** &#x27; + ex);
+    process.exit(-2);
+  }
+}</pre>
+                            </span>
+                        </div>
+
+                    </div>
+                </div>
+                <br>
+                <div style="margin-bottom: 5px; border: 1px solid;">
+                    <div>
+
+                        <div class="row text-center" style="background-color: lightgoldenrodyellow;">
+                            <span class="col-lg-6" style="margin-top: 10px;"><b>File:</b> /home/osboxes/desynchronizer/bonescript/test/TODO/remote_bonetest.js</span>
+                            <span class="col-lg-3" style="margin-top: 10px;"><b>Start line:</b> 84</span>
+                            <span class="col-lg-3" style="margin-top: 10px;"><b>End line:</b> 84</span>
+                        </div>
+
+                        <div class="text-left">
+                            <span class="col-lg-6" style="border: 1px solid; background-color: lightyellow"><b>Before</b></span>
+                            <span class="col-lg-6" style="border: 1px solid; background-color: lightyellow"><b>After</b></span>
+                        </div>
+
+                        <div class="text-left">
+                            <span class="col-lg-6" style="border: 1px solid; height: 150px; overflow-y: scroll; background-color: lightgreen">
+                                <pre style="background-color: inherit; border: 0px; padding: inherit; margin: inherit;">function getRequireData(m) {
+  if (!m.module || !m.data) throw &#x27;Invalid &quot;require&quot; message sent for &quot;&#x27; + m.module + &#x27;&quot;&#x27;;
+  console.log(&#x27;Initialized module: &#x27; + m.module);
+  _bonescript.modules[m.module] &#x3D; {};
+
+  for (var x in m.data) {
+    if (!m.data[x].type || !m.data[x].name || typeof m.data[x].value &#x3D;&#x3D; &#x27;undefined&#x27;) throw &#x27;Invalid data in &quot;require&quot; message sent for &quot;&#x27; + m.module + &#x27;.&#x27; + m.data[x] + &#x27;&quot;&#x27;;
+
+    if (m.data[x].type &#x3D;&#x3D; &#x27;function&#x27;) {
+      // define the function
+      if (!m.data[x].value) throw &#x27;Missing args in &quot;require&quot; message sent for &quot;&#x27; + m.module + &#x27;.&#x27; + m.data[x] + &#x27;&quot;&#x27;;
+      var myargs &#x3D; m.data[x].value; // eval of objString builds the call data out of arguments passed in
+
+      var objString &#x3D; &#x27;&#x27;;
+
+      for (var y in myargs) {
+        if (isNaN(y)) continue; // Need to find the source of this bug
+
+        if (myargs[y] &#x3D;&#x3D; &#x27;callback&#x27;) continue;
+        objString +&#x3D; &#x27; if(typeof &#x27; + myargs[y] + &#x27; &#x3D;&#x3D; &quot;function&quot;) {\n&#x27;;
+        objString +&#x3D; &#x27;  &#x27; + myargs[y] + &#x27; &#x3D; &#x27; + myargs[y] + &#x27;.toString();\n&#x27;;
+        objString +&#x3D; &#x27; }\n&#x27;;
+        objString +&#x3D; &#x27; calldata.&#x27; + myargs[y] + &#x27; &#x3D; &#x27; + myargs[y] + &#x27;;\n&#x27;;
+      }
+
+      var argsString &#x3D; myargs.join(&#x27;, &#x27;);
+      var handyfunc &#x3D; &#x27;_bonescript.modules[&quot;&#x27; + m.module + &#x27;&quot;].&#x27; + m.data[x].name + &#x27; &#x3D; &#x27; + &#x27;function (&#x27; + argsString + &#x27;) {\n&#x27; + &#x27; var calldata &#x3D; {};\n&#x27; + objString + &#x27; if(callback) {\n&#x27; + &#x27;  _bonescript._callbacks[_bonescript._seqnum] &#x3D; callback;\n&#x27; + &#x27;  calldata.seq &#x3D; _bonescript._seqnum;\n&#x27; + &#x27;  _bonescript._seqnum++;\n&#x27; + &#x27; }\n&#x27; + &#x27; socket.emit(&quot;&#x27; + m.module + &#x27;$&#x27; + m.data[x].name + &#x27;&quot;, calldata);\n&#x27; + &#x27;};\n&#x27;;
+      eval(handyfunc);
+    } else {
+      _bonescript.modules[m.module][m.data[x].name] &#x3D; m.data[x].value;
+    }
+  }
+
+  _bonescript.modules[m.module].socket &#x3D; socket;
+
+  _bonescript.on.initialized();
+}</pre>
+                            </span>
+                            <span class="col-lg-6" style="border: 1px solid; height: 150px; overflow-y: scroll; background-color: lightcoral">
+                                <pre style="background-color: inherit; border: 0px; padding: inherit; margin: inherit;">async function getRequireData(m) {
+  if (!m.module || !m.data) throw &#x27;Invalid &quot;require&quot; message sent for &quot;&#x27; + m.module + &#x27;&quot;&#x27;;
+  console.log(&#x27;Initialized module: &#x27; + m.module);
+  _bonescript.modules[m.module] &#x3D; {};
+
+  for (var x in m.data) {
+    if (!m.data[x].type || !m.data[x].name || typeof m.data[x].value &#x3D;&#x3D; &#x27;undefined&#x27;) throw &#x27;Invalid data in &quot;require&quot; message sent for &quot;&#x27; + m.module + &#x27;.&#x27; + m.data[x] + &#x27;&quot;&#x27;;
+
+    if (m.data[x].type &#x3D;&#x3D; &#x27;function&#x27;) {
+      // define the function
+      if (!m.data[x].value) throw &#x27;Missing args in &quot;require&quot; message sent for &quot;&#x27; + m.module + &#x27;.&#x27; + m.data[x] + &#x27;&quot;&#x27;;
+      var myargs &#x3D; m.data[x].value; // eval of objString builds the call data out of arguments passed in
+
+      var objString &#x3D; &#x27;&#x27;;
+
+      for (var y in myargs) {
+        if (isNaN(y)) continue; // Need to find the source of this bug
+
+        if (myargs[y] &#x3D;&#x3D; &#x27;callback&#x27;) continue;
+        objString +&#x3D; &#x27; if(typeof &#x27; + myargs[y] + &#x27; &#x3D;&#x3D; &quot;function&quot;) {\n&#x27;;
+        objString +&#x3D; &#x27;  &#x27; + myargs[y] + &#x27; &#x3D; &#x27; + myargs[y] + &#x27;.toString();\n&#x27;;
+        objString +&#x3D; &#x27; }\n&#x27;;
+        objString +&#x3D; &#x27; calldata.&#x27; + myargs[y] + &#x27; &#x3D; &#x27; + myargs[y] + &#x27;;\n&#x27;;
+      }
+
+      var argsString &#x3D; myargs.join(&#x27;, &#x27;);
+      var handyfunc &#x3D; &#x27;_bonescript.modules[&quot;&#x27; + m.module + &#x27;&quot;].&#x27; + m.data[x].name + &#x27; &#x3D; &#x27; + &#x27;function (&#x27; + argsString + &#x27;) {\n&#x27; + &#x27; var calldata &#x3D; {};\n&#x27; + objString + &#x27; if(callback) {\n&#x27; + &#x27;  _bonescript._callbacks[_bonescript._seqnum] &#x3D; callback;\n&#x27; + &#x27;  calldata.seq &#x3D; _bonescript._seqnum;\n&#x27; + &#x27;  _bonescript._seqnum++;\n&#x27; + &#x27; }\n&#x27; + &#x27; socket.emit(&quot;&#x27; + m.module + &#x27;$&#x27; + m.data[x].name + &#x27;&quot;, calldata);\n&#x27; + &#x27;};\n&#x27;;
+      eval(handyfunc);
+    } else {
+      _bonescript.modules[m.module][m.data[x].name] &#x3D; m.data[x].value;
+    }
+  }
+
+  _bonescript.modules[m.module].socket &#x3D; socket;
+  await _bonescript.on.initialized();
+}</pre>
+                            </span>
+                        </div>
+
+                    </div>
+                </div>
+                <br>
+            </div>
+            <br>
+        </div>
+            <div class="row text-center error-div" style="background-color: lavender; border: 1px solid; margin: 10px;">
+                <span class="col-lg-8" style="border-top:1px solid; border-left:1px solid">id 5</span>
+                <span class="col-lg-4" style="border-top:1px solid; border-right:1px solid"><button id="button5" class="btn btn-success" onclick="expandTable(5)">Show Details</button></span>
+
+                <div id="detail5" class="col-lg-12" style="display: none; border: 1px solid">
+                <div style="margin-bottom: 5px; border: 1px solid;">
+                    <div>
+
+                        <div class="row text-center" style="background-color: lightgoldenrodyellow;">
+                            <span class="col-lg-6" style="margin-top: 10px;"><b>File:</b> /home/osboxes/desynchronizer/bonescript/test/TODO/test-unloadslot.js</span>
+                            <span class="col-lg-3" style="margin-top: 10px;"><b>Start line:</b> 4</span>
+                            <span class="col-lg-3" style="margin-top: 10px;"><b>End line:</b> 4</span>
+                        </div>
+
+                        <div class="text-left">
+                            <span class="col-lg-6" style="border: 1px solid; background-color: lightyellow"><b>Before</b></span>
+                            <span class="col-lg-6" style="border: 1px solid; background-color: lightyellow"><b>After</b></span>
+                        </div>
+
+                        <div class="text-left">
+                            <span class="col-lg-6" style="border: 1px solid; height: 150px; overflow-y: scroll; background-color: lightgreen">
+                                <pre style="background-color: inherit; border: 0px; padding: inherit; margin: inherit;">fs.readFileSync(capemgr + &#x27;/slots&#x27;, &#x27;ascii&#x27;)</pre>
+                            </span>
+                            <span class="col-lg-6" style="border: 1px solid; height: 150px; overflow-y: scroll; background-color: lightcoral">
+                                <pre style="background-color: inherit; border: 0px; padding: inherit; margin: inherit;">*Note*: File will be wrapped in an IIFE 
+
+await fs_readFilePromise(capemgr + &#x27;/slots&#x27;, &#x27;ascii&#x27;)</pre>
+                            </span>
+                        </div>
+
+                    </div>
+                </div>
+                <br>
+            </div>
+            <br>
+        </div>
+            <div class="row text-center error-div" style="background-color: lavender; border: 1px solid; margin: 10px;">
+                <span class="col-lg-8" style="border-top:1px solid; border-left:1px solid">id 6</span>
+                <span class="col-lg-4" style="border-top:1px solid; border-right:1px solid"><button id="button6" class="btn btn-success" onclick="expandTable(6)">Show Details</button></span>
+
+                <div id="detail6" class="col-lg-12" style="display: none; border: 1px solid">
+                <div style="margin-bottom: 5px; border: 1px solid;">
+                    <div>
+
+                        <div class="row text-center" style="background-color: lightgoldenrodyellow;">
+                            <span class="col-lg-6" style="margin-top: 10px;"><b>File:</b> /home/osboxes/desynchronizer/bonescript/test/TODO/watch-button.js</span>
+                            <span class="col-lg-3" style="margin-top: 10px;"><b>Start line:</b> 3</span>
+                            <span class="col-lg-3" style="margin-top: 10px;"><b>End line:</b> 3</span>
+                        </div>
+
+                        <div class="text-left">
+                            <span class="col-lg-6" style="border: 1px solid; background-color: lightyellow"><b>Before</b></span>
+                            <span class="col-lg-6" style="border: 1px solid; background-color: lightyellow"><b>After</b></span>
+                        </div>
+
+                        <div class="text-left">
+                            <span class="col-lg-6" style="border: 1px solid; height: 150px; overflow-y: scroll; background-color: lightgreen">
+                                <pre style="background-color: inherit; border: 0px; padding: inherit; margin: inherit;">fs.openSync(&#x27;/sys/class/gpio/gpio22/value&#x27;, &#x27;r&#x27;)</pre>
+                            </span>
+                            <span class="col-lg-6" style="border: 1px solid; height: 150px; overflow-y: scroll; background-color: lightcoral">
+                                <pre style="background-color: inherit; border: 0px; padding: inherit; margin: inherit;">*Note*: File will be wrapped in an IIFE 
+
+await fs_openPromise(&#x27;/sys/class/gpio/gpio22/value&#x27;, &#x27;r&#x27;)</pre>
+                            </span>
+                        </div>
+
+                    </div>
+                </div>
+                <br>
+            </div>
+            <br>
+        </div>
+            <div class="row text-center error-div" style="background-color: lavender; border: 1px solid; margin: 10px;">
+                <span class="col-lg-8" style="border-top:1px solid; border-left:1px solid">id 7</span>
+                <span class="col-lg-4" style="border-top:1px solid; border-right:1px solid"><button id="button7" class="btn btn-success" onclick="expandTable(7)">Show Details</button></span>
+
+                <div id="detail7" class="col-lg-12" style="display: none; border: 1px solid">
+                <div style="margin-bottom: 5px; border: 1px solid;">
+                    <div>
+
+                        <div class="row text-center" style="background-color: lightgoldenrodyellow;">
+                            <span class="col-lg-6" style="margin-top: 10px;"><b>File:</b> /home/osboxes/desynchronizer/bonescript/test/TODO/watch-button.js</span>
+                            <span class="col-lg-3" style="margin-top: 10px;"><b>Start line:</b> 15</span>
+                            <span class="col-lg-3" style="margin-top: 10px;"><b>End line:</b> 15</span>
+                        </div>
+
+                        <div class="text-left">
+                            <span class="col-lg-6" style="border: 1px solid; background-color: lightyellow"><b>Before</b></span>
+                            <span class="col-lg-6" style="border: 1px solid; background-color: lightyellow"><b>After</b></span>
+                        </div>
+
+                        <div class="text-left">
+                            <span class="col-lg-6" style="border: 1px solid; height: 150px; overflow-y: scroll; background-color: lightgreen">
+                                <pre style="background-color: inherit; border: 0px; padding: inherit; margin: inherit;">fs.readSync(valuefd, buffer, 0, 1, 0)</pre>
+                            </span>
+                            <span class="col-lg-6" style="border: 1px solid; height: 150px; overflow-y: scroll; background-color: lightcoral">
+                                <pre style="background-color: inherit; border: 0px; padding: inherit; margin: inherit;">*Note*: File will be wrapped in an IIFE 
+
+await fs_readPromise(valuefd, buffer, 0, 1, 0)</pre>
+                            </span>
+                        </div>
+
+                    </div>
+                </div>
+                <br>
+            </div>
+            <br>
+        </div>
+            <div class="row text-center error-div" style="background-color: lavender; border: 1px solid; margin: 10px;">
+                <span class="col-lg-8" style="border-top:1px solid; border-left:1px solid">id 8</span>
+                <span class="col-lg-4" style="border-top:1px solid; border-right:1px solid"><button id="button8" class="btn btn-success" onclick="expandTable(8)">Show Details</button></span>
+
+                <div id="detail8" class="col-lg-12" style="display: none; border: 1px solid">
+                <div style="margin-bottom: 5px; border: 1px solid;">
+                    <div>
+
+                        <div class="row text-center" style="background-color: lightgoldenrodyellow;">
+                            <span class="col-lg-6" style="margin-top: 10px;"><b>File:</b> /home/osboxes/desynchronizer/bonescript/test/test-lint.js</span>
+                            <span class="col-lg-3" style="margin-top: 10px;"><b>Start line:</b> 6</span>
+                            <span class="col-lg-3" style="margin-top: 10px;"><b>End line:</b> 6</span>
+                        </div>
+
+                        <div class="text-left">
+                            <span class="col-lg-6" style="border: 1px solid; background-color: lightyellow"><b>Before</b></span>
+                            <span class="col-lg-6" style="border: 1px solid; background-color: lightyellow"><b>After</b></span>
+                        </div>
+
+                        <div class="text-left">
+                            <span class="col-lg-6" style="border: 1px solid; height: 150px; overflow-y: scroll; background-color: lightgreen">
+                                <pre style="background-color: inherit; border: 0px; padding: inherit; margin: inherit;">fs.readFileSync(&#x27;./lint-config.json&#x27;)</pre>
+                            </span>
+                            <span class="col-lg-6" style="border: 1px solid; height: 150px; overflow-y: scroll; background-color: lightcoral">
+                                <pre style="background-color: inherit; border: 0px; padding: inherit; margin: inherit;">*Note*: File will be wrapped in an IIFE 
+
+await fs_readFilePromise(&#x27;./lint-config.json&#x27;)</pre>
+                            </span>
+                        </div>
+
+                    </div>
+                </div>
+                <br>
+            </div>
+            <br>
+        </div>
+            <div class="row text-center error-div" style="background-color: lavender; border: 1px solid; margin: 10px;">
+                <span class="col-lg-8" style="border-top:1px solid; border-left:1px solid">id 9</span>
+                <span class="col-lg-4" style="border-top:1px solid; border-right:1px solid"><button id="button9" class="btn btn-success" onclick="expandTable(9)">Show Details</button></span>
+
+                <div id="detail9" class="col-lg-12" style="display: none; border: 1px solid">
+                <div style="margin-bottom: 5px; border: 1px solid;">
+                    <div>
+
+                        <div class="row text-center" style="background-color: lightgoldenrodyellow;">
+                            <span class="col-lg-6" style="margin-top: 10px;"><b>File:</b> /home/osboxes/desynchronizer/bonescript/test/test-lint.js</span>
+                            <span class="col-lg-3" style="margin-top: 10px;"><b>Start line:</b> 14</span>
+                            <span class="col-lg-3" style="margin-top: 10px;"><b>End line:</b> 14</span>
+                        </div>
+
+                        <div class="text-left">
+                            <span class="col-lg-6" style="border: 1px solid; background-color: lightyellow"><b>Before</b></span>
+                            <span class="col-lg-6" style="border: 1px solid; background-color: lightyellow"><b>After</b></span>
+                        </div>
+
+                        <div class="text-left">
+                            <span class="col-lg-6" style="border: 1px solid; height: 150px; overflow-y: scroll; background-color: lightgreen">
+                                <pre style="background-color: inherit; border: 0px; padding: inherit; margin: inherit;">function testDir(dir) {
+  var files &#x3D; fs.readdirSync(dir);
+  files.forEach(function (file, index) {
+    testFile(dir + file);
+  });
+}</pre>
+                            </span>
+                            <span class="col-lg-6" style="border: 1px solid; height: 150px; overflow-y: scroll; background-color: lightcoral">
+                                <pre style="background-color: inherit; border: 0px; padding: inherit; margin: inherit;">async function testDir(dir) {
+  var files &#x3D; await fs_readdirPromise(dir);
+  files.forEach(function (file, index) {
+    testFile(dir + file);
+  });
+}</pre>
+                            </span>
+                        </div>
+
+                    </div>
+                </div>
+                <br>
+                <div style="margin-bottom: 5px; border: 1px solid;">
+                    <div>
+
+                        <div class="row text-center" style="background-color: lightgoldenrodyellow;">
+                            <span class="col-lg-6" style="margin-top: 10px;"><b>File:</b> /home/osboxes/desynchronizer/bonescript/test/test-lint.js</span>
+                            <span class="col-lg-3" style="margin-top: 10px;"><b>Start line:</b> 9</span>
+                            <span class="col-lg-3" style="margin-top: 10px;"><b>End line:</b> 9</span>
+                        </div>
+
+                        <div class="text-left">
+                            <span class="col-lg-6" style="border: 1px solid; background-color: lightyellow"><b>Before</b></span>
+                            <span class="col-lg-6" style="border: 1px solid; background-color: lightyellow"><b>After</b></span>
+                        </div>
+
+                        <div class="text-left">
+                            <span class="col-lg-6" style="border: 1px solid; height: 150px; overflow-y: scroll; background-color: lightgreen">
+                                <pre style="background-color: inherit; border: 0px; padding: inherit; margin: inherit;">testDir(&quot;./&quot;)</pre>
+                            </span>
+                            <span class="col-lg-6" style="border: 1px solid; height: 150px; overflow-y: scroll; background-color: lightcoral">
+                                <pre style="background-color: inherit; border: 0px; padding: inherit; margin: inherit;">*Note*: File will be wrapped in an IIFE 
+
+await testDir(&quot;./&quot;)</pre>
+                            </span>
+                        </div>
+
+                    </div>
+                </div>
+                <br>
+                <div style="margin-bottom: 5px; border: 1px solid;">
+                    <div>
+
+                        <div class="row text-center" style="background-color: lightgoldenrodyellow;">
+                            <span class="col-lg-6" style="margin-top: 10px;"><b>File:</b> /home/osboxes/desynchronizer/bonescript/test/test-lint.js</span>
+                            <span class="col-lg-3" style="margin-top: 10px;"><b>Start line:</b> 10</span>
+                            <span class="col-lg-3" style="margin-top: 10px;"><b>End line:</b> 10</span>
+                        </div>
+
+                        <div class="text-left">
+                            <span class="col-lg-6" style="border: 1px solid; background-color: lightyellow"><b>Before</b></span>
+                            <span class="col-lg-6" style="border: 1px solid; background-color: lightyellow"><b>After</b></span>
+                        </div>
+
+                        <div class="text-left">
+                            <span class="col-lg-6" style="border: 1px solid; height: 150px; overflow-y: scroll; background-color: lightgreen">
+                                <pre style="background-color: inherit; border: 0px; padding: inherit; margin: inherit;">testDir(&quot;./src/&quot;)</pre>
+                            </span>
+                            <span class="col-lg-6" style="border: 1px solid; height: 150px; overflow-y: scroll; background-color: lightcoral">
+                                <pre style="background-color: inherit; border: 0px; padding: inherit; margin: inherit;">*Note*: File will be wrapped in an IIFE 
+
+await testDir(&quot;./src/&quot;)</pre>
+                            </span>
+                        </div>
+
+                    </div>
+                </div>
+                <br>
+                <div style="margin-bottom: 5px; border: 1px solid;">
+                    <div>
+
+                        <div class="row text-center" style="background-color: lightgoldenrodyellow;">
+                            <span class="col-lg-6" style="margin-top: 10px;"><b>File:</b> /home/osboxes/desynchronizer/bonescript/test/test-lint.js</span>
+                            <span class="col-lg-3" style="margin-top: 10px;"><b>Start line:</b> 11</span>
+                            <span class="col-lg-3" style="margin-top: 10px;"><b>End line:</b> 11</span>
+                        </div>
+
+                        <div class="text-left">
+                            <span class="col-lg-6" style="border: 1px solid; background-color: lightyellow"><b>Before</b></span>
+                            <span class="col-lg-6" style="border: 1px solid; background-color: lightyellow"><b>After</b></span>
+                        </div>
+
+                        <div class="text-left">
+                            <span class="col-lg-6" style="border: 1px solid; height: 150px; overflow-y: scroll; background-color: lightgreen">
+                                <pre style="background-color: inherit; border: 0px; padding: inherit; margin: inherit;">testDir(&quot;./test/&quot;)</pre>
+                            </span>
+                            <span class="col-lg-6" style="border: 1px solid; height: 150px; overflow-y: scroll; background-color: lightcoral">
+                                <pre style="background-color: inherit; border: 0px; padding: inherit; margin: inherit;">*Note*: File will be wrapped in an IIFE 
+
+await testDir(&quot;./test/&quot;)</pre>
+                            </span>
+                        </div>
+
+                    </div>
+                </div>
+                <br>
+            </div>
+            <br>
+        </div>
+            <div class="row text-center error-div" style="background-color: lavender; border: 1px solid; margin: 10px;">
+                <span class="col-lg-8" style="border-top:1px solid; border-left:1px solid">id 10</span>
+                <span class="col-lg-4" style="border-top:1px solid; border-right:1px solid"><button id="button10" class="btn btn-success" onclick="expandTable(10)">Show Details</button></span>
+
+                <div id="detail10" class="col-lg-12" style="display: none; border: 1px solid">
+                <div style="margin-bottom: 5px; border: 1px solid;">
+                    <div>
+
+                        <div class="row text-center" style="background-color: lightgoldenrodyellow;">
+                            <span class="col-lg-6" style="margin-top: 10px;"><b>File:</b> /home/osboxes/desynchronizer/bonescript/test/test-lint.js</span>
+                            <span class="col-lg-3" style="margin-top: 10px;"><b>Start line:</b> 21</span>
+                            <span class="col-lg-3" style="margin-top: 10px;"><b>End line:</b> 21</span>
+                        </div>
+
+                        <div class="text-left">
+                            <span class="col-lg-6" style="border: 1px solid; background-color: lightyellow"><b>Before</b></span>
+                            <span class="col-lg-6" style="border: 1px solid; background-color: lightyellow"><b>After</b></span>
+                        </div>
+
+                        <div class="text-left">
+                            <span class="col-lg-6" style="border: 1px solid; height: 150px; overflow-y: scroll; background-color: lightgreen">
+                                <pre style="background-color: inherit; border: 0px; padding: inherit; margin: inherit;">function testFile(fileToTest) {
+  var stat &#x3D; fs.statSync(fileToTest);
+
+  if (stat.isFile() &amp;&amp; fileToTest.match(/js$/)) {
+    //console.log(&quot;Adding lint test for &quot; + fileToTest);
+    index++;
+
+    module.exports[&quot;testLint&quot; + index] &#x3D; function (test) {
+      var inFile &#x3D; &quot;a&quot;;
+      var outFile &#x3D; &quot;b&quot;;
+      test.expect(2);
+      test.doesNotThrow(function () {
+        console.log(&quot;Running lint on &quot; + fileToTest);
+        inFile &#x3D; fs.readFileSync(fileToTest, &#x27;utf8&#x27;);
+        outFile &#x3D; beautify.js(inFile, config); //fs.writeFileSync(fileToTest + &quot;.lint&quot;, outFile);
+      });
+      test.equal(inFile, outFile);
+      test.done();
+    };
+  }
+}</pre>
+                            </span>
+                            <span class="col-lg-6" style="border: 1px solid; height: 150px; overflow-y: scroll; background-color: lightcoral">
+                                <pre style="background-color: inherit; border: 0px; padding: inherit; margin: inherit;">async function testFile(fileToTest) {
+  var stat &#x3D; await fs_statPromise(fileToTest);
+
+  if (stat.isFile() &amp;&amp; fileToTest.match(/js$/)) {
+    //console.log(&quot;Adding lint test for &quot; + fileToTest);
+    index++;
+
+    module.exports[&quot;testLint&quot; + index] &#x3D; function (test) {
+      var inFile &#x3D; &quot;a&quot;;
+      var outFile &#x3D; &quot;b&quot;;
+      test.expect(2);
+      test.doesNotThrow(function () {
+        console.log(&quot;Running lint on &quot; + fileToTest);
+        inFile &#x3D; fs.readFileSync(fileToTest, &#x27;utf8&#x27;);
+        outFile &#x3D; beautify.js(inFile, config); //fs.writeFileSync(fileToTest + &quot;.lint&quot;, outFile);
+      });
+      test.equal(inFile, outFile);
+      test.done();
+    };
+  }
+}</pre>
+                            </span>
+                        </div>
+
+                    </div>
+                </div>
+                <br>
+                <div style="margin-bottom: 5px; border: 1px solid;">
+                    <div>
+
+                        <div class="row text-center" style="background-color: lightgoldenrodyellow;">
+                            <span class="col-lg-6" style="margin-top: 10px;"><b>File:</b> /home/osboxes/desynchronizer/bonescript/test/test-lint.js</span>
+                            <span class="col-lg-3" style="margin-top: 10px;"><b>Start line:</b> 16</span>
+                            <span class="col-lg-3" style="margin-top: 10px;"><b>End line:</b> 16</span>
+                        </div>
+
+                        <div class="text-left">
+                            <span class="col-lg-6" style="border: 1px solid; background-color: lightyellow"><b>Before</b></span>
+                            <span class="col-lg-6" style="border: 1px solid; background-color: lightyellow"><b>After</b></span>
+                        </div>
+
+                        <div class="text-left">
+                            <span class="col-lg-6" style="border: 1px solid; height: 150px; overflow-y: scroll; background-color: lightgreen">
+                                <pre style="background-color: inherit; border: 0px; padding: inherit; margin: inherit;">function (file, index) {
+  testFile(dir + file);
+}</pre>
+                            </span>
+                            <span class="col-lg-6" style="border: 1px solid; height: 150px; overflow-y: scroll; background-color: lightcoral">
+                                <pre style="background-color: inherit; border: 0px; padding: inherit; margin: inherit;">async function (file, index) {
+  await testFile(dir + file);
+}</pre>
+                            </span>
+                        </div>
+
+                    </div>
+                </div>
+                <br>
+                <div style="margin-bottom: 5px; border: 1px solid;">
+                    <div>
+
+                        <div class="row text-center" style="background-color: lightgoldenrodyellow;">
+                            <span class="col-lg-6" style="margin-top: 10px;"><b>File:</b> /home/osboxes/desynchronizer/bonescript/test/test-lint.js</span>
+                            <span class="col-lg-3" style="margin-top: 10px;"><b>Start line:</b> 15</span>
+                            <span class="col-lg-3" style="margin-top: 10px;"><b>End line:</b> 17</span>
+                        </div>
+
+                        <div class="text-left">
+                            <span class="col-lg-6" style="border: 1px solid; background-color: lightyellow"><b>Before</b></span>
+                            <span class="col-lg-6" style="border: 1px solid; background-color: lightyellow"><b>After</b></span>
+                        </div>
+
+                        <div class="text-left">
+                            <span class="col-lg-6" style="border: 1px solid; height: 150px; overflow-y: scroll; background-color: lightgreen">
+                                <pre style="background-color: inherit; border: 0px; padding: inherit; margin: inherit;">function testDir(dir) {
+  var files &#x3D; fs.readdirSync(dir);
+  files.forEach(function (file, index) {
+    testFile(dir + file);
+  });
+}</pre>
+                            </span>
+                            <span class="col-lg-6" style="border: 1px solid; height: 150px; overflow-y: scroll; background-color: lightcoral">
+                                <pre style="background-color: inherit; border: 0px; padding: inherit; margin: inherit;">async function testDir(dir) {
+  var files &#x3D; await fs_readdirPromise(dir);
+
+  for (const [index, file] of files.entries()) {
+    await testFile(dir + file);
+  }
+}</pre>
+                            </span>
+                        </div>
+
+                    </div>
+                </div>
+                <br>
+            </div>
+            <br>
+        </div>
+        <div style="position: fixed;right: 10px;bottom: 10px">
+            <button class="btn btn-primary" onclick="scrollToTop()">Scroll top</button>
+        </div>
+    </div>
+</body>
+
+<script>
+    function expandTable(id) {
+        let element = document.getElementById('detail'+id);
+        element.style.display = (element.style.display === 'none') ? 'block' : 'none';
+        document.getElementById('button'+id).textContent = (document.getElementById('button'+id).textContent === 'Show Details') ?
+            'Hide Details' : 'Show Details';
+    }
+
+    function scrollToTop() {
+        window.scrollTo(0, 0);
+    }
+
+</script>
+
+</html>

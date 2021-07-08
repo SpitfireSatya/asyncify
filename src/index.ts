@@ -11,6 +11,7 @@ import { BabelParser } from './plugins/parsers-and-generators/babel-parser';
 import { ASTUtils } from './utils/ast-utils';
 import { ITransformationDetail } from './interfaces/transformation-detail.interface';
 import { ExtractCallTrees } from './plugins/callgraph-transformations/extract-call-trees';
+import { SuggestionUtils } from './utils/suggestion-utils';
 
 export default class Asyncify {
 
@@ -18,7 +19,9 @@ export default class Asyncify {
     const callgraph: Array<ICallgraphEdge> = await FileOps.readCSVFile(pathToCallgraphCSV, true);
     const callTree: Node = await CallGraphTransformations.transform(callgraph);
     Store.setData('callTree', callTree);
-    const transformations: {[key: string]: Array<ITransformationDetail>} = ASTTransformations.showTransformations(callTree);
+    const transformations: { statistics: any, suggestions: { [key: string]: Array<ITransformationDetail>} }
+      = ASTTransformations.showTransformations(callTree);
+    await SuggestionUtils.generateHtmlReport(transformations);
     await FileOps.writeFile('listOfTransformations.txt', JSON.stringify(transformations, null, 2));
     
     await Asyncify.rebuildASTCache(pathToCallgraphCSV);
@@ -34,7 +37,9 @@ export default class Asyncify {
     const callgraph: Array<ICallgraphEdge> = await FileOps.readCSVFile(pathToCallgraphCSV, true);
     const callTree: Node = await CallGraphTransformations.transform(callgraph);
     Store.setData('callTree', callTree);
-    const transformations: {[key: string]: Array<ITransformationDetail>} = ASTTransformations.showTransformations(callTree);
+    const transformations: { statistics: any, suggestions: { [key: string]: Array<ITransformationDetail>} }
+      = ASTTransformations.showTransformations(callTree);
+    await SuggestionUtils.generateHtmlReport(transformations);
     await FileOps.writeFile('listOfTransformations.txt', JSON.stringify(transformations, null, 2));
     return;
   }

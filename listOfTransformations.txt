@@ -1,143 +1,150 @@
 {
-  "0": [
-    {
-      "filename": "/home/osboxes/desynchronizer/bonescript/test/TODO/eeprom.js",
-      "startLine": 62,
-      "endLine": 62,
-      "before": "fs.readFileSync(sourceJSON, 'ascii')",
-      "after": "*Note*: File will be wrapped in an IIFE \n\nawait fs_readFilePromise(sourceJSON, 'ascii')"
-    }
-  ],
-  "1": [
-    {
-      "filename": "/home/osboxes/desynchronizer/bonescript/test/TODO/eeprom.js",
-      "startLine": 86,
-      "endLine": 86,
-      "before": "fs.writeFileSync(x, eepromData)",
-      "after": "*Note*: File will be wrapped in an IIFE \n\nawait fs_writeFilePromise(x, eepromData)"
-    }
-  ],
-  "2": [
-    {
-      "filename": "/home/osboxes/desynchronizer/bonescript/test/TODO/eeprom.js",
-      "startLine": 89,
-      "endLine": 89,
-      "before": "fs.writeFileSync(destinationEeprom, eepromData)",
-      "after": "*Note*: File will be wrapped in an IIFE \n\nawait fs_writeFilePromise(destinationEeprom, eepromData)"
-    }
-  ],
-  "3": [
-    {
-      "filename": "/home/osboxes/desynchronizer/bonescript/test/TODO/eeprom.js",
-      "startLine": 125,
-      "endLine": 125,
-      "before": "fs.writeFileSync(destinationJSON, eepromsString)",
-      "after": "*Note*: File will be wrapped in an IIFE \n\nawait fs_writeFilePromise(destinationJSON, eepromsString)"
-    }
-  ],
-  "4": [
-    {
-      "filename": "/home/osboxes/desynchronizer/bonescript/test/TODO/remote_bonetest.js",
-      "startLine": 107,
-      "endLine": 107,
-      "before": "function () {\n  try {\n    console.log('Loading ' + process.argv[2]);\n    var script = fs.readFileSync(process.argv[2], 'ascii'); //console.log('Executing: ' + script);\n\n    eval(script);\n  } catch (ex) {\n    console.log('***FAIL*** ' + ex);\n    process.exit(-2);\n  }\n}",
-      "after": "async function () {\n  try {\n    console.log('Loading ' + process.argv[2]);\n    var script = await fs_readFilePromise(process.argv[2], 'ascii'); //console.log('Executing: ' + script);\n\n    eval(script);\n  } catch (ex) {\n    console.log('***FAIL*** ' + ex);\n    process.exit(-2);\n  }\n}"
-    },
-    {
-      "filename": "/home/osboxes/desynchronizer/bonescript/test/TODO/remote_bonetest.js",
-      "startLine": 84,
-      "endLine": 84,
-      "before": "function getRequireData(m) {\n  if (!m.module || !m.data) throw 'Invalid \"require\" message sent for \"' + m.module + '\"';\n  console.log('Initialized module: ' + m.module);\n  _bonescript.modules[m.module] = {};\n\n  for (var x in m.data) {\n    if (!m.data[x].type || !m.data[x].name || typeof m.data[x].value == 'undefined') throw 'Invalid data in \"require\" message sent for \"' + m.module + '.' + m.data[x] + '\"';\n\n    if (m.data[x].type == 'function') {\n      // define the function\n      if (!m.data[x].value) throw 'Missing args in \"require\" message sent for \"' + m.module + '.' + m.data[x] + '\"';\n      var myargs = m.data[x].value; // eval of objString builds the call data out of arguments passed in\n\n      var objString = '';\n\n      for (var y in myargs) {\n        if (isNaN(y)) continue; // Need to find the source of this bug\n\n        if (myargs[y] == 'callback') continue;\n        objString += ' if(typeof ' + myargs[y] + ' == \"function\") {\\n';\n        objString += '  ' + myargs[y] + ' = ' + myargs[y] + '.toString();\\n';\n        objString += ' }\\n';\n        objString += ' calldata.' + myargs[y] + ' = ' + myargs[y] + ';\\n';\n      }\n\n      var argsString = myargs.join(', ');\n      var handyfunc = '_bonescript.modules[\"' + m.module + '\"].' + m.data[x].name + ' = ' + 'function (' + argsString + ') {\\n' + ' var calldata = {};\\n' + objString + ' if(callback) {\\n' + '  _bonescript._callbacks[_bonescript._seqnum] = callback;\\n' + '  calldata.seq = _bonescript._seqnum;\\n' + '  _bonescript._seqnum++;\\n' + ' }\\n' + ' socket.emit(\"' + m.module + '$' + m.data[x].name + '\", calldata);\\n' + '};\\n';\n      eval(handyfunc);\n    } else {\n      _bonescript.modules[m.module][m.data[x].name] = m.data[x].value;\n    }\n  }\n\n  _bonescript.modules[m.module].socket = socket;\n\n  _bonescript.on.initialized();\n}",
-      "after": "async function getRequireData(m) {\n  if (!m.module || !m.data) throw 'Invalid \"require\" message sent for \"' + m.module + '\"';\n  console.log('Initialized module: ' + m.module);\n  _bonescript.modules[m.module] = {};\n\n  for (var x in m.data) {\n    if (!m.data[x].type || !m.data[x].name || typeof m.data[x].value == 'undefined') throw 'Invalid data in \"require\" message sent for \"' + m.module + '.' + m.data[x] + '\"';\n\n    if (m.data[x].type == 'function') {\n      // define the function\n      if (!m.data[x].value) throw 'Missing args in \"require\" message sent for \"' + m.module + '.' + m.data[x] + '\"';\n      var myargs = m.data[x].value; // eval of objString builds the call data out of arguments passed in\n\n      var objString = '';\n\n      for (var y in myargs) {\n        if (isNaN(y)) continue; // Need to find the source of this bug\n\n        if (myargs[y] == 'callback') continue;\n        objString += ' if(typeof ' + myargs[y] + ' == \"function\") {\\n';\n        objString += '  ' + myargs[y] + ' = ' + myargs[y] + '.toString();\\n';\n        objString += ' }\\n';\n        objString += ' calldata.' + myargs[y] + ' = ' + myargs[y] + ';\\n';\n      }\n\n      var argsString = myargs.join(', ');\n      var handyfunc = '_bonescript.modules[\"' + m.module + '\"].' + m.data[x].name + ' = ' + 'function (' + argsString + ') {\\n' + ' var calldata = {};\\n' + objString + ' if(callback) {\\n' + '  _bonescript._callbacks[_bonescript._seqnum] = callback;\\n' + '  calldata.seq = _bonescript._seqnum;\\n' + '  _bonescript._seqnum++;\\n' + ' }\\n' + ' socket.emit(\"' + m.module + '$' + m.data[x].name + '\", calldata);\\n' + '};\\n';\n      eval(handyfunc);\n    } else {\n      _bonescript.modules[m.module][m.data[x].name] = m.data[x].value;\n    }\n  }\n\n  _bonescript.modules[m.module].socket = socket;\n  await _bonescript.on.initialized();\n}"
-    }
-  ],
-  "5": [
-    {
-      "filename": "/home/osboxes/desynchronizer/bonescript/test/TODO/test-unloadslot.js",
-      "startLine": 4,
-      "endLine": 4,
-      "before": "fs.readFileSync(capemgr + '/slots', 'ascii')",
-      "after": "*Note*: File will be wrapped in an IIFE \n\nawait fs_readFilePromise(capemgr + '/slots', 'ascii')"
-    }
-  ],
-  "6": [
-    {
-      "filename": "/home/osboxes/desynchronizer/bonescript/test/TODO/watch-button.js",
-      "startLine": 3,
-      "endLine": 3,
-      "before": "fs.openSync('/sys/class/gpio/gpio22/value', 'r')",
-      "after": "*Note*: File will be wrapped in an IIFE \n\nawait fs_openPromise('/sys/class/gpio/gpio22/value', 'r')"
-    }
-  ],
-  "7": [
-    {
-      "filename": "/home/osboxes/desynchronizer/bonescript/test/TODO/watch-button.js",
-      "startLine": 15,
-      "endLine": 15,
-      "before": "fs.readSync(valuefd, buffer, 0, 1, 0)",
-      "after": "*Note*: File will be wrapped in an IIFE \n\nawait fs_readPromise(valuefd, buffer, 0, 1, 0)"
-    }
-  ],
-  "8": [
-    {
-      "filename": "/home/osboxes/desynchronizer/bonescript/test/test-lint.js",
-      "startLine": 6,
-      "endLine": 6,
-      "before": "fs.readFileSync('./lint-config.json')",
-      "after": "*Note*: File will be wrapped in an IIFE \n\nawait fs_readFilePromise('./lint-config.json')"
-    }
-  ],
-  "9": [
-    {
-      "filename": "/home/osboxes/desynchronizer/bonescript/test/test-lint.js",
-      "startLine": 14,
-      "endLine": 14,
-      "before": "function testDir(dir) {\n  var files = fs.readdirSync(dir);\n  files.forEach(function (file, index) {\n    testFile(dir + file);\n  });\n}",
-      "after": "async function testDir(dir) {\n  var files = await fs_readdirPromise(dir);\n  files.forEach(function (file, index) {\n    testFile(dir + file);\n  });\n}"
-    },
-    {
-      "filename": "/home/osboxes/desynchronizer/bonescript/test/test-lint.js",
-      "startLine": 9,
-      "endLine": 9,
-      "before": "testDir(\"./\")",
-      "after": "*Note*: File will be wrapped in an IIFE \n\nawait testDir(\"./\")"
-    },
-    {
-      "filename": "/home/osboxes/desynchronizer/bonescript/test/test-lint.js",
-      "startLine": 10,
-      "endLine": 10,
-      "before": "testDir(\"./src/\")",
-      "after": "*Note*: File will be wrapped in an IIFE \n\nawait testDir(\"./src/\")"
-    },
-    {
-      "filename": "/home/osboxes/desynchronizer/bonescript/test/test-lint.js",
-      "startLine": 11,
-      "endLine": 11,
-      "before": "testDir(\"./test/\")",
-      "after": "*Note*: File will be wrapped in an IIFE \n\nawait testDir(\"./test/\")"
-    }
-  ],
-  "10": [
-    {
-      "filename": "/home/osboxes/desynchronizer/bonescript/test/test-lint.js",
-      "startLine": 21,
-      "endLine": 21,
-      "before": "function testFile(fileToTest) {\n  var stat = fs.statSync(fileToTest);\n\n  if (stat.isFile() && fileToTest.match(/js$/)) {\n    //console.log(\"Adding lint test for \" + fileToTest);\n    index++;\n\n    module.exports[\"testLint\" + index] = function (test) {\n      var inFile = \"a\";\n      var outFile = \"b\";\n      test.expect(2);\n      test.doesNotThrow(function () {\n        console.log(\"Running lint on \" + fileToTest);\n        inFile = fs.readFileSync(fileToTest, 'utf8');\n        outFile = beautify.js(inFile, config); //fs.writeFileSync(fileToTest + \".lint\", outFile);\n      });\n      test.equal(inFile, outFile);\n      test.done();\n    };\n  }\n}",
-      "after": "async function testFile(fileToTest) {\n  var stat = await fs_statPromise(fileToTest);\n\n  if (stat.isFile() && fileToTest.match(/js$/)) {\n    //console.log(\"Adding lint test for \" + fileToTest);\n    index++;\n\n    module.exports[\"testLint\" + index] = function (test) {\n      var inFile = \"a\";\n      var outFile = \"b\";\n      test.expect(2);\n      test.doesNotThrow(function () {\n        console.log(\"Running lint on \" + fileToTest);\n        inFile = fs.readFileSync(fileToTest, 'utf8');\n        outFile = beautify.js(inFile, config); //fs.writeFileSync(fileToTest + \".lint\", outFile);\n      });\n      test.equal(inFile, outFile);\n      test.done();\n    };\n  }\n}"
-    },
-    {
-      "filename": "/home/osboxes/desynchronizer/bonescript/test/test-lint.js",
-      "startLine": 16,
-      "endLine": 16,
-      "before": "function (file, index) {\n  testFile(dir + file);\n}",
-      "after": "async function (file, index) {\n  await testFile(dir + file);\n}"
-    },
-    {
-      "filename": "/home/osboxes/desynchronizer/bonescript/test/test-lint.js",
-      "startLine": 15,
-      "endLine": 17,
-      "before": "function testDir(dir) {\n  var files = fs.readdirSync(dir);\n  files.forEach(function (file, index) {\n    testFile(dir + file);\n  });\n}",
-      "after": "async function testDir(dir) {\n  var files = await fs_readdirPromise(dir);\n\n  for (const [index, file] of files.entries()) {\n    await testFile(dir + file);\n  }\n}"
-    }
-  ]
+  "statistics": {
+    "syncTransformed": 11,
+    "relatedTransformed": 17,
+    "filesChanged": 5
+  },
+  "suggestions": {
+    "0": [
+      {
+        "filename": "/home/osboxes/desynchronizer/bonescript/test/TODO/eeprom.js",
+        "startLine": 62,
+        "endLine": 62,
+        "before": "fs.readFileSync(sourceJSON, 'ascii')",
+        "after": "*Note*: File will be wrapped in an IIFE \n\nawait fs_readFilePromise(sourceJSON, 'ascii')"
+      }
+    ],
+    "1": [
+      {
+        "filename": "/home/osboxes/desynchronizer/bonescript/test/TODO/eeprom.js",
+        "startLine": 86,
+        "endLine": 86,
+        "before": "fs.writeFileSync(x, eepromData)",
+        "after": "*Note*: File will be wrapped in an IIFE \n\nawait fs_writeFilePromise(x, eepromData)"
+      }
+    ],
+    "2": [
+      {
+        "filename": "/home/osboxes/desynchronizer/bonescript/test/TODO/eeprom.js",
+        "startLine": 89,
+        "endLine": 89,
+        "before": "fs.writeFileSync(destinationEeprom, eepromData)",
+        "after": "*Note*: File will be wrapped in an IIFE \n\nawait fs_writeFilePromise(destinationEeprom, eepromData)"
+      }
+    ],
+    "3": [
+      {
+        "filename": "/home/osboxes/desynchronizer/bonescript/test/TODO/eeprom.js",
+        "startLine": 125,
+        "endLine": 125,
+        "before": "fs.writeFileSync(destinationJSON, eepromsString)",
+        "after": "*Note*: File will be wrapped in an IIFE \n\nawait fs_writeFilePromise(destinationJSON, eepromsString)"
+      }
+    ],
+    "4": [
+      {
+        "filename": "/home/osboxes/desynchronizer/bonescript/test/TODO/remote_bonetest.js",
+        "startLine": 107,
+        "endLine": 107,
+        "before": "function () {\n  try {\n    console.log('Loading ' + process.argv[2]);\n    var script = fs.readFileSync(process.argv[2], 'ascii'); //console.log('Executing: ' + script);\n\n    eval(script);\n  } catch (ex) {\n    console.log('***FAIL*** ' + ex);\n    process.exit(-2);\n  }\n}",
+        "after": "async function () {\n  try {\n    console.log('Loading ' + process.argv[2]);\n    var script = await fs_readFilePromise(process.argv[2], 'ascii'); //console.log('Executing: ' + script);\n\n    eval(script);\n  } catch (ex) {\n    console.log('***FAIL*** ' + ex);\n    process.exit(-2);\n  }\n}"
+      },
+      {
+        "filename": "/home/osboxes/desynchronizer/bonescript/test/TODO/remote_bonetest.js",
+        "startLine": 84,
+        "endLine": 84,
+        "before": "function getRequireData(m) {\n  if (!m.module || !m.data) throw 'Invalid \"require\" message sent for \"' + m.module + '\"';\n  console.log('Initialized module: ' + m.module);\n  _bonescript.modules[m.module] = {};\n\n  for (var x in m.data) {\n    if (!m.data[x].type || !m.data[x].name || typeof m.data[x].value == 'undefined') throw 'Invalid data in \"require\" message sent for \"' + m.module + '.' + m.data[x] + '\"';\n\n    if (m.data[x].type == 'function') {\n      // define the function\n      if (!m.data[x].value) throw 'Missing args in \"require\" message sent for \"' + m.module + '.' + m.data[x] + '\"';\n      var myargs = m.data[x].value; // eval of objString builds the call data out of arguments passed in\n\n      var objString = '';\n\n      for (var y in myargs) {\n        if (isNaN(y)) continue; // Need to find the source of this bug\n\n        if (myargs[y] == 'callback') continue;\n        objString += ' if(typeof ' + myargs[y] + ' == \"function\") {\\n';\n        objString += '  ' + myargs[y] + ' = ' + myargs[y] + '.toString();\\n';\n        objString += ' }\\n';\n        objString += ' calldata.' + myargs[y] + ' = ' + myargs[y] + ';\\n';\n      }\n\n      var argsString = myargs.join(', ');\n      var handyfunc = '_bonescript.modules[\"' + m.module + '\"].' + m.data[x].name + ' = ' + 'function (' + argsString + ') {\\n' + ' var calldata = {};\\n' + objString + ' if(callback) {\\n' + '  _bonescript._callbacks[_bonescript._seqnum] = callback;\\n' + '  calldata.seq = _bonescript._seqnum;\\n' + '  _bonescript._seqnum++;\\n' + ' }\\n' + ' socket.emit(\"' + m.module + '$' + m.data[x].name + '\", calldata);\\n' + '};\\n';\n      eval(handyfunc);\n    } else {\n      _bonescript.modules[m.module][m.data[x].name] = m.data[x].value;\n    }\n  }\n\n  _bonescript.modules[m.module].socket = socket;\n\n  _bonescript.on.initialized();\n}",
+        "after": "async function getRequireData(m) {\n  if (!m.module || !m.data) throw 'Invalid \"require\" message sent for \"' + m.module + '\"';\n  console.log('Initialized module: ' + m.module);\n  _bonescript.modules[m.module] = {};\n\n  for (var x in m.data) {\n    if (!m.data[x].type || !m.data[x].name || typeof m.data[x].value == 'undefined') throw 'Invalid data in \"require\" message sent for \"' + m.module + '.' + m.data[x] + '\"';\n\n    if (m.data[x].type == 'function') {\n      // define the function\n      if (!m.data[x].value) throw 'Missing args in \"require\" message sent for \"' + m.module + '.' + m.data[x] + '\"';\n      var myargs = m.data[x].value; // eval of objString builds the call data out of arguments passed in\n\n      var objString = '';\n\n      for (var y in myargs) {\n        if (isNaN(y)) continue; // Need to find the source of this bug\n\n        if (myargs[y] == 'callback') continue;\n        objString += ' if(typeof ' + myargs[y] + ' == \"function\") {\\n';\n        objString += '  ' + myargs[y] + ' = ' + myargs[y] + '.toString();\\n';\n        objString += ' }\\n';\n        objString += ' calldata.' + myargs[y] + ' = ' + myargs[y] + ';\\n';\n      }\n\n      var argsString = myargs.join(', ');\n      var handyfunc = '_bonescript.modules[\"' + m.module + '\"].' + m.data[x].name + ' = ' + 'function (' + argsString + ') {\\n' + ' var calldata = {};\\n' + objString + ' if(callback) {\\n' + '  _bonescript._callbacks[_bonescript._seqnum] = callback;\\n' + '  calldata.seq = _bonescript._seqnum;\\n' + '  _bonescript._seqnum++;\\n' + ' }\\n' + ' socket.emit(\"' + m.module + '$' + m.data[x].name + '\", calldata);\\n' + '};\\n';\n      eval(handyfunc);\n    } else {\n      _bonescript.modules[m.module][m.data[x].name] = m.data[x].value;\n    }\n  }\n\n  _bonescript.modules[m.module].socket = socket;\n  await _bonescript.on.initialized();\n}"
+      }
+    ],
+    "5": [
+      {
+        "filename": "/home/osboxes/desynchronizer/bonescript/test/TODO/test-unloadslot.js",
+        "startLine": 4,
+        "endLine": 4,
+        "before": "fs.readFileSync(capemgr + '/slots', 'ascii')",
+        "after": "*Note*: File will be wrapped in an IIFE \n\nawait fs_readFilePromise(capemgr + '/slots', 'ascii')"
+      }
+    ],
+    "6": [
+      {
+        "filename": "/home/osboxes/desynchronizer/bonescript/test/TODO/watch-button.js",
+        "startLine": 3,
+        "endLine": 3,
+        "before": "fs.openSync('/sys/class/gpio/gpio22/value', 'r')",
+        "after": "*Note*: File will be wrapped in an IIFE \n\nawait fs_openPromise('/sys/class/gpio/gpio22/value', 'r')"
+      }
+    ],
+    "7": [
+      {
+        "filename": "/home/osboxes/desynchronizer/bonescript/test/TODO/watch-button.js",
+        "startLine": 15,
+        "endLine": 15,
+        "before": "fs.readSync(valuefd, buffer, 0, 1, 0)",
+        "after": "*Note*: File will be wrapped in an IIFE \n\nawait fs_readPromise(valuefd, buffer, 0, 1, 0)"
+      }
+    ],
+    "8": [
+      {
+        "filename": "/home/osboxes/desynchronizer/bonescript/test/test-lint.js",
+        "startLine": 6,
+        "endLine": 6,
+        "before": "fs.readFileSync('./lint-config.json')",
+        "after": "*Note*: File will be wrapped in an IIFE \n\nawait fs_readFilePromise('./lint-config.json')"
+      }
+    ],
+    "9": [
+      {
+        "filename": "/home/osboxes/desynchronizer/bonescript/test/test-lint.js",
+        "startLine": 14,
+        "endLine": 14,
+        "before": "function testDir(dir) {\n  var files = fs.readdirSync(dir);\n  files.forEach(function (file, index) {\n    testFile(dir + file);\n  });\n}",
+        "after": "async function testDir(dir) {\n  var files = await fs_readdirPromise(dir);\n  files.forEach(function (file, index) {\n    testFile(dir + file);\n  });\n}"
+      },
+      {
+        "filename": "/home/osboxes/desynchronizer/bonescript/test/test-lint.js",
+        "startLine": 9,
+        "endLine": 9,
+        "before": "testDir(\"./\")",
+        "after": "*Note*: File will be wrapped in an IIFE \n\nawait testDir(\"./\")"
+      },
+      {
+        "filename": "/home/osboxes/desynchronizer/bonescript/test/test-lint.js",
+        "startLine": 10,
+        "endLine": 10,
+        "before": "testDir(\"./src/\")",
+        "after": "*Note*: File will be wrapped in an IIFE \n\nawait testDir(\"./src/\")"
+      },
+      {
+        "filename": "/home/osboxes/desynchronizer/bonescript/test/test-lint.js",
+        "startLine": 11,
+        "endLine": 11,
+        "before": "testDir(\"./test/\")",
+        "after": "*Note*: File will be wrapped in an IIFE \n\nawait testDir(\"./test/\")"
+      }
+    ],
+    "10": [
+      {
+        "filename": "/home/osboxes/desynchronizer/bonescript/test/test-lint.js",
+        "startLine": 21,
+        "endLine": 21,
+        "before": "function testFile(fileToTest) {\n  var stat = fs.statSync(fileToTest);\n\n  if (stat.isFile() && fileToTest.match(/js$/)) {\n    //console.log(\"Adding lint test for \" + fileToTest);\n    index++;\n\n    module.exports[\"testLint\" + index] = function (test) {\n      var inFile = \"a\";\n      var outFile = \"b\";\n      test.expect(2);\n      test.doesNotThrow(function () {\n        console.log(\"Running lint on \" + fileToTest);\n        inFile = fs.readFileSync(fileToTest, 'utf8');\n        outFile = beautify.js(inFile, config); //fs.writeFileSync(fileToTest + \".lint\", outFile);\n      });\n      test.equal(inFile, outFile);\n      test.done();\n    };\n  }\n}",
+        "after": "async function testFile(fileToTest) {\n  var stat = await fs_statPromise(fileToTest);\n\n  if (stat.isFile() && fileToTest.match(/js$/)) {\n    //console.log(\"Adding lint test for \" + fileToTest);\n    index++;\n\n    module.exports[\"testLint\" + index] = function (test) {\n      var inFile = \"a\";\n      var outFile = \"b\";\n      test.expect(2);\n      test.doesNotThrow(function () {\n        console.log(\"Running lint on \" + fileToTest);\n        inFile = fs.readFileSync(fileToTest, 'utf8');\n        outFile = beautify.js(inFile, config); //fs.writeFileSync(fileToTest + \".lint\", outFile);\n      });\n      test.equal(inFile, outFile);\n      test.done();\n    };\n  }\n}"
+      },
+      {
+        "filename": "/home/osboxes/desynchronizer/bonescript/test/test-lint.js",
+        "startLine": 16,
+        "endLine": 16,
+        "before": "function (file, index) {\n  testFile(dir + file);\n}",
+        "after": "async function (file, index) {\n  await testFile(dir + file);\n}"
+      },
+      {
+        "filename": "/home/osboxes/desynchronizer/bonescript/test/test-lint.js",
+        "startLine": 15,
+        "endLine": 17,
+        "before": "function testDir(dir) {\n  var files = fs.readdirSync(dir);\n  files.forEach(function (file, index) {\n    testFile(dir + file);\n  });\n}",
+        "after": "async function testDir(dir) {\n  var files = await fs_readdirPromise(dir);\n\n  for (const [index, file] of files.entries()) {\n    await testFile(dir + file);\n  }\n}"
+      }
+    ]
+  }
 }

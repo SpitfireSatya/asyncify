@@ -54,7 +54,7 @@
   // await asyncify.showTransformationsAndTransform(path.resolve(__dirname, 'AppsCallGraph.csv'));
   // await asyncify.showTransformationsAndTransform(path.resolve(__dirname, 'SwitchBoardCallGraph.csv'));
   // await asyncify.showTransformationsAndTransform(path.resolve(__dirname, 'FlatsheetCallGraph.csv'));
-  await asyncify.showTransformationsAndTransform(path.resolve(__dirname, 'BonescriptCallGraph.csv'));
+  await asyncify.showTransformations(path.resolve(__dirname, 'BonescriptCallGraph.csv'));
   // await asyncify.showTransformationsAndTransform(path.resolve(__dirname, 'Neoan3CliCallGraph.csv'));
   // await asyncify.showTransformationsAndTransform(path.resolve(__dirname, 'electron-apps.csv'));
   // asyncify.transform();

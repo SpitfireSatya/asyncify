@@ -17,11 +17,7 @@ import path = require('path');
 
 export default class Asyncify {
 
-  public static showTransformationsAndTransform = async (pathToCallgraphCSV: string, homeDir?: string): Promise<{[key: string]: Array<ITransformationDetail>}> => {
-    if(homeDir) {
-      Global.HOME_DIR = path.resolve(Global.HOME_DIR + homeDir);
-      console.log('Updated project directory: \n', Global.HOME_DIR);
-    }
+  public static showTransformationsAndTransform = async (pathToCallgraphCSV: string): Promise<{[key: string]: Array<ITransformationDetail>}> => {
     const callgraph: Array<ICallgraphEdge> = await FileOps.readCSVFile(pathToCallgraphCSV, true);
     const callTree: Node = await CallGraphTransformations.transform(callgraph);
     Store.setData('callTree', callTree);
@@ -39,11 +35,7 @@ export default class Asyncify {
     return;
   }
 
-  public static showTransformations = async (pathToCallgraphCSV: string, homeDir?: string): Promise<{[key: string]: Array<ITransformationDetail>}> => {
-    if(homeDir) {
-      Global.HOME_DIR = path.resolve(Global.HOME_DIR + homeDir);
-      console.log('Updated project directory: \n', Global.HOME_DIR);
-    }
+  public static showTransformations = async (pathToCallgraphCSV: string): Promise<{[key: string]: Array<ITransformationDetail>}> => {
     const callgraph: Array<ICallgraphEdge> = await FileOps.readCSVFile(pathToCallgraphCSV, true);
     const callTree: Node = await CallGraphTransformations.transform(callgraph);
     Store.setData('callTree', callTree);
@@ -54,11 +46,7 @@ export default class Asyncify {
     return;
   }
 
-  public static transform = async (pathToCallgraphCSV: string, homeDir?: string, nodesToTransform?: Array<string>): Promise<number> => {
-    if(homeDir) {
-      Global.HOME_DIR = path.resolve(Global.HOME_DIR + homeDir);
-      console.log('Updated project directory: \n', Global.HOME_DIR);
-    }
+  public static transform = async (pathToCallgraphCSV: string, nodesToTransform?: Array<string>): Promise<number> => {
     const callgraph: Array<ICallgraphEdge> = await FileOps.readCSVFile(pathToCallgraphCSV, true);
     const callTree: Node = await CallGraphTransformations.transform(callgraph);
     Store.setData('callTree', callTree);

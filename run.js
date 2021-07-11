@@ -7,7 +7,7 @@
   const pathToCSV = process.argv[2];
 
   const start = new Date().getTime();
-  await asyncify.showTransformationsAndTransform(pathToCSV, "/desynchronizer");
+  await asyncify.showTransformationsAndTransform(pathToCSV);
   const end = new Date().getTime();
 
   console.log('Time: ', end - start);

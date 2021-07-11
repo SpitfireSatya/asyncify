@@ -12,10 +12,16 @@ import { ASTUtils } from './utils/ast-utils';
 import { ITransformationDetail } from './interfaces/transformation-detail.interface';
 import { ExtractCallTrees } from './plugins/callgraph-transformations/extract-call-trees';
 import { SuggestionUtils } from './utils/suggestion-utils';
+import { Global } from './constants/global.constant';
+import path = require('path');
 
 export default class Asyncify {
 
-  public static showTransformationsAndTransform = async (pathToCallgraphCSV: string): Promise<{[key: string]: Array<ITransformationDetail>}> => {
+  public static showTransformationsAndTransform = async (pathToCallgraphCSV: string, homeDir?: string): Promise<{[key: string]: Array<ITransformationDetail>}> => {
+    if(homeDir) {
+      Global.HOME_DIR = path.resolve(Global.HOME_DIR + homeDir);
+      console.log('Updated project directory: \n', Global.HOME_DIR);
+    }
     const callgraph: Array<ICallgraphEdge> = await FileOps.readCSVFile(pathToCallgraphCSV, true);
     const callTree: Node = await CallGraphTransformations.transform(callgraph);
     Store.setData('callTree', callTree);
@@ -33,7 +39,11 @@ export default class Asyncify {
     return;
   }
 
-  public static showTransformations = async (pathToCallgraphCSV: string): Promise<{[key: string]: Array<ITransformationDetail>}> => {
+  public static showTransformations = async (pathToCallgraphCSV: string, homeDir?: string): Promise<{[key: string]: Array<ITransformationDetail>}> => {
+    if(homeDir) {
+      Global.HOME_DIR = path.resolve(Global.HOME_DIR + homeDir);
+      console.log('Updated project directory: \n', Global.HOME_DIR);
+    }
     const callgraph: Array<ICallgraphEdge> = await FileOps.readCSVFile(pathToCallgraphCSV, true);
     const callTree: Node = await CallGraphTransformations.transform(callgraph);
     Store.setData('callTree', callTree);
@@ -44,7 +54,11 @@ export default class Asyncify {
     return;
   }
 
-  public static transform = async (pathToCallgraphCSV: string, nodesToTransform?: Array<string>): Promise<number> => {
+  public static transform = async (pathToCallgraphCSV: string, homeDir?: string, nodesToTransform?: Array<string>): Promise<number> => {
+    if(homeDir) {
+      Global.HOME_DIR = path.resolve(Global.HOME_DIR + homeDir);
+      console.log('Updated project directory: \n', Global.HOME_DIR);
+    }
     const callgraph: Array<ICallgraphEdge> = await FileOps.readCSVFile(pathToCallgraphCSV, true);
     const callTree: Node = await CallGraphTransformations.transform(callgraph);
     Store.setData('callTree', callTree);

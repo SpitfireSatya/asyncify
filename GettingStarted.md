@@ -13,7 +13,6 @@ The rest of the artifact document reports on the contents of the artifact and ho
 - [Getting Started](#getting-started)
 - [Understanding the Workflow](#understanding-the-workflow)
   - [Kick-the-Tires](#kick-the-tires) instructions can be found here 
-- [General Instructions](#general-instructions)
 - [Verification of Evaluation](#verification-of-evaluation)
 - [List of Supported Claims](#supported-claims)
 - [List of Unsupported Claims](#unsupported-claims)
@@ -48,7 +47,7 @@ The directory contains 2 directories:
 All commands will be executed in the */root/asyncify* directory.
 
 
-# Understanding The Workflow
+# <a name="understanding-the-workflow">Understanding The Workflow</a>
 
 The workflow for transformation of any project is as below:
 - Setting up the project.
@@ -66,7 +65,7 @@ A full list of urls and project names used during the evaluation can be found la
 
 The following sections contain a breakdown of the various tasks performed by this script.
 
-## Kick-the-Tires
+## <a name="kick-the-tires">Kick-the-Tires</a>
 
 Below you will find a sequence of instructions which stress each aspect of our artifact. 
 We will be working with the `deepforge` project as an example.
@@ -132,8 +131,6 @@ Finally, perform the transformation.
 
 This step takes ~1 min.
 
-# General Instructions
-
 ## Setting up the project
 
 In order to keep the container size relatively small, target projects have not been set up in the container.
@@ -198,7 +195,7 @@ The below list contains commands for setting up each project used in the evaluat
 
 *Note 2:* Each project may take a few minutes to complete.
 
-# Verification Of Evaluation
+# <a name="verification-of-evaluation">Verification Of Evaluation</a> 
 
 Our artifact reproduces the important data from Section 5, Table 2 (pg. 17).
 We provide a script to perform the transformations based on pre-generated callgraphs. 

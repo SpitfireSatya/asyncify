@@ -9,8 +9,9 @@ This document contains information on setting up and evaluating the results for 
 - Understanding the Workflow (#understanding-the-workflow)
   - Kick-the-Tires instructions can be found here 
 - Transforming Projects (#transforming-projects)
-- Verification of evaluation (#verification-of-evaluation)
-
+- Verification of Evaluation (#verification-of-evaluation)
+- List of Supported Claims (#supported-claims)
+- List of Unsupported Claims (#unsupported-claims)
 
 # Getting Started
 
@@ -199,3 +200,15 @@ The following commands can be used to run this script:
   - `cd /root/asyncify`
 - Run the evaluation
   - `./run-evaluation.sh`
+
+
+## List of Supported Claims
+
+- This artifact supports all the research questions of the paper.
+  - Our artifact reproduces Table 2 (page #17) from the paper, which we used to argue in favor of our answers to RQs 1 through 4.
+
+## List of Unsupported Claims
+
+- The performance claims for asynchronous behaviour (from Sections 2 and 3, Fig. 3 page #7 and Fig. 6 page #10) cannot be verified in virtual environments. Tests have shown significatly worse performance for asynchronous APIs on Virtual environments.
+- This artifact uses a generic entry point for callgraph generation. During the actual evaluation, the entry points were tailored to best fit the projects. Thus, this artifact may not reproduce the exact callgraph for all projects. However, we have provided pre-computed callgraphs which can be used to verify the evaluation presented in the paper.
+- Due to constraints of the environment, all test projects may not produce a clean build. This, however, does not affect the transformation of projects.

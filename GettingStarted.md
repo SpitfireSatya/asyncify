@@ -7,6 +7,7 @@ This document contains information on setting up and evaluating the results for 
 
 - Getting Started (#getting-started)
 - Understanding the Workflow (#understanding-the-workflow)
+  - Kick-the-Tires instructions can be found here 
 - Transforming Projects (#transforming-projects)
 - Verification of evaluation (#verification-of-evaluation)
 
@@ -58,6 +59,67 @@ eg. `./setup-and-transform-project.sh https://github.com/JSTransformationBenchma
 A full list of urls and project names used during the evaluation can be found later in this section.
 
 The following sections contain a breakdown of the various tasks performed by this script.
+
+## Kick-the-Tires
+
+Below you will find a sequence of instructions which stress each aspect of our artifact. 
+We will be working with the `deepforge` project as an example.
+In the following subsection, general commands are provided with more information.
+
+### Step 0: Ensure Environment Variables are Set
+
+In some cases, the path modifications made by our setup scripts do not carry over outside of the script.
+To address this, ensure that you have run the following commands before proceeding:
+
+```
+export PATH="$PATH:/root/desynchronizer/codeql-home/codeql" 
+export ANALYSIS_HOME="/root/desynchronizer/ApproximateCallGraphAnalysis"
+```
+
+### Step 1: Clone and Build `deepforge`
+
+We will use the `deepforge` project as our kick-the-tires exemplar.
+
+First, clone, build, and install the project:
+
+```
+cd /root/desynchronizer
+git clone https://github.com/JSTransformationBenchmarks/deepforge.git
+cd deepforge
+npm i
+npm run build
+```
+
+To ensure reproducibility, we forked the `deepforge` repository to our own organization (`JSTransformationBenchmarks`), and are cloning from there.
+
+### Step 2: Build Callgraph Manually
+
+Since generating call graphs can take quite some time, and the process of using CodeQL requires a few input commands, we have included prebuilt call graphs for each of our experimental subjects.
+That said, we will walk you through creating one such call graph manually.
+
+- Navigate to ApproximateCallGraphBenchmarks directory
+  - `cd /root/desynchronizer/ApproximateCallGraphBenchmarks`
+- Create codeql database for project
+  - `codeql database create --language=javascript --source-root "../deepforge" "./deepforge-js-db"`
+- Copy callgraph.ql (File containing entry point for callgrapg generation) to project database directory
+  - `cp "/root/asyncify/callgraph.ql" "./deepforge-js-db/callgraph.ql"`
+- Navigate to project database directory
+  - `cd deepforge-js-db`
+- Generate a callgraph based on given entry point.
+  - `codeql query run --search-path=$ANALYSIS_HOME --database . --output="deepforgeCallGraph.bqrs" callgraph.ql`
+- Convert the callgraph to CSV format.
+  - `codeql bqrs decode --format=csv "deepforgeCallGraph.bqrs" > "deepforgeCallGraph.csv"`
+- Copy callgraph to asyncify/generated-cgs
+  - `cp "deepforgeCallGraph.csv" "/root/asyncify/generated-cgs/deepforgeCallGraph.csv"`
+
+### Step 3: Perform Transformation
+
+Finally, perform the transformation.
+
+- Navigate to asyncify directory
+  - `cd /root/asyncify`
+- Transform the project
+  - `node ./run.js  "./generated-cgs/deepforgeCallGraph.csv"`
 
 ## Setting up the project
 

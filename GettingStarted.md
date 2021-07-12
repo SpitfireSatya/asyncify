@@ -2,18 +2,23 @@
 # Desynchronizer 
 This document contains information on setting up and evaluating the results for Desynchronizer, a tool for automatic refactoring of Synchronous Javascript API to their Asynchronous equivalents.
 
+## Purpose
+
+The main purpose of our artifact is to reproduce the paper's evaluation (Section 5).
+This is discussed in our section on **Verification of Evaluation**.
+The rest of the artifact document reports on the contents of the artifact and how to use it.
 
 # Contents
 
-- Getting Started (#getting-started)
-- Understanding the Workflow (#understanding-the-workflow)
-  - Kick-the-Tires instructions can be found here 
-- Transforming Projects (#transforming-projects)
-- Verification of Evaluation (#verification-of-evaluation)
-- List of Supported Claims (#supported-claims)
-- List of Unsupported Claims (#unsupported-claims)
+- [Getting Started](#getting-started)
+- [Understanding the Workflow](#understanding-the-workflow)
+  - [Kick-the-Tires](#kick-the-tires) instructions can be found here 
+- [Transforming Projects](#transforming-projects)
+- [Verification of Evaluation](#verification-of-evaluation)
+- [List of Supported Claims](#supported-claims)
+- [List of Unsupported Claims](#unsupported-claims)
 
-# Getting Started
+# <a name="getting-started">Getting Started</a>
 
 For ease of setting up the artifact, the project has been bundled into a docker container.
 Please make sure docker is installed on your system before proceeding.
@@ -193,7 +198,9 @@ The below list contains commands for setting up each project used in the evaluat
 
 # Verification Of Evaluation
 
-In order to verify the evaluation presented in the paper, a script has been written to perform the transformations based on pre-generated callgraphs. The script may take about 40 mins to complete and would present the user with a table containing transformation metrics such as synchronous functions identified, transformed, and related functions transformed.
+Our artifact reproduces the important data from Section 5, Table 2 (pg. 17).
+We provide a script to perform the transformations based on pre-generated callgraphs. 
+The script may take about 40 mins to complete and would present the user with a table containing transformation metrics such as synchronous functions identified, transformed, and related functions transformed.
 
 The following commands can be used to run this script:
 - Navigate to asyncify
@@ -201,14 +208,15 @@ The following commands can be used to run this script:
 - Run the evaluation
   - `./run-evaluation.sh`
 
+You should then compare the numbers obtained here with those in the paper.
 
-## List of Supported Claims
+## <a name="supported-claims">List of Supported Claims</a> 
 
 - This artifact supports all the research questions of the paper.
-  - Our artifact reproduces Table 2 (page #17) from the paper, which we used to argue in favor of our answers to RQs 1 through 4.
+  - Our artifact reproduces Table 2 (pg. 17) from the paper, which we used to argue in favor of our answers to RQs 1 through 4.
 
-## List of Unsupported Claims
+## <a name="unsupported-claims">List of Unsupported Claims</a> 
 
-- The performance claims for asynchronous behaviour (from Sections 2 and 3, Fig. 3 page #7 and Fig. 6 page #10) cannot be verified in virtual environments. Tests have shown significatly worse performance for asynchronous APIs on Virtual environments.
+- The performance claims for asynchronous behaviour (from Sections 2 and 3, Fig. 3 pg. 7 and Fig. 6 pg. 10) cannot be verified in virtual environments. Tests have shown significatly worse performance for asynchronous APIs on Virtual environments.
 - This artifact uses a generic entry point for callgraph generation. During the actual evaluation, the entry points were tailored to best fit the projects. Thus, this artifact may not reproduce the exact callgraph for all projects. However, we have provided pre-computed callgraphs which can be used to verify the evaluation presented in the paper.
 - Due to constraints of the environment, all test projects may not produce a clean build. This, however, does not affect the transformation of projects.

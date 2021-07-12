@@ -7,13 +7,10 @@ import { Node } from './models/node.model';
 import { Store } from './plugins/store/store';
 import { BabelGenerator } from './plugins/parsers-and-generators/babel-generator';
 import * as babelTypes from '@babel/types';
-import { BabelParser } from './plugins/parsers-and-generators/babel-parser';
-import { ASTUtils } from './utils/ast-utils';
 import { ITransformationDetail } from './interfaces/transformation-detail.interface';
 import { ExtractCallTrees } from './plugins/callgraph-transformations/extract-call-trees';
 import { SuggestionUtils } from './utils/suggestion-utils';
-import { Global } from './constants/global.constant';
-import path = require('path');
+import { Events } from './plugins/events/events';
 
 export default class Asyncify {
 
@@ -46,7 +43,8 @@ export default class Asyncify {
     return;
   }
 
-  public static transform = async (pathToCallgraphCSV: string, nodesToTransform?: Array<string>): Promise<number> => {
+  public static transform = async (pathToCallgraphCSV: string, nodesToTransform?: Array<string>): Promise<any> => {
+    const start: number = new Date().getTime();
     const callgraph: Array<ICallgraphEdge> = await FileOps.readCSVFile(pathToCallgraphCSV, true);
     const callTree: Node = await CallGraphTransformations.transform(callgraph);
     Store.setData('callTree', callTree);
@@ -59,7 +57,22 @@ export default class Asyncify {
     }
     const numberOfFuncsTransformed: number = ASTTransformations.transform(callTree);
     await Asyncify.writeTransformedFiles();
-    return numberOfFuncsTransformed;
+    const end: number = new Date().getTime();
+    const timeTaken: number = end - start;
+    const syncIdentified = Store.getData('syncIdentified');
+    const syncTransformed = callTree.children.length
+    const relatedTransformed = numberOfFuncsTransformed - callTree.children.length
+    console.log('Sync functions transformed: ', syncTransformed);
+    console.log('Related functions transformed: ', relatedTransformed);
+    return { syncIdentified, syncTransformed, relatedTransformed, timeTaken };
+  }
+
+  public static resetData(): void {
+  
+    Store.reset();
+    ExtractCallTrees.resetData();
+    Events.reset();
+  
   }
 
   private static rebuildASTCache = async (pathToCallgraphCSV: string) => {

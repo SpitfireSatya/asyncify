@@ -3,13 +3,14 @@ import { Node } from '../../models/node.model';
 import { ICallgraphEdge } from '../../interfaces/callgraph-edge.interface';
 import { ExtractCallTrees } from './extract-call-trees';
 import { AnalyzeCallTrees } from './analyze-call-trees';
-
+import { Store } from '../store/store';
 
 export class CallGraphTransformations {
 
   public static transform = (callgraph: Array<ICallgraphEdge>): Promise<Node> => {
     return ExtractCallTrees.extract(callgraph)
     .then((rootNode: Node): Node => {
+        Store.setData('syncIdentified', rootNode.children.length, true);
         console.log('Sync functions identified: ', rootNode.children.length);
         rootNode = AnalyzeCallTrees.analyze(rootNode);
         // CallGraphTransformations.printCallTrees(rootNode, '');

@@ -9,7 +9,7 @@ class MyAnalysis extends Analysis {
 
     override 
     predicate isMainFile(File file){
-        file.getAbsolutePath().indexOf(".js") != -1
+        file.getAbsolutePath().indexOf("test") != -1
     }
     
 }

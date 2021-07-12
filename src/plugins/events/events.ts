@@ -27,6 +27,16 @@ export class Events {
     Events._event.emit(eventName, data);
   }
 
+  public static reset = (): void => {
+    Events._event = new EventEmitter();
+    Events._pending = [];
+    Events._notifyWhenReady = false;
+    Events._event.on('notify-when-ready', Events._notifyWhenReadyCallback);
+    Events._event.on('fetch-file', Events._fetchFileCallback);
+    Events._event.on('fetch-file-complete', Events._fetchFileCompleteCallback);
+    Events._event.on('check-pending', Events._checkPendingCallback);
+  }
+
   private static registerEvents = (): void => {
     Events._event.on('notify-when-ready', Events._notifyWhenReadyCallback);
     Events._event.on('fetch-file', Events._fetchFileCallback);

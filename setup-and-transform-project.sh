@@ -32,7 +32,7 @@ cd "desynchronizer"
 cd "ApproximateCallGraphBenchmarks"
 
 codeql database create --language=javascript --source-root "../${PROJECT_NAME}" "./${PROJECT_NAME}-js-db"
-cp "../../asyncify/callgraph.ql" "./${PROJECT_NAME}-js-db/callgraph.ql"
+cp "/root/asyncify/callgraph.ql" "./${PROJECT_NAME}-js-db/callgraph.ql"
 
 # Generating callgraph
 cd "./${PROJECT_NAME}-js-db"

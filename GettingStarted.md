@@ -91,26 +91,29 @@ npm run build
 ```
 
 To ensure reproducibility, we forked the `deepforge` repository to our own organization (`JSTransformationBenchmarks`), and are cloning from there.
+This took ~5 mins.
 
 ### Step 2: Build Callgraph Manually
 
 Since generating call graphs can take quite some time, and the process of using CodeQL requires a few input commands, we have included prebuilt call graphs for each of our experimental subjects.
 That said, we will walk you through creating one such call graph manually.
 
-- Navigate to ApproximateCallGraphBenchmarks directory
+- Navigate to ApproximateCallGraphBenchmarks directory.
   - `cd /root/desynchronizer/ApproximateCallGraphBenchmarks`
-- Create codeql database for project
+- Create codeql database for project. (Takes some time.)
   - `codeql database create --language=javascript --source-root "../deepforge" "./deepforge-js-db"`
-- Copy callgraph.ql (File containing entry point for callgrapg generation) to project database directory
+- Copy callgraph.ql (File containing entry point for callgrapg generation) to project database directory.
   - `cp "/root/asyncify/callgraph.ql" "./deepforge-js-db/callgraph.ql"`
-- Navigate to project database directory
+- Navigate to project database directory.
   - `cd deepforge-js-db`
-- Generate a callgraph based on given entry point.
+- Generate a callgraph based on given entry point. (Takes some time.)
   - `codeql query run --search-path=$ANALYSIS_HOME --database . --output="deepforgeCallGraph.bqrs" callgraph.ql`
 - Convert the callgraph to CSV format.
   - `codeql bqrs decode --format=csv "deepforgeCallGraph.bqrs" > "deepforgeCallGraph.csv"`
-- Copy callgraph to asyncify/generated-cgs
+- Copy callgraph to asyncify/generated-cgs.
   - `cp "deepforgeCallGraph.csv" "/root/asyncify/generated-cgs/deepforgeCallGraph.csv"`
+
+This step takes 10-15 mins.
 
 ### Step 3: Perform Transformation
 
@@ -120,6 +123,8 @@ Finally, perform the transformation.
   - `cd /root/asyncify`
 - Transform the project
   - `node ./run.js  "./generated-cgs/deepforgeCallGraph.csv"`
+
+This step takes ~1 min.
 
 ## Setting up the project
 

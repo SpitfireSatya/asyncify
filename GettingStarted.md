@@ -13,7 +13,7 @@ The rest of the artifact document reports on the contents of the artifact and ho
 - [Getting Started](#getting-started)
 - [Understanding the Workflow](#understanding-the-workflow)
   - [Kick-the-Tires](#kick-the-tires) instructions can be found here 
-- [Transforming Projects](#transforming-projects)
+- [General Instructions](#general-instructions)
 - [Verification of Evaluation](#verification-of-evaluation)
 - [List of Supported Claims](#supported-claims)
 - [List of Unsupported Claims](#unsupported-claims)
@@ -132,6 +132,8 @@ Finally, perform the transformation.
 
 This step takes ~1 min.
 
+# General Instructions
+
 ## Setting up the project
 
 In order to keep the container size relatively small, target projects have not been set up in the container.
@@ -210,12 +212,12 @@ The following commands can be used to run this script:
 
 You should then compare the numbers obtained here with those in the paper.
 
-## <a name="supported-claims">List of Supported Claims</a> 
+# <a name="supported-claims">List of Supported Claims</a> 
 
 - This artifact supports all the research questions of the paper.
   - Our artifact reproduces Table 2 (pg. 17) from the paper, which we used to argue in favor of our answers to RQs 1 through 4.
 
-## <a name="unsupported-claims">List of Unsupported Claims</a> 
+# <a name="unsupported-claims">List of Unsupported Claims</a> 
 
 - The performance claims for asynchronous behaviour (from Sections 2 and 3, Fig. 3 pg. 7 and Fig. 6 pg. 10) cannot be verified in virtual environments. Tests have shown significatly worse performance for asynchronous APIs on Virtual environments.
 - This artifact uses a generic entry point for callgraph generation. During the actual evaluation, the entry points were tailored to best fit the projects. Thus, this artifact may not reproduce the exact callgraph for all projects. However, we have provided pre-computed callgraphs which can be used to verify the evaluation presented in the paper.

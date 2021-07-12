@@ -20,7 +20,7 @@ git clone "https://github.com/SpitfireSatya/ql"
 
 cd "/root"
 cd "desynchronizer/"
-git clone "https://github.com/franktip/ApproximateCallGraphAnalysis.git"
+git clone "https://github.com/SpitfireSatya/ApproximateCallGraphAnalysis.git"
 
 export PATH="$PATH:/root/desynchronizer/codeql-home/codeql" 
 export ANALYSIS_HOME="/root/desynchronizer/ApproximateCallGraphAnalysis"

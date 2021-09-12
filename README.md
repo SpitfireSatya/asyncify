@@ -45,3 +45,13 @@ Report location: `reports/tslint-html-report`
 
 Run *`npm run jscpd`* to generate a json and html duplicity report using [JSCPD-Html-report](https://www.npmjs.com/package/jscpd-html-reporter).  
 Report location: `reports/code-duplicity`  
+
+## Building the container
+
+- Create a zip of all the contents of the asyncify directory (except node modules) into a file called "asyncify.zip"
+  - Ensure that this is present in the root of the project.
+- Build the container using the command:
+  - `sudo docker build -t desynchronizer .`
+- Follow the steps in [Getting Started](./GettingStarted.md) to verify the evaluation.
+  - Or use the below command to run the container:
+    - `sudo docker run --name desynchronizer -it desynchronizer bash`
